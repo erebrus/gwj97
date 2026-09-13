@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://c4xmr8fgcygi5"]
+
+[ext_resource type="PackedScene" uid="uid://bwaucq274rap0" path="res://src/systems/station/room.tscn" id="1_k0h56"]
+[ext_resource type="Texture2D" uid="uid://dg73b37wwp5uo" path="res://assets/gfx/rooms/room_2x1.png" id="2_j5rhk"]
+
+[node name="Room" unique_id=1243543416 instance=ExtResource("1_k0h56")]
+
+[node name="Sprite2D" parent="." index="0" unique_id=276615709]
+position = Vector2(32, 16)
+texture = ExtResource("2_j5rhk")
+
+[node name="Tiles" parent="." index="1" unique_id=740900682]
+tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)

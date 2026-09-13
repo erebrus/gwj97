@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://colgh87172chk"]
+
+[ext_resource type="Script" uid="uid://hfap0woio2bw" path="res://src/systems/station/placement/room_button.gd" id="1_euwvw"]
+
+[node name="RoomButton" type="PanelContainer" unique_id=1335469626]
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_euwvw")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1026821496]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2

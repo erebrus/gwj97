@@ -26,7 +26,7 @@ LAYER_20 = 524288,
 enum PHYSICS_2D { 
 NONE = 0,
 LAYER_1 = 1,
-LAYER_2 = 2,
+ROOMS = 2,
 LAYER_3 = 4,
 LAYER_4 = 8,
 LAYER_5 = 16,

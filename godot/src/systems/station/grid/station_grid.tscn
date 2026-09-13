@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://ct0x1qn140hns"]
+
+[ext_resource type="Material" uid="uid://bi4qwnglvwx8d" path="res://src/systems/station/grid/grid_material.tres" id="1_vnbsp"]
+[ext_resource type="Script" uid="uid://ck88y3xsegcud" path="res://src/systems/station/grid/station_grid.gd" id="3_elcw1"]
+
+[sub_resource type="Gradient" id="Gradient_vnbsp"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3sxak"]
+gradient = SubResource("Gradient_vnbsp")
+width = 1280
+height = 768
+
+[node name="StationGrid" type="Sprite2D" unique_id=665700206]
+material = ExtResource("1_vnbsp")
+texture = SubResource("GradientTexture2D_3sxak")
+script = ExtResource("3_elcw1")

@@ -1,6 +1,33 @@
-[gd_scene load_steps=2 format=3 uid="uid://lqtollaovard"]
+[gd_scene format=3 uid="uid://lqtollaovard"]
 
 [ext_resource type="Script" uid="uid://b4ytavk038x8p" path="res://src/base_level.gd" id="1_mnxva"]
+[ext_resource type="PackedScene" uid="uid://ct0x1qn140hns" path="res://src/systems/station/grid/station_grid.tscn" id="2_2xr1i"]
+[ext_resource type="PackedScene" uid="uid://colgh87172chk" path="res://src/systems/station/placement/room_button.tscn" id="3_82ww6"]
+[ext_resource type="PackedScene" uid="uid://07dok1yb8mp3" path="res://src/systems/station/rooms/room_1.tscn" id="4_0xb2g"]
+[ext_resource type="PackedScene" uid="uid://c4xmr8fgcygi5" path="res://src/systems/station/rooms/room_2.tscn" id="5_vmobq"]
 
-[node name="BaseLevel" type="Node2D"]
+[node name="BaseLevel" type="Node2D" unique_id=613843204]
 script = ExtResource("1_mnxva")
+
+[node name="StationGrid" parent="." unique_id=1502046342 instance=ExtResource("2_2xr1i")]
+unique_name_in_owner = true
+position = Vector2(640, 384)
+
+[node name="RoomCatalog" type="CanvasLayer" parent="." unique_id=332297952]
+
+[node name="RoomButtons" type="HBoxContainer" parent="RoomCatalog" unique_id=1842233401]
+unique_name_in_owner = true
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="RoomButton" parent="RoomCatalog/RoomButtons" unique_id=2120654148 instance=ExtResource("3_82ww6")]
+layout_mode = 2
+room_scene = ExtResource("4_0xb2g")
+
+[node name="RoomButton2" parent="RoomCatalog/RoomButtons" unique_id=1717729275 instance=ExtResource("3_82ww6")]
+layout_mode = 2
+room_scene = ExtResource("5_vmobq")

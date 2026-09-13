@@ -31,6 +31,11 @@ Debug="*res://src/common/debug/debug.tscn"
 LayerNames="*uid://bn54jbvg6ffka"
 MetricsEvents="*res://src/common/metric_manager/metrics_events.gd"
 
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=760
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/gs_logger/plugin.cfg", "res://addons/layerNames/plugin.cfg")
@@ -71,3 +76,11 @@ debug={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":true,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":68,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_2="rooms"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

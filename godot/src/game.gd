@@ -14,6 +14,7 @@ func _ready():
 	level_manager.load_first_level()
 	Debug.set_levels(level_manager.levels)
 	Globals.game = self
+	
 
 func _on_level_ended():
 	fade_panel.fade_out()
@@ -22,7 +23,6 @@ func _on_level_ended():
 		fade_panel.fade_in()
 	level_manager.load_next_level()
 	
-
 
 func _on_level_manager_game_completed() -> void:
 	Globals.do_win()

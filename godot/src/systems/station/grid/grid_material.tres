@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bi4qwnglvwx8d"]
+
+[ext_resource type="Shader" uid="uid://bb4x4cudbacjq" path="res://src/systems/station/grid/grid.tres" id="1_vxhm5"]
+
+[resource]
+shader = ExtResource("1_vxhm5")
+shader_parameter/pixel_width = 1280.0
+shader_parameter/pixel_height = 768.0
+shader_parameter/grid_color = Color(0.899842, 0.36831, 0.646314, 1)
+shader_parameter/block_size = Vector2(32, 32)
+shader_parameter/grid_outline_size = 1.0
+shader_parameter/circle_size = 0.5
+shader_parameter/circle_position = Vector2(0.5, 0.5)
+shader_parameter/valid_placement = true
+shader_parameter/invalid_color = Color(0.997825, 0, 0.211122, 1)
+shader_parameter/alpha_value = 1.0

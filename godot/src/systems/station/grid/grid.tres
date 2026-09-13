@@ -1,0 +1,165 @@
+[gd_resource type="VisualShader" format=3 uid="uid://bb4x4cudbacjq"]
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_jmpox"]
+parameter_name = "circle_size"
+default_value_enabled = true
+default_value = 0.2
+
+[sub_resource type="VisualShaderNodeVec2Parameter" id="VisualShaderNodeVec2Parameter_iutbv"]
+parameter_name = "circle_position"
+default_value_enabled = true
+default_value = Vector2(0.5, 0.5)
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_jgdq6"]
+parameter_name = "alpha_value"
+default_value_enabled = true
+default_value = 0.8
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_fxp2p"]
+operator = 2
+
+[sub_resource type="Gradient" id="Gradient_3um1p"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6hitw"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_i43u1"]
+noise = SubResource("FastNoiseLite_6hitw")
+color_ramp = SubResource("Gradient_3um1p")
+seamless = true
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_uyydg"]
+texture = SubResource("NoiseTexture2D_i43u1")
+
+[sub_resource type="VisualShaderNodeBooleanParameter" id="VisualShaderNodeBooleanParameter_g31ug"]
+parameter_name = "valid_placement"
+default_value_enabled = true
+default_value = true
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_idsy1"]
+parameter_name = "invalid_color"
+default_value_enabled = true
+default_value = Color(0.997825, 0, 0.211122, 1)
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_27ame"]
+parameter_name = "pixel_width"
+default_value_enabled = true
+default_value = 1280.0
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_1q73u"]
+parameter_name = "pixel_height"
+default_value_enabled = true
+default_value = 760.0
+
+[sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_i1bux"]
+output_port_for_preview = 0
+size = Vector2(780, 1000)
+expression = "float uvPixelWidth = 1.0 / pixelWidth;
+float uvPixelHeight = 1.0 / pixelHeight;
+vec2 uvOutlineSize = vec2(uvPixelWidth * gridOutlineSize, uvPixelHeight * gridOutlineSize);
+vec2 uvOutlineHalfSize = uvOutlineSize / 2.0;
+float blockWidth = blockSize.x / pixelWidth;
+float blockHeight = blockSize.y / pixelHeight;
+float remainderWidth = mod(uv.x, blockWidth);
+float remainderHeight = mod(uv.y, blockHeight);
+vec4 transparent = vec4(0.0, 0.0, 0.0, 0.0);
+
+float circle_distance = distance(uv, circlePosition);
+vec4 calcColor = gridColor;
+calcColor = mix(invalidColor, gridColor, vec4(clamp(float(valid) + circle_distance + circle_distance*4.0, 0.0, 1.0)));
+
+color += calcColor * step(remainderWidth, uvOutlineHalfSize.x);
+color += calcColor * step((blockWidth - remainderWidth), uvOutlineHalfSize.x);
+color += calcColor * step(remainderHeight, uvOutlineHalfSize.y);
+color += calcColor * step((blockHeight - remainderHeight), uvOutlineHalfSize.y);
+
+color *= step(circle_distance, circleSize / 2.0);
+
+color = mix(color, transparent, vec4(clamp(circle_distance + circle_distance * 3.0, 0.0, 1.0)));
+
+color = clamp(color, transparent, gridColor);"
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_w4m8s"]
+parameter_name = "grid_color"
+default_value_enabled = true
+default_value = Color(0.899842, 0.36831, 0.646314, 1)
+
+[sub_resource type="VisualShaderNodeVec2Parameter" id="VisualShaderNodeVec2Parameter_8cg4p"]
+parameter_name = "block_size"
+default_value_enabled = true
+default_value = Vector2(8, 8)
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_goxmt"]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_kuhr7"]
+default_input_values = [0, Quaternion(0, 0, 0, 0)]
+op_type = 2
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_3t6tq"]
+parameter_name = "grid_outline_size"
+default_value_enabled = true
+default_value = 1.0
+
+[resource]
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2(2460, 440)
+nodes/fragment/2/node = SubResource("VisualShaderNodeFloatParameter_27ame")
+nodes/fragment/2/position = Vector2(-900, 40)
+nodes/fragment/3/node = SubResource("VisualShaderNodeFloatParameter_1q73u")
+nodes/fragment/3/position = Vector2(-900, 280)
+nodes/fragment/4/node = SubResource("VisualShaderNodeExpression_i1bux")
+nodes/fragment/4/position = Vector2(-320, 620)
+nodes/fragment/4/size = Vector2(780, 1000)
+nodes/fragment/4/input_ports = "0,0,pixelWidth;1,0,pixelHeight;2,5,gridColor;3,3,blockSize;4,3,uv;5,0,gridOutlineSize;6,0,circleSize;7,3,circlePosition;8,5,noiseColor;9,6,valid;10,5,invalidColor;"
+nodes/fragment/4/output_ports = "0,5,color;"
+nodes/fragment/4/expression = "float uvPixelWidth = 1.0 / pixelWidth;
+float uvPixelHeight = 1.0 / pixelHeight;
+vec2 uvOutlineSize = vec2(uvPixelWidth * gridOutlineSize, uvPixelHeight * gridOutlineSize);
+vec2 uvOutlineHalfSize = uvOutlineSize / 2.0;
+float blockWidth = blockSize.x / pixelWidth;
+float blockHeight = blockSize.y / pixelHeight;
+float remainderWidth = mod(uv.x, blockWidth);
+float remainderHeight = mod(uv.y, blockHeight);
+vec4 transparent = vec4(0.0, 0.0, 0.0, 0.0);
+
+float circle_distance = distance(uv, circlePosition);
+vec4 calcColor = gridColor;
+calcColor = mix(invalidColor, gridColor, vec4(clamp(float(valid) + circle_distance + circle_distance*4.0, 0.0, 1.0)));
+
+color += calcColor * step(remainderWidth, uvOutlineHalfSize.x);
+color += calcColor * step((blockWidth - remainderWidth), uvOutlineHalfSize.x);
+color += calcColor * step(remainderHeight, uvOutlineHalfSize.y);
+color += calcColor * step((blockHeight - remainderHeight), uvOutlineHalfSize.y);
+
+color *= step(circle_distance, circleSize / 2.0);
+
+color = mix(color, transparent, vec4(clamp(circle_distance + circle_distance * 3.0, 0.0, 1.0)));
+
+color = clamp(color, transparent, gridColor);"
+nodes/fragment/5/node = SubResource("VisualShaderNodeColorParameter_w4m8s")
+nodes/fragment/5/position = Vector2(-700, -220)
+nodes/fragment/6/node = SubResource("VisualShaderNodeVec2Parameter_8cg4p")
+nodes/fragment/6/position = Vector2(-1400, 480)
+nodes/fragment/7/node = SubResource("VisualShaderNodeInput_goxmt")
+nodes/fragment/7/position = Vector2(-1380, 760)
+nodes/fragment/8/node = SubResource("VisualShaderNodeVectorDecompose_kuhr7")
+nodes/fragment/8/position = Vector2(640, 460)
+nodes/fragment/9/node = SubResource("VisualShaderNodeFloatParameter_3t6tq")
+nodes/fragment/9/position = Vector2(-1073.84, 918.246)
+nodes/fragment/10/node = SubResource("VisualShaderNodeFloatParameter_jmpox")
+nodes/fragment/10/position = Vector2(-1540, 1120)
+nodes/fragment/11/node = SubResource("VisualShaderNodeVec2Parameter_iutbv")
+nodes/fragment/11/position = Vector2(-1500, 1380)
+nodes/fragment/12/node = SubResource("VisualShaderNodeFloatParameter_jgdq6")
+nodes/fragment/12/position = Vector2(1780, 1220)
+nodes/fragment/13/node = SubResource("VisualShaderNodeFloatOp_fxp2p")
+nodes/fragment/13/position = Vector2(2060, 860)
+nodes/fragment/14/node = SubResource("VisualShaderNodeTexture_uyydg")
+nodes/fragment/14/position = Vector2(-1523.52, 1793.69)
+nodes/fragment/15/node = SubResource("VisualShaderNodeBooleanParameter_g31ug")
+nodes/fragment/15/position = Vector2(-880, 1560)
+nodes/fragment/16/node = SubResource("VisualShaderNodeColorParameter_idsy1")
+nodes/fragment/16/position = Vector2(-860, 1220)
+nodes/fragment/connections = PackedInt32Array(2, 0, 4, 0, 3, 0, 4, 1, 5, 0, 4, 2, 7, 0, 4, 4, 6, 0, 4, 3, 4, 0, 8, 0, 9, 0, 4, 5, 8, 3, 13, 0, 12, 0, 13, 1, 11, 0, 4, 7, 10, 0, 4, 6, 14, 0, 4, 8, 16, 0, 4, 10, 15, 0, 4, 9, 13, 0, 0, 1, 4, 0, 0, 0)
