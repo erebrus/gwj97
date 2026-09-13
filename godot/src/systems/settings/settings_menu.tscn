@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://dl8v2fu2m6iq5"]
+
+[ext_resource type="Theme" uid="uid://k0yx4w2osxxx" path="res://src/ui/theme.tres" id="1_0qepn"]
+[ext_resource type="PackedScene" uid="uid://to3p8qv7p8yo" path="res://addons/sj/components/ui/settings/volume_slider.tscn" id="1_ynjey"]
+[ext_resource type="Script" uid="uid://dkopnwb68pia4" path="res://src/systems/settings/settings_menu.gd" id="2_g7q7d"]
+
+[node name="SettingsMenu" type="PanelContainer" unique_id=802910518]
+offset_right = 167.0
+offset_bottom = 185.0
+theme = ExtResource("1_0qepn")
+script = ExtResource("2_g7q7d")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=964843725]
+layout_mode = 2
+theme_type_variation = &"MarginContainerMedium"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=679651697]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=2028950653]
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+text = "Settings"
+
+[node name="Volume" type="GridContainer" parent="MarginContainer/VBoxContainer" unique_id=80304844]
+layout_mode = 2
+columns = 2
+
+[node name="SoundLabel" type="Label" parent="MarginContainer/VBoxContainer/Volume" unique_id=968643149]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_type_variation = &"HeaderSmall"
+text = "SFX"
+
+[node name="SoundSlider" parent="MarginContainer/VBoxContainer/Volume" unique_id=250706371 instance=ExtResource("1_ynjey")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+bus_name = "Sfx"
+
+[node name="MusicLabel" type="Label" parent="MarginContainer/VBoxContainer/Volume" unique_id=651276265]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_type_variation = &"HeaderSmall"
+text = "Music"
+
+[node name="MusicSlider" parent="MarginContainer/VBoxContainer/Volume" unique_id=171365583 instance=ExtResource("1_ynjey")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+bus_name = "Music"
+
+[node name="Checkboxes" type="GridContainer" parent="MarginContainer/VBoxContainer" unique_id=862340823]
+layout_mode = 2
+columns = 2
+
+[node name="FullScreenLabel" type="Label" parent="MarginContainer/VBoxContainer/Checkboxes" unique_id=1094340650]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"HeaderSmall"
+text = "Fullscreen"
+
+[node name="FullScreenCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/Checkboxes" unique_id=46991474]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=161136099]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Close"
+
+[node name="RangeSfx" type="AudioStreamPlayer" parent="." unique_id=365329772]
+unique_name_in_owner = true
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]

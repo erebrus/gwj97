@@ -1,0 +1,109 @@
+{
+	"data": [
+		{
+			"events": [
+				{
+					"data": {
+						"cards": [
+							"block1",
+							"block1",
+							"block2",
+							"block3_step",
+							"turn_around",
+							"block3_step",
+							"block2",
+							"turn_around"
+						],
+						"node": {
+							"coords": "(2, 0)",
+							"type": 0
+						},
+						"relics": []
+					},
+					"name": "level_started",
+					"timestamp": 5692,
+					"turn": 0
+				}
+			],
+			"level": "res://src/world/levels/1.7/orion_1.tscn",
+			"values": {
+
+			}
+		}
+	],
+	"metadata": {
+		"OS": "Windows",
+		"fullscreen": "true",
+		"run_id": 1779701666,
+		"screen_size": "(1920, 1200)",
+		"session_id": 1779701664,
+		"session_start_time": "2026-05-25T09:34:23",
+		"start_time": "2026-05-25T10:34:27",
+		"username": "",
+		"uuid": "3a1d1ce6-15ae-4f7e-ac96-b3321e5ae884",
+		"version": "1.7.2",
+		"window_size": "(1920, 1080)"
+	},
+	"metrics": [
+		{
+			"name": "cards_played",
+			"scope": 3,
+			"type": 0
+		},
+		{
+			"name": "coins",
+			"scope": 3,
+			"type": 0
+		},
+		{
+			"name": "shards_consumed",
+			"scope": 3,
+			"type": 0
+		},
+		{
+			"name": "reshuffles",
+			"scope": 3,
+			"type": 0
+		},
+		{
+			"name": "stabilizers",
+			"scope": 3,
+			"type": 0
+		},
+		{
+			"name": "void_speed",
+			"scope": 3,
+			"type": 0
+		},
+		{
+			"name": "void_distance",
+			"scope": 3,
+			"type": 0
+		},
+		{
+			"name": "deaths",
+			"scope": 2,
+			"type": 0
+		},
+		{
+			"name": "level_completions",
+			"scope": 2,
+			"type": 0
+		},
+		{
+			"name": "player_to_end",
+			"scope": 3,
+			"type": 1
+		},
+		{
+			"name": "rewinds",
+			"scope": 3,
+			"type": 0
+		},
+		{
+			"name": "checkpoints",
+			"scope": 3,
+			"type": 0
+		}
+	]
+}

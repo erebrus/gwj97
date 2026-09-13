@@ -1,0 +1,82 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctrd2c74fom4t"]
+
+[ext_resource type="Script" uid="uid://ba8oovky3bhiq" path="res://src/common/debug/debug_panel.gd" id="1_ihtat"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvt4n"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+
+[node name="DebugPanel" type="PanelContainer"]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -122.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 8
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvt4n")
+script = ExtResource("1_ihtat")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HFlowContainer2" type="HFlowContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MusicTensionToggle" type="Button" parent="VBoxContainer/HFlowContainer2"]
+layout_mode = 2
+focus_mode = 0
+text = "Swap Music"
+
+[node name="Invulnerable" type="Button" parent="VBoxContainer/HFlowContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+toggle_mode = true
+text = "Invulnerable"
+
+[node name="LevelSelectLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Game Over"
+
+[node name="HFlowContainer3" type="HFlowContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LevelSelection" type="OptionButton" parent="VBoxContainer/HFlowContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="LoadLevelButton" type="Button" parent="VBoxContainer/HFlowContainer3"]
+layout_mode = 2
+focus_mode = 0
+text = "Game Over
+"
+
+[node name="GameOverLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Game Over"
+
+[node name="HFlowContainer" type="HFlowContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="GameOver" type="Button" parent="VBoxContainer/HFlowContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Game Over
+"
+
+[node name="WinGame" type="Button" parent="VBoxContainer/HFlowContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Win Game
+"
+
+[connection signal="pressed" from="VBoxContainer/HFlowContainer2/MusicTensionToggle" to="." method="_on_music_tension_toggle_pressed"]
+[connection signal="toggled" from="VBoxContainer/HFlowContainer2/Invulnerable" to="." method="_on_invulnerable_toggled"]
+[connection signal="pressed" from="VBoxContainer/HFlowContainer3/LoadLevelButton" to="." method="_on_load_level_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HFlowContainer/GameOver" to="." method="_on_game_over_pressed"]
+[connection signal="pressed" from="VBoxContainer/HFlowContainer/WinGame" to="." method="_on_win_game_pressed"]

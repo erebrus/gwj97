@@ -1,0 +1,120 @@
+name: "godot-ci export"
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+env:
+  GODOT_VERSION: 4.7.1.stable
+  EXPORT_NAME: replace_export_name
+  ITCH_GAME: itch-game-name
+  ITCH_USER: erebrus
+
+jobs:
+  export-web:
+    name: Web Export
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.7.1
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        lfs: true
+    - name: Setup
+      run: |
+        mkdir -v -p ~/.local/share/godot/export_templates/
+        mv /root/.local/share/godot/export_templates/${GODOT_VERSION} ~/.local/share/godot/export_templates/${GODOT_VERSION}
+        ls ~/.local/share/godot/export_templates/${GODOT_VERSION}
+    - name: Web Build
+      run: |
+        cd godot
+        mkdir -v -p build/html
+        godot --headless --verbose --import --export-release "Web" build/html/index.html
+    - name: Publish to Itch.io
+      uses: josephbmanley/butler-publish-itchio-action@master
+      env:
+        BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+        CHANNEL: web
+        PACKAGE: godot/build/html
+  
+  export-mac:
+    name: Mac Export
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.7.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION} ~/.local/share/godot/export_templates/${GODOT_VERSION}
+          ls ~/.local/share/godot/export_templates/${GODOT_VERSION}
+      - name: Mac Build
+        run: |
+          cd godot
+          mkdir -v -p build/mac
+          godot --headless --verbose --import --export-release "macOS" build/mac/$EXPORT_NAME.zip
+      - name: Publish to Itch.io
+        uses: josephbmanley/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: mac
+          PACKAGE: godot/build/mac
+
+  export-windows:
+    name: Windows Export
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.7.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION} ~/.local/share/godot/export_templates/${GODOT_VERSION}
+          ls ~/.local/share/godot/export_templates/${GODOT_VERSION}
+      - name: Windows Build
+        run: |
+          cd godot
+          mkdir -v -p build/windows
+          godot --headless --verbose --import --export-release "Windows Desktop" build/windows/$EXPORT_NAME.exe
+      - name: Publish to Itch.io
+        uses: josephbmanley/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: windows
+          PACKAGE: godot/build/windows
+
+  export-linux:
+    name: Linux Export
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.7.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION} ~/.local/share/godot/export_templates/${GODOT_VERSION}
+          ls ~/.local/share/godot/export_templates/${GODOT_VERSION}
+      - name: Linux Build
+        run: |
+          cd godot
+          mkdir -v -p build/linux
+          godot --headless --verbose --import --export-release "Linux/X11" build/linux/$EXPORT_NAME.x86_64
+      - name: Publish to Itch.io
+        uses: josephbmanley/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: linux
+          PACKAGE: godot/build/linux

@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://tew5nggvlbv0"]
+
+[ext_resource type="Theme" uid="uid://k0yx4w2osxxx" path="res://src/ui/theme.tres" id="1_15q2y"]
+[ext_resource type="Script" uid="uid://d0qhvgualhiwk" path="res://src/start_screen/start_screen.gd" id="1_yk0mb"]
+[ext_resource type="PackedScene" uid="uid://dl8v2fu2m6iq5" path="res://src/systems/settings/settings_menu.tscn" id="4_1wdge"]
+
+[node name="StartScreen" type="TextureRect" unique_id=1789025817]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_15q2y")
+script = ExtResource("1_yk0mb")
+
+[node name="Buttons" type="VBoxContainer" parent="." unique_id=922063281]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -420.0
+offset_top = -117.5
+offset_right = -60.0
+offset_bottom = 117.5
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="StartButton" type="Button" parent="Buttons" unique_id=1324112190]
+custom_minimum_size = Vector2(420, 200)
+layout_mode = 2
+theme_override_font_sizes/font_size = 96
+text = "START"
+
+[node name="SettingsButton" type="Button" parent="Buttons" unique_id=933515076]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Settings"
+
+[node name="SettingsMenu" parent="." unique_id=1230211766 instance=ExtResource("4_1wdge")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+offset_left = 60.0
+offset_top = 60.0
+
+[connection signal="pressed" from="Buttons/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Buttons/SettingsButton" to="." method="_on_settings_button_pressed"]

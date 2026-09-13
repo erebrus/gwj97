@@ -1,0 +1,71 @@
+[gd_resource type="Theme" format=3 uid="uid://k0yx4w2osxxx"]
+
+[ext_resource type="Texture2D" uid="uid://cfxv02j5bdpc1" path="res://assets/gfx/ui/checkbox/checkbox_checked.png" id="1_r2kde"]
+[ext_resource type="Texture2D" uid="uid://bfafs574ou8f7" path="res://assets/gfx/ui/sliders/slider_area_highlight.png" id="1_r7xqo"]
+[ext_resource type="Texture2D" uid="uid://hfa6e0p0oind" path="res://assets/gfx/ui/sliders/slider_grabber_normal.png" id="1_ty3yj"]
+[ext_resource type="Texture2D" uid="uid://daxpxu6jaesju" path="res://assets/gfx/ui/checkbox/checkbox_unchecked.png" id="2_jc0sv"]
+[ext_resource type="Texture2D" uid="uid://bw2girkkhi45s" path="res://assets/gfx/ui/sliders/slider_area_filled.png" id="2_lf7dv"]
+[ext_resource type="Texture2D" uid="uid://pp4u141ndyrg" path="res://assets/gfx/ui/sliders/slider_grabber_disabled.png" id="2_o7re1"]
+[ext_resource type="Texture2D" uid="uid://3b6b1pq730jr" path="res://assets/gfx/ui/sliders/slider_area_normal.png" id="3_cwe5m"]
+[ext_resource type="Texture2D" uid="uid://dxnxycvgfbcw4" path="res://assets/gfx/ui/sliders/slider_grabber_highlight.png" id="3_r2kde"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ty3yj"]
+texture = ExtResource("1_r7xqo")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o7re1"]
+texture = ExtResource("2_lf7dv")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r2kde"]
+texture = ExtResource("3_cwe5m")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r2kde"]
+bg_color = Color(0.14767182, 0.14767179, 0.14767179, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6784314, 0.6784314, 0.6784314, 1)
+
+[resource]
+CheckBox/icons/checked = ExtResource("1_r2kde")
+CheckBox/icons/unchecked = ExtResource("2_jc0sv")
+HSlider/icons/grabber = ExtResource("1_ty3yj")
+HSlider/icons/grabber_disabled = ExtResource("2_o7re1")
+HSlider/icons/grabber_highlight = ExtResource("3_r2kde")
+HSlider/styles/grabber_area = SubResource("StyleBoxTexture_ty3yj")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxTexture_o7re1")
+HSlider/styles/slider = SubResource("StyleBoxTexture_r2kde")
+MarginContainerLarge/base_type = &"MarginContainer"
+MarginContainerLarge/constants/margin_bottom = 40
+MarginContainerLarge/constants/margin_left = 80
+MarginContainerLarge/constants/margin_right = 80
+MarginContainerLarge/constants/margin_top = 40
+MarginContainerMedium/base_type = &"MarginContainer"
+MarginContainerMedium/constants/margin_bottom = 8
+MarginContainerMedium/constants/margin_left = 16
+MarginContainerMedium/constants/margin_right = 16
+MarginContainerMedium/constants/margin_top = 8
+MarginContainerSmall/base_type = &"MarginContainer"
+MarginContainerSmall/constants/margin_bottom = 4
+MarginContainerSmall/constants/margin_left = 8
+MarginContainerSmall/constants/margin_right = 8
+MarginContainerSmall/constants/margin_top = 4
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_r2kde")

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://to3p8qv7p8yo"]
+
+[ext_resource type="Script" uid="uid://ch3o4f8xdrgp2" path="res://addons/sj/components/ui/settings/volume_slider.gd" id="1_42p7s"]
+
+[node name="VolumeSlider" type="HSlider" unique_id=1764895535]
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.1
+script = ExtResource("1_42p7s")

@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://cksg8e5vq41y8"]
+
+[ext_resource type="Script" uid="uid://pnabmv0ru7y6" path="res://src/common/debug/debug.gd" id="1_k56ks"]
+[ext_resource type="PackedScene" uid="uid://ctrd2c74fom4t" path="res://src/common/debug/debug_panel.tscn" id="2_j5q3p"]
+
+[node name="Debug" type="CanvasLayer"]
+process_mode = 3
+layer = 128
+script = ExtResource("1_k56ks")
+
+[node name="DebugPanel" parent="." instance=ExtResource("2_j5q3p")]
+unique_name_in_owner = true
+anchors_preset = 0
+anchor_left = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1030.0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="VersionContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Version" type="Label" parent="VersionContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 10
+text = "0.0.0"

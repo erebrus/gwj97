@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://ke438w5ne7cw"]
+
+[ext_resource type="Script" uid="uid://cgpkxa13hhnox" path="res://src/game.gd" id="1_kc8ui"]
+[ext_resource type="PackedScene" uid="uid://bdj8t5d1w0lh5" path="res://src/common/level_manager.tscn" id="2_bs6l1"]
+[ext_resource type="Resource" uid="uid://7vtuecoxqef2" path="res://src/start_state.tres" id="2_pk08u"]
+[ext_resource type="PackedScene" uid="uid://lqtollaovard" path="res://src/base_level.tscn" id="3_pk08u"]
+[ext_resource type="PackedScene" uid="uid://cdm2fhla0kigd" path="res://src/common/fade_panel.tscn" id="4_wqvko"]
+
+[sub_resource type="Resource" id="Resource_5q4o7"]
+metadata/__load_path__ = "res://src/tutorial_state.tres"
+
+[node name="Game" type="Node2D" unique_id=1712433023]
+script = ExtResource("1_kc8ui")
+start_state = ExtResource("2_pk08u")
+game_state = SubResource("Resource_5q4o7")
+
+[node name="LevelManager" parent="." unique_id=827960347 node_paths=PackedStringArray("level_container") instance=ExtResource("2_bs6l1")]
+levels = Array[PackedScene]([ExtResource("3_pk08u")])
+level_container = NodePath("../Level")
+
+[node name="Level" type="Node2D" parent="." unique_id=1708604477]
+
+[node name="HUDLayer" type="CanvasLayer" parent="." unique_id=10557319]
+
+[node name="OverlayLayer" type="CanvasLayer" parent="." unique_id=1990209073]
+layer = 5
+
+[node name="FadePanel" parent="OverlayLayer" unique_id=1603154315 instance=ExtResource("4_wqvko")]
+unique_name_in_owner = true
+metadata/_edit_lock_ = true
+
+[connection signal="game_completed" from="LevelManager" to="." method="_on_level_manager_game_completed"]
+[connection signal="level_ready" from="LevelManager" to="." method="_on_level_manager_level_ready"]
+[connection signal="level_unloaded" from="LevelManager" to="." method="_on_level_manager_level_unloaded"]

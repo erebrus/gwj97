@@ -1,0 +1,4 @@
+sqlalchemy>=2.0
+click>=8.1
+requests>=2.31
+pytest>=7.0
