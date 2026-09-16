@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://rumvotveqal5"]
+[gd_scene format=3 uid="uid://rumvotveqal5"]
 
 [ext_resource type="Script" uid="uid://dodm85vhrwagf" path="res://src/common/globals.gd" id="1_noqpm"]
 [ext_resource type="PackedScene" uid="uid://cegox3dcovjjg" path="res://src/common/feedback/feedback_manager.tscn" id="2_q26s1"]
@@ -19,37 +19,37 @@ stream_1/volume = -60.0
 stream_2/stream = ExtResource("3_gfpot")
 stream_2/volume = 0.0
 
-[node name="Globals" type="Node"]
+[node name="Globals" type="Node" unique_id=1581108287]
 process_mode = 3
 script = ExtResource("1_noqpm")
 
-[node name="FeedbackManager" parent="." instance=ExtResource("2_q26s1")]
+[node name="FeedbackManager" parent="." unique_id=828237892 instance=ExtResource("2_q26s1")]
 enabled = false
 
-[node name="MetricsManager" parent="." instance=ExtResource("3_i6p1b")]
+[node name="MetricsManager" parent="." unique_id=1762384852 instance=ExtResource("3_i6p1b")]
 
-[node name="MusicManager" type="Node" parent="."]
+[node name="MusicManager" type="Node" parent="." unique_id=1155181575]
 script = ExtResource("3_h14hn")
 
-[node name="game_music" type="AudioStreamPlayer" parent="MusicManager"]
+[node name="game_music" type="AudioStreamPlayer" parent="MusicManager" unique_id=1422883633]
 process_mode = 3
 stream = SubResource("AudioStreamSynchronized_q1nu8")
 bus = &"Music"
 
-[node name="menu_music" type="AudioStreamPlayer" parent="MusicManager"]
+[node name="menu_music" type="AudioStreamPlayer" parent="MusicManager" unique_id=2043284249]
 process_mode = 3
 stream = ExtResource("4_v6ulc")
 bus = &"Music"
 
-[node name="UiSfx" type="Node" parent="."]
+[node name="UiSfx" type="Node" parent="." unique_id=181774649]
 script = ExtResource("5_fmvy8")
 
-[node name="click_sfx" type="AudioStreamPlayer" parent="UiSfx"]
+[node name="click_sfx" type="AudioStreamPlayer" parent="UiSfx" unique_id=237009878]
 process_mode = 3
 stream = ExtResource("6_7sypx")
 bus = &"Sfx"
 
-[node name="hover_sfx" type="AudioStreamPlayer" parent="UiSfx"]
+[node name="hover_sfx" type="AudioStreamPlayer" parent="UiSfx" unique_id=571581425]
 process_mode = 3
 stream = ExtResource("5_kyxtr")
 bus = &"Sfx"

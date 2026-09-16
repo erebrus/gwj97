@@ -92,5 +92,9 @@ func generate_uuid_v4() -> String:
 	]
 
 
+static func force_angle_precision(angle: float, precision: float) -> float:
+	return precision * round(angle / precision)
+
+
 static func get_seconds_as_time(seconds:float)->String:
 	return "%02d:%02d" % [floor(seconds/60), int(seconds) % 60]

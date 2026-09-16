@@ -21,15 +21,12 @@ position = Vector2(640, 384)
 
 [node name="AsteroidA" parent="Asteroids" unique_id=874490926 instance=ExtResource("3_ujsc6")]
 position = Vector2(48, 112)
-collision_layer = 1
 
 [node name="AsteroidB" parent="Asteroids" unique_id=927420345 instance=ExtResource("4_ohl3f")]
 position = Vector2(256, 40)
-collision_layer = 1
 
 [node name="AsteroidC" parent="Asteroids" unique_id=1122160183 instance=ExtResource("5_l54d2")]
 position = Vector2(200, 136)
-collision_layer = 1
 
 [node name="Player" parent="." unique_id=126300614 instance=ExtResource("9_ujsc6")]
 position = Vector2(112, 48)

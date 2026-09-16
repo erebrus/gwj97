@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://uxnj4i0iv7oh"]
+
+[ext_resource type="Script" uid="uid://dkhf18o6n5ytv" path="res://src/systems/asteroids/cargo.gd" id="1_mgpur"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mgpur"]
+friction = 0.14
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_i7cnb"]
+size = Vector2(4, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i7cnb"]
+size = Vector2(4, 4)
+
+[node name="Cargo" type="RigidBody2D" unique_id=1502133110]
+collision_layer = 32
+collision_mask = 33
+physics_material_override = SubResource("PhysicsMaterial_mgpur")
+gravity_scale = 0.0
+linear_damp = 5.0
+script = ExtResource("1_mgpur")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2030830231]
+texture = SubResource("PlaceholderTexture2D_i7cnb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=970739078]
+shape = SubResource("RectangleShape2D_i7cnb")
