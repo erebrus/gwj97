@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://2s1r5gi0e132"]
+
+[ext_resource type="PackedScene" uid="uid://bwaucq274rap0" path="res://src/systems/station/room.tscn" id="1_hluaf"]
+[ext_resource type="Texture2D" uid="uid://csnshiqmilecn" path="res://assets/gfx/station/placeholder/turret.png" id="2_hluaf"]
+
+[node name="Room" unique_id=1243543416 instance=ExtResource("1_hluaf")]
+requirements = Dictionary[int, int]({
+0: 2
+})
+power = 2
+
+[node name="Sprite2D" parent="." index="0" unique_id=276615709]
+texture = ExtResource("2_hluaf")

@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://s34hx8xcy6v0"]
+
+[ext_resource type="PackedScene" uid="uid://bwaucq274rap0" path="res://src/systems/station/room.tscn" id="1_8fkum"]
+[ext_resource type="Texture2D" uid="uid://vf6bi1i0arui" path="res://assets/gfx/station/placeholder/reactor.png" id="2_egc62"]
+
+[node name="Reactor" unique_id=1243543416 instance=ExtResource("1_8fkum")]
+requirements = Dictionary[int, int]({
+0: 12
+})
+power = 10
+
+[node name="Sprite2D" parent="." index="0" unique_id=276615709]
+position = Vector2(32, 16)
+texture = ExtResource("2_egc62")
+
+[node name="Tiles" parent="." index="1" unique_id=740900682]
+tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)

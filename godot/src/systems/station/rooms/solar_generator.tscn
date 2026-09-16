@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dl4wcbqooexg3"]
+
+[ext_resource type="PackedScene" uid="uid://bwaucq274rap0" path="res://src/systems/station/room.tscn" id="1_ynt2x"]
+[ext_resource type="Texture2D" uid="uid://cc678ie2qdbps" path="res://assets/gfx/station/placeholder/solar_generator.png" id="2_7jf7m"]
+
+[node name="Room" unique_id=1243543416 instance=ExtResource("1_ynt2x")]
+requirements = Dictionary[int, int]({
+0: 2
+})
+power = 5
+
+[node name="Sprite2D" parent="." index="0" unique_id=276615709]
+texture = ExtResource("2_7jf7m")

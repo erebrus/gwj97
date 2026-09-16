@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Game Template"
 config/version="0.0.0"
-run/main_scene="uid://lqtollaovard"
+run/main_scene="uid://ke438w5ne7cw"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 

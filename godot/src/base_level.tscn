@@ -4,10 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://ct0x1qn140hns" path="res://src/systems/station/grid/station_grid.tscn" id="2_2xr1i"]
 [ext_resource type="PackedScene" uid="uid://colgh87172chk" path="res://src/systems/station/placement/room_button.tscn" id="3_82ww6"]
 [ext_resource type="PackedScene" uid="uid://cr1k77e4uh33v" path="res://src/systems/asteroids/instances/asteroid_a.tscn" id="3_ujsc6"]
-[ext_resource type="PackedScene" uid="uid://07dok1yb8mp3" path="res://src/systems/station/rooms/room_1.tscn" id="4_0xb2g"]
 [ext_resource type="PackedScene" uid="uid://d3p0ehflf68eg" path="res://src/systems/asteroids/instances/asteroid_b.tscn" id="4_ohl3f"]
 [ext_resource type="PackedScene" uid="uid://by4ij8hnxj1ym" path="res://src/systems/asteroids/instances/asteroid_c.tscn" id="5_l54d2"]
-[ext_resource type="PackedScene" uid="uid://c4xmr8fgcygi5" path="res://src/systems/station/rooms/room_2.tscn" id="5_vmobq"]
+[ext_resource type="PackedScene" uid="uid://dl4wcbqooexg3" path="res://src/systems/station/rooms/solar_generator.tscn" id="8_ujsc6"]
+[ext_resource type="PackedScene" uid="uid://s34hx8xcy6v0" path="res://src/systems/station/rooms/reactor.tscn" id="9_ohl3f"]
 [ext_resource type="PackedScene" uid="uid://b2ge6oaudwi0r" path="res://src/systems/player_ship/player.tscn" id="9_ujsc6"]
 
 [node name="BaseLevel" type="Node2D" unique_id=613843204]
@@ -46,10 +46,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="RoomButton" parent="RoomCatalog/RoomButtons" unique_id=2120654148 instance=ExtResource("3_82ww6")]
+[node name="SolarGenerator" parent="RoomCatalog/RoomButtons" unique_id=2120654148 instance=ExtResource("3_82ww6")]
 layout_mode = 2
-room_scene = ExtResource("4_0xb2g")
+room_scene = ExtResource("8_ujsc6")
 
-[node name="RoomButton2" parent="RoomCatalog/RoomButtons" unique_id=1717729275 instance=ExtResource("3_82ww6")]
+[node name="Reactor" parent="RoomCatalog/RoomButtons" unique_id=1717729275 instance=ExtResource("3_82ww6")]
 layout_mode = 2
-room_scene = ExtResource("5_vmobq")
+room_scene = ExtResource("9_ohl3f")

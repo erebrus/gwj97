@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://1778u0k6j16k"]
+
+[ext_resource type="PackedScene" uid="uid://bwaucq274rap0" path="res://src/systems/station/room.tscn" id="1_kdo25"]
+[ext_resource type="Texture2D" uid="uid://dxqbl82e5k1su" path="res://assets/gfx/station/placeholder/big_reactor.png" id="2_kdo25"]
+
+[node name="BigReactor" unique_id=1243543416 instance=ExtResource("1_kdo25")]
+power = 25
+
+[node name="Sprite2D" parent="." index="0" unique_id=276615709]
+position = Vector2(32, 32)
+texture = ExtResource("2_kdo25")
+
+[node name="Tiles" parent="." index="1" unique_id=740900682]
+tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0)

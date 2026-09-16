@@ -1,5 +1,7 @@
 class_name StationRoom extends Area2D
 
+@export var requirements:Dictionary[Types.Mineral, int]
+@export var power:int
 var texture: Texture2D:
 	get:
 		return %Sprite2D.texture

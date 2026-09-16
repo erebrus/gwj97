@@ -1,0 +1,14 @@
+[gd_scene format=4 uid="uid://ew4ms4wlrbex"]
+
+[ext_resource type="PackedScene" uid="uid://bwaucq274rap0" path="res://src/systems/station/room.tscn" id="1_2usyi"]
+[ext_resource type="Texture2D" uid="uid://doevxut4rj63n" path="res://assets/gfx/station/placeholder/docking.png" id="2_2usyi"]
+
+[node name="EthReactor" unique_id=1243543416 instance=ExtResource("1_2usyi")]
+power = -10
+
+[node name="Sprite2D" parent="." index="0" unique_id=276615709]
+position = Vector2(32, 48)
+texture = ExtResource("2_2usyi")
+
+[node name="Tiles" parent="." index="1" unique_id=740900682]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAIAAAAAAAAAAAA=")

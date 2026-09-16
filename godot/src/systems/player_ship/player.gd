@@ -113,6 +113,9 @@ func _stop_thrust():
 	animation_player.play("thrust_stop") 
 	
 func _input(event):
+	if Globals.game.control != Game.MouseControl.Ship:
+		return
+		
 	if event is InputEventMouseMotion:
 		_set_target_angle()
 		return

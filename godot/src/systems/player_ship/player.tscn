@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://c3xnln65xorhf" path="res://assets/sfx/player/placeholder/trust_end.wav" id="4_a0wdr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ujsc6"]
-friction = 0.16
+friction = 0.4
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_f80af"]
 load_path = "res://.godot/imported/character.png-68664cdc53bfb670638ffdb8d9412002.ctex"

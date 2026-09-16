@@ -1,11 +1,15 @@
 class_name Game extends Node2D
 
+enum MouseControl {Ship, Station}
+
 @export var start_state:GameState
 @export var game_state:GameState
 
 
 @onready var level_manager: LevelManager = $LevelManager
 @onready var fade_panel: FadePanel = %FadePanel
+
+var control:MouseControl = MouseControl.Ship
 
 func _ready():
 	Events.level_ended.connect(_on_level_ended)
