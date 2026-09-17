@@ -4,10 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://dxqbl82e5k1su" path="res://assets/gfx/station/placeholder/big_reactor.png" id="2_kdo25"]
 
 [node name="BigReactor" unique_id=1243543416 instance=ExtResource("1_kdo25")]
-power = 25
 
 [node name="Sprite2D" parent="." index="0" unique_id=276615709]
-position = Vector2(32, 32)
+position = Vector2(64, 64)
 texture = ExtResource("2_kdo25")
 
 [node name="Tiles" parent="." index="1" unique_id=740900682]
