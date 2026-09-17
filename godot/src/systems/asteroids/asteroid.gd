@@ -5,7 +5,7 @@ var angular_speed_interval:Vector2 = Vector2(0.1,.5)
 @export 
 var structure:float = 100
 @export 
-var type := Types.Mineral.ORE
+var type := Types.Resources.ORE
 @export
 var mineral_count := 5
 

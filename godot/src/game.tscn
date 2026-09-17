@@ -22,6 +22,29 @@ level_container = NodePath("../Level")
 
 [node name="HUDLayer" type="CanvasLayer" parent="." unique_id=10557319]
 
+[node name="HBoxContainer" type="HBoxContainer" parent="HUDLayer" unique_id=933696937]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_constants/separation = 40
+alignment = 2
+
+[node name="PowerLabel" type="Label" parent="HUDLayer/HBoxContainer" unique_id=1931315043]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Power: 5 / 10"
+
+[node name="OreLabel" type="Label" parent="HUDLayer/HBoxContainer" unique_id=1355033895]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Ore: 5"
+
+[node name="EthLabel" type="Label" parent="HUDLayer/HBoxContainer" unique_id=471866777]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Etherium: 5"
+
 [node name="OverlayLayer" type="CanvasLayer" parent="." unique_id=1990209073]
 layer = 5
 

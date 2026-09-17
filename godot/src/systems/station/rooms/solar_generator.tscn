@@ -7,7 +7,9 @@
 requirements = Dictionary[int, int]({
 0: 2
 })
-power = 5
+production_output = Dictionary[int, int]({
+2: 5
+})
 
 [node name="Sprite2D" parent="." index="0" unique_id=276615709]
 texture = ExtResource("2_7jf7m")

@@ -6,6 +6,7 @@ class_name BaseLevel extends Node
 var game_state:GameState
 
 var placeholder: Placeholder
+@onready var station: Station = $Station
 
 @onready var grid: StationGrid = %StationGrid
 
@@ -28,6 +29,6 @@ func _on_room_button_pressed(room: StationRoom) -> void:
 	add_child(placeholder)
 
 func _on_room_placed(room: StationRoom) -> void:
-	room.reparent(self)
+	station.add_room(room)
 	if is_instance_valid(placeholder):
 		placeholder.queue_free()

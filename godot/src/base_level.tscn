@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b4ytavk038x8p" path="res://src/base_level.gd" id="1_mnxva"]
 [ext_resource type="PackedScene" uid="uid://ct0x1qn140hns" path="res://src/systems/station/grid/station_grid.tscn" id="2_2xr1i"]
+[ext_resource type="PackedScene" uid="uid://dyvtawur8hwpc" path="res://src/systems/station/station.tscn" id="2_ohl3f"]
 [ext_resource type="PackedScene" uid="uid://colgh87172chk" path="res://src/systems/station/placement/room_button.tscn" id="3_82ww6"]
 [ext_resource type="PackedScene" uid="uid://cr1k77e4uh33v" path="res://src/systems/asteroids/instances/asteroid_a.tscn" id="3_ujsc6"]
 [ext_resource type="PackedScene" uid="uid://d3p0ehflf68eg" path="res://src/systems/asteroids/instances/asteroid_b.tscn" id="4_ohl3f"]
@@ -12,6 +13,8 @@
 
 [node name="BaseLevel" type="Node2D" unique_id=613843204]
 script = ExtResource("1_mnxva")
+
+[node name="Station" parent="." unique_id=1288710059 instance=ExtResource("2_ohl3f")]
 
 [node name="StationGrid" parent="." unique_id=1502046342 instance=ExtResource("2_2xr1i")]
 unique_name_in_owner = true

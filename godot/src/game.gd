@@ -9,6 +9,12 @@ enum MouseControl {Ship, Station}
 @onready var level_manager: LevelManager = $LevelManager
 @onready var fade_panel: FadePanel = %FadePanel
 
+@onready var power_label: Label = %PowerLabel
+@onready var ore_label: Label = %OreLabel
+@onready var eth_label: Label = %EthLabel
+
+
+
 var control:MouseControl = MouseControl.Ship
 
 func _ready():
@@ -18,7 +24,13 @@ func _ready():
 	level_manager.load_first_level()
 	Debug.set_levels(level_manager.levels)
 	Globals.game = self
-	
+	Events.control_state_changed.connect(_on_control_state_changed)
+	Events.request_hud_update.connect(_on_request_hud_update)
+
+func _on_control_state_changed(control_type:MouseControl):
+	control = control_type
+	GSLogger.info("Control type changed to %d " % control)
+
 
 func _on_level_ended():
 	fade_panel.fade_out()
@@ -48,4 +60,9 @@ func _on_level_manager_level_ready() -> void:
 			game_state = start_state.duplicate()
 		get_level().set_state(game_state)
 	
+
+func _on_request_hud_update():
+	power_label.text="Power: %d / %d" % [get_level().station.get_total_power_consumption(), get_level().station.get_total_power_production()]
+	ore_label.text="Ore: %d" % [get_level().station.resources[Types.Resources.ORE]]
+	eth_label.text="Etherium: %d" % [get_level().station.resources[Types.Resources.ETHERIUM]]
 	
