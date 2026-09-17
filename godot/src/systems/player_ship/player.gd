@@ -82,18 +82,20 @@ func collect_cargo():
 				c.attract_to(global_position, attaction_power)
 			
 func has_fuel()->bool:
-	return fuel > 0
+	return true
+	#return fuel > 0
 	
 func _rotate_sprite() -> void:
-	var discrete_rotation = GameUtils.force_angle_precision(rotation - PI / 4 - PI / 8, PI/2)
-	var discrete_rotation_half = GameUtils.force_angle_precision(rotation - PI / 2, PI/4)
-	
-	var frame_num = posmod(discrete_rotation_half / (PI / 4), 2)
-	sprite.frame = frame_num * 2
-	
-	sprite.rotation = -rotation + discrete_rotation
-#	crush_sprite.rotation = sprite.rotation + deg_to_rad(135) TODO restore crush animation
-	rotation_guide.rotation = -rotation
+	pass
+	#var discrete_rotation = GameUtils.force_angle_precision(rotation - PI / 4 - PI / 8, PI/2)
+	#var discrete_rotation_half = GameUtils.force_angle_precision(rotation - PI / 2, PI/4)
+	#
+	#var frame_num = posmod(discrete_rotation_half / (PI / 4), 2)
+	#sprite.frame = frame_num * 2
+	#
+	#sprite.rotation = -rotation + discrete_rotation
+##	crush_sprite.rotation = sprite.rotation + deg_to_rad(135) TODO restore crush animation
+	#rotation_guide.rotation = -rotation
 	
 
 func _set_target_angle():
