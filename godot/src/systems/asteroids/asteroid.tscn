@@ -2,13 +2,72 @@
 
 [ext_resource type="Script" uid="uid://oidjccy8ifbv" path="res://src/systems/asteroids/asteroid.gd" id="1_g1ntp"]
 [ext_resource type="Texture2D" uid="uid://buhtqhr28y53u" path="res://assets/gfx/map/asteroids/asteroid1/asteroid1.png" id="2_g1ntp"]
+[ext_resource type="Texture2D" uid="uid://b38117cgee56q" path="res://assets/gfx/map/asteroids/asteroid1/crack1.png" id="3_18mke"]
+[ext_resource type="Texture2D" uid="uid://nh47blyqv0t4" path="res://assets/gfx/map/asteroids/asteroid1/crack2.png" id="4_jy2ub"]
+[ext_resource type="Texture2D" uid="uid://b1k5pnintgjxe" path="res://assets/gfx/map/asteroids/asteroid1/crack3.png" id="5_p3431"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_y6u74"]
 friction = 0.0
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_i7cnb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_18mke")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_jy2ub")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_p3431")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i7cnb"]
 radius = 80.00689
 height = 395.53433
+
+[sub_resource type="Animation" id="Animation_1y8a4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BrokenSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_onhs6"]
+resource_name = "flash"
+length = 0.5
+loop_mode = 2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BrokenSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.033333335, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1.2696835, 2.454227, 2.3609557, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ajy3r"]
+_data = {
+&"RESET": SubResource("Animation_1y8a4"),
+&"flash": SubResource("Animation_onhs6")
+}
 
 [node name="Asteroid" type="RigidBody2D" unique_id=874490926]
 collision_layer = 17
@@ -20,7 +79,14 @@ script = ExtResource("1_g1ntp")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=856023534]
 texture = ExtResource("2_g1ntp")
 
+[node name="BrokenSprite" type="AnimatedSprite2D" parent="." unique_id=1473793723]
+sprite_frames = SubResource("SpriteFrames_i7cnb")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=740251918]
+visible = false
 position = Vector2(0, -10)
 rotation = 1.3957374
 shape = SubResource("CapsuleShape2D_i7cnb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1919126292]
+libraries/ = SubResource("AnimationLibrary_ajy3r")
