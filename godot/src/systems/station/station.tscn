@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dyvtawur8hwpc"]
+
+[ext_resource type="Script" uid="uid://yxb65dvm0c21" path="res://src/systems/station/station.gd" id="1_5p176"]
+
+[node name="Station" type="Node2D" unique_id=1288710059]
+script = ExtResource("1_5p176")
+
+[node name="Rooms" type="Node2D" parent="." unique_id=468113172]
+
+[node name="Timer" type="Timer" parent="." unique_id=1743435862]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

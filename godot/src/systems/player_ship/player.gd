@@ -31,9 +31,9 @@ var fuel = max_fuel
 var laser:Laser
 
 var target_cargo:Array[Cargo]
-var cargo:Dictionary[Types.Mineral, int] = {
-	Types.Mineral.ORE: 0,
-	Types.Mineral.ETHERIUM : 0
+var cargo:Dictionary[Types.Resources, int] = {
+	Types.Resources.ORE: 0,
+	Types.Resources.ETHERIUM : 0
 }
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -55,6 +55,8 @@ func _on_thrust_requested():
 	
 
 func _physics_process(_delta):
+	if Globals.game.control != Game.MouseControl.Ship:
+		return
 	if angle_difference(rotation, target_angle) < PI/60:
 		rotation = target_angle
 	else:
@@ -182,8 +184,8 @@ func is_cargo_full()->bool:
 func unload():
 	#TODO unload
 	cargo = {
-		Types.Mineral.ORE: 0,
-		Types.Mineral.ETHERIUM : 0
+		Types.Resources.ORE: 0,
+		Types.Resources.ETHERIUM : 0
 	}
 	collection_area.monitoring = true
 	
