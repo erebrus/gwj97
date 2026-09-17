@@ -1,4 +1,4 @@
-class_name BaseLevel extends Node
+class_name BaseLevel extends Node2D
 
 @export var override_game_state: GameState
 

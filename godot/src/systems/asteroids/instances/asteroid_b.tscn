@@ -2,6 +2,26 @@
 
 [ext_resource type="PackedScene" uid="uid://6eidtajo6mqr" path="res://src/systems/asteroids/asteroid.tscn" id="1_hb5gb"]
 [ext_resource type="Texture2D" uid="uid://dawrnr2j68pxu" path="res://assets/gfx/map/asteroids/asteroid2/asteroid2.png" id="2_f3a72"]
+[ext_resource type="Texture2D" uid="uid://cpps8qo6gd174" path="res://assets/gfx/map/asteroids/asteroid2/crack1.png" id="3_6sd81"]
+[ext_resource type="Texture2D" uid="uid://dja3bs7388bu3" path="res://assets/gfx/map/asteroids/asteroid2/crack2.png" id="4_yrkdf"]
+[ext_resource type="Texture2D" uid="uid://cijhmph8c824n" path="res://assets/gfx/map/asteroids/asteroid2/crack3.png" id="5_kkqpp"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m2fog"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_6sd81")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_yrkdf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_kkqpp")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhmu4"]
 radius = 100.197655
@@ -12,7 +32,11 @@ height = 294.08752
 [node name="Sprite2D" parent="." index="0" unique_id=856023534]
 texture = ExtResource("2_f3a72")
 
-[node name="CollisionShape2D" parent="." index="1" unique_id=740251918]
+[node name="BrokenSprite" parent="." index="1" unique_id=1473793723]
+visible = false
+sprite_frames = SubResource("SpriteFrames_m2fog")
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=740251918]
 position = Vector2(-11, -11.000001)
 rotation = 1.610043
 shape = SubResource("CapsuleShape2D_qhmu4")
