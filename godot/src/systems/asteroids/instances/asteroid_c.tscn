@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://by4ij8hnxj1ym"]
 
 [ext_resource type="PackedScene" uid="uid://6eidtajo6mqr" path="res://src/systems/asteroids/asteroid.tscn" id="1_lnh8m"]
-[ext_resource type="Texture2D" uid="uid://cnybmi38f74fh" path="res://assets/gfx/map/asteroids/placeholder/asteroid3.png" id="2_lnh8m"]
+[ext_resource type="Texture2D" uid="uid://dbt5kicrw50i5" path="res://assets/gfx/map/asteroids/asteroid3/asteroid3.png" id="2_lnh8m"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_om6w5"]
-radius = 4.164692
-height = 23.291065
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hd51g"]
+radius = 84.78396
+height = 272.26123
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ci3fx"]
-radius = 5.814814
-height = 18.770561
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i7cnb"]
+radius = 48.86699
+height = 250.48994
 
 [node name="AsteroidC" unique_id=874490926 instance=ExtResource("1_lnh8m")]
 
@@ -18,11 +18,11 @@ position = Vector2(-3, 0)
 texture = ExtResource("2_lnh8m")
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=740251918]
-position = Vector2(-4, -4)
-rotation = 0.5934119
-shape = SubResource("CapsuleShape2D_om6w5")
+position = Vector2(-19, 7)
+rotation = 1.3886094
+shape = SubResource("CapsuleShape2D_hd51g")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="." index="2" unique_id=900962045]
-position = Vector2(-3, 1)
-rotation = 0.66025203
-shape = SubResource("CapsuleShape2D_ci3fx")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." index="2" unique_id=1557607076]
+position = Vector2(14.999998, -10.000002)
+rotation = -0.67370313
+shape = SubResource("CapsuleShape2D_i7cnb")

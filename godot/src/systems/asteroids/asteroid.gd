@@ -22,7 +22,7 @@ func take_damage(damage:float):
 func destroy():
 	for i in range(mineral_count):
 		var c:Cargo = Cargo.create(type)
-		c.global_position = Vector2(global_position.x + randf_range(-15,15), global_position.y + randf_range(-15,15))
-		c.linear_velocity = Vector2(randf_range(-2,2),randf_range(-2,2) )
+		c.global_position = Vector2(global_position.x + randf_range(-100,100), global_position.y + randf_range(-100,100))
+		c.linear_velocity = (Vector2.RIGHT * randf_range(50,150)).rotated(randf()*2*PI) # Vector2(randf_range(-15,15),randf_range(-15,15) )
 		get_parent().add_child(c)
 	queue_free()

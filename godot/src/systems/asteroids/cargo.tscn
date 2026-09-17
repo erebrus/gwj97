@@ -6,17 +6,17 @@
 friction = 0.14
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_i7cnb"]
-size = Vector2(4, 4)
+size = Vector2(24, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i7cnb"]
-size = Vector2(4, 4)
+size = Vector2(24, 24)
 
 [node name="Cargo" type="RigidBody2D" unique_id=1502133110]
 collision_layer = 32
 collision_mask = 33
 physics_material_override = SubResource("PhysicsMaterial_mgpur")
 gravity_scale = 0.0
-linear_damp = 5.0
+linear_damp = 0.5
 script = ExtResource("1_mgpur")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2030830231]

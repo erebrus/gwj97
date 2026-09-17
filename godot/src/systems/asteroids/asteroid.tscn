@@ -1,13 +1,14 @@
 [gd_scene format=3 uid="uid://6eidtajo6mqr"]
 
-[ext_resource type="Texture2D" uid="uid://igbdjpiotknt" path="res://assets/gfx/map/asteroids/placeholder/asteroid1.png" id="1_c7tj1"]
 [ext_resource type="Script" uid="uid://oidjccy8ifbv" path="res://src/systems/asteroids/asteroid.gd" id="1_g1ntp"]
+[ext_resource type="Texture2D" uid="uid://buhtqhr28y53u" path="res://assets/gfx/map/asteroids/asteroid1/asteroid1.png" id="2_g1ntp"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_y6u74"]
 friction = 0.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i7cnb"]
-radius = 9.0
+radius = 80.00689
+height = 395.53433
 
 [node name="Asteroid" type="RigidBody2D" unique_id=874490926]
 collision_layer = 17
@@ -17,9 +18,9 @@ gravity_scale = 0.0
 script = ExtResource("1_g1ntp")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=856023534]
-texture = ExtResource("1_c7tj1")
+texture = ExtResource("2_g1ntp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=740251918]
-position = Vector2(2, 0)
-rotation = 0.34906584
+position = Vector2(0, -10)
+rotation = 1.3957374
 shape = SubResource("CapsuleShape2D_i7cnb")

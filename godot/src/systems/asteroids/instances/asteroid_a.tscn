@@ -2,17 +2,4 @@
 
 [ext_resource type="PackedScene" uid="uid://6eidtajo6mqr" path="res://src/systems/asteroids/asteroid.tscn" id="1_qhmu4"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhmu4"]
-radius = 9.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_i7cnb"]
-radius = 8.062258
-
 [node name="AsteroidA" unique_id=874490926 instance=ExtResource("1_qhmu4")]
-
-[node name="CollisionShape2D" parent="." index="1" unique_id=740251918]
-shape = SubResource("CapsuleShape2D_qhmu4")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="." index="2" unique_id=900962045]
-position = Vector2(-4, -8)
-shape = SubResource("CircleShape2D_i7cnb")
