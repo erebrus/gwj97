@@ -10,15 +10,22 @@
 [ext_resource type="PackedScene" uid="uid://dl4wcbqooexg3" path="res://src/systems/station/rooms/solar_generator.tscn" id="8_ujsc6"]
 [ext_resource type="PackedScene" uid="uid://s34hx8xcy6v0" path="res://src/systems/station/rooms/reactor.tscn" id="9_ohl3f"]
 [ext_resource type="PackedScene" uid="uid://b2ge6oaudwi0r" path="res://src/systems/player_ship/player.tscn" id="9_ujsc6"]
+[ext_resource type="PackedScene" uid="uid://1778u0k6j16k" path="res://src/systems/station/rooms/big_reactor.tscn" id="11_m2fog"]
+[ext_resource type="PackedScene" uid="uid://ew4ms4wlrbex" path="res://src/systems/station/rooms/dock.tscn" id="12_a04hb"]
 
 [node name="BaseLevel" type="Node2D" unique_id=613843204]
 script = ExtResource("1_mnxva")
 
 [node name="Station" parent="." unique_id=1288710059 instance=ExtResource("2_ohl3f")]
+metadata/_edit_lock_ = true
+
+[node name="Dock" parent="Station" unique_id=1243543416 instance=ExtResource("12_a04hb")]
+position = Vector2(512, 128)
 
 [node name="StationGrid" parent="." unique_id=1502046342 instance=ExtResource("2_2xr1i")]
 unique_name_in_owner = true
 position = Vector2(640, 384)
+metadata/_edit_lock_ = true
 
 [node name="Asteroids" type="Node2D" parent="." unique_id=888332613]
 
@@ -36,6 +43,12 @@ collision_layer = 1
 
 [node name="Player" parent="." unique_id=126300614 instance=ExtResource("9_ujsc6")]
 position = Vector2(264, 264)
+impulse_force = 10000.0
+backup_impulse_force = 500.0
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1596738547]
+limit_enabled = false
+position_smoothing_enabled = true
 
 [node name="RoomCatalog" type="CanvasLayer" parent="." unique_id=332297952]
 
@@ -55,3 +68,11 @@ room_scene = ExtResource("8_ujsc6")
 [node name="Reactor" parent="RoomCatalog/RoomButtons" unique_id=1717729275 instance=ExtResource("3_82ww6")]
 layout_mode = 2
 room_scene = ExtResource("9_ohl3f")
+
+[node name="BigReactor" parent="RoomCatalog/RoomButtons" unique_id=1335469626 instance=ExtResource("3_82ww6")]
+layout_mode = 2
+room_scene = ExtResource("11_m2fog")
+
+[node name="Dock" parent="RoomCatalog/RoomButtons" unique_id=1035414076 instance=ExtResource("3_82ww6")]
+layout_mode = 2
+room_scene = ExtResource("12_a04hb")

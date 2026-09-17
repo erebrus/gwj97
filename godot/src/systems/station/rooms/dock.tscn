@@ -2,13 +2,43 @@
 
 [ext_resource type="PackedScene" uid="uid://bwaucq274rap0" path="res://src/systems/station/room.tscn" id="1_2usyi"]
 [ext_resource type="Texture2D" uid="uid://doevxut4rj63n" path="res://assets/gfx/station/placeholder/docking.png" id="2_2usyi"]
+[ext_resource type="Script" uid="uid://dcti426klfdap" path="res://src/systems/station/rooms/dock.gd" id="2_54tkk"]
 
-[node name="EthReactor" unique_id=1243543416 instance=ExtResource("1_2usyi")]
-power = -10
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xwukc"]
+size = Vector2(128, 192)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i7cnb"]
+size = Vector2(64, 32)
+
+[node name="Dock" unique_id=1243543416 instance=ExtResource("1_2usyi")]
+script = ExtResource("2_54tkk")
 
 [node name="Sprite2D" parent="." index="0" unique_id=276615709]
-position = Vector2(32, 48)
+position = Vector2(64, 96)
 texture = ExtResource("2_2usyi")
 
 [node name="Tiles" parent="." index="1" unique_id=740900682]
 tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAIAAAAAAAAAAAA=")
+
+[node name="Area2D" parent="." index="2" unique_id=280593222]
+visible = false
+
+[node name="CollisionShape2D" parent="Area2D" index="0" unique_id=1301403298]
+position = Vector2(64, 96)
+shape = SubResource("RectangleShape2D_xwukc")
+
+[node name="DockArea" type="Area2D" parent="." index="3" unique_id=1378352787]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DockArea" index="0" unique_id=1638619312]
+position = Vector2(64, 176)
+shape = SubResource("RectangleShape2D_i7cnb")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="4" unique_id=1486344427]
+polygon = PackedVector2Array(0, 0, 0, 0, 0, 160, 32, 160, 32, 128, 96, 128, 96, 160, 128, 160, 128, 0)
+
+[node name="DockPoint" type="Node2D" parent="." index="5" unique_id=556305285]
+position = Vector2(64, 176)
+
+[connection signal="body_entered" from="DockArea" to="." method="_on_dock_area_body_entered"]
+[connection signal="body_exited" from="DockArea" to="." method="_on_dock_area_body_exited"]

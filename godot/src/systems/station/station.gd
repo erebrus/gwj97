@@ -12,7 +12,11 @@ var resources:Dictionary[Types.Resources, int] = {
 
 func _ready() -> void:
 	Events.unsuccessful_production.connect(func(r:StationRoom): GSLogger.info("%s can't produce. Missing requirements." % [r.name]))
- 
+	for child in get_children():
+		if child is StationRoom:
+			add_room(child as StationRoom)
+		
+		
 func add_room(room: StationRoom):
 	room.reparent(rooms)
 	room.station = self

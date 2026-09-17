@@ -27,7 +27,22 @@ var fuel = max_fuel
 
 @onready var collection_area: Area2D = $CollectionArea
 
+var autopilot:bool :
+	set(_v):
+		autopilot = _v
+		if autopilot:
+			if thrust_on:
+				_stop_thrust()
+			linear_velocity = Vector2.ZERO
+			angular_velocity = 0
+			freeze_mode = RigidBody2D.FREEZE_MODE_KINEMATIC
+			freeze = true
+			Events.control_state_changed.emit(Game.MouseControl.Station)
 
+		else:
+			freeze = false
+			Events.control_state_changed.emit(Game.MouseControl.Ship)
+			
 var laser:Laser
 
 var target_cargo:Array[Cargo]
@@ -53,14 +68,19 @@ func _on_thrust_stopped():
 func _on_thrust_requested():
 	thrust_on = true
 	
-
+func unload_cargo(station:Station):
+	if not cargo.is_empty():
+		station.add_resources(cargo)
+		cargo.clear()
+		GSLogger.info("Unloaded cargo")
+		
 func _physics_process(_delta):
 	if Globals.game.control != Game.MouseControl.Ship:
 		return
 	if angle_difference(rotation, target_angle) < PI/60:
 		rotation = target_angle
 	else:
-		rotation=lerp_angle(rotation, target_angle, .8)
+		rotation=lerp_angle(rotation, target_angle, .05)
 	if thrust_on:
 		var impulse = Vector2.RIGHT.rotated(rotation)*-(impulse_force if has_fuel() else backup_impulse_force)
 		apply_force(impulse)
@@ -192,7 +212,8 @@ func unload():
 	collection_area.monitoring = true
 	
 
-
+func get_speed()->float:
+	return linear_velocity.length()
 
 func _on_attraction_area_body_entered(body: Node2D) -> void:
 	if body is Cargo and not body in target_cargo:

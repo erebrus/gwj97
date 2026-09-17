@@ -21,7 +21,7 @@ var center: Vector2i:
 
 func _ready() -> void:
 	_setup_collision()
-
+	
 func _setup_collision() -> void:
 	var tiles: TileMapLayer = %Tiles
 	tile_size= tiles.tile_set.tile_size
