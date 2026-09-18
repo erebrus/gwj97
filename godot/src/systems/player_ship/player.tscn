@@ -196,7 +196,6 @@ linear_damp_mode = 1
 linear_damp = 1.0
 script = ExtResource("1_8b0mp")
 impulse_force = 50000.0
-laser_range = 300.0
 attraction_range = 128.0
 attaction_power = 300.0
 

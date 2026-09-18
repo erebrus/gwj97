@@ -5,7 +5,7 @@ class_name Player extends RigidBody2D
 @export var fuel_consumption = 1
 @export var max_fuel = 100
 @export var laser_power:float = 1
-@export var laser_range:float = 100
+@export var laser_range:float = 300
 @export var attraction_range:float = 50
 @export var attaction_power:float = 50.0
 @export var max_cargo:=4
@@ -95,9 +95,7 @@ func _physics_process(_delta):
 		else:
 			GSLogger.trace("Out of fuel.")
 	if is_instance_valid(laser):
-			var laser_len = min((get_global_mouse_position() - global_position).length(), laser_range)			
-			Events.laser_position_updated.emit(global_position, 
-				global_position + Vector2.LEFT.rotated(rotation) * laser_len)
+			_do_laser()
 
 	_rotate_sprite()
 	collect_cargo()
@@ -163,16 +161,18 @@ func _input(event):
 			else:
 				_stop_laser()
 
-
+func _do_laser():
+	var vec := (get_global_mouse_position() - global_position). normalized()*(laser_range)
+	Events.laser_position_updated.emit(global_position, global_position + vec)
+	laser.visible = true
+	
 func _shoot_laser():
 	if not laser:
 		laser = Laser.create(laser_power)
 		laser.global_position = muzzle.global_position
 		get_parent().add_child(laser)
+	_do_laser()
 
-	var vec := (get_global_mouse_position() - global_position).limit_length(laser_range)
-	Events.laser_position_updated.emit(global_position, global_position + vec)
-	laser.visible = true
 
 func _stop_laser():
 	Events.laser_cancelled.emit()
