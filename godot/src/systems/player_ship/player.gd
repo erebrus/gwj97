@@ -170,7 +170,7 @@ func _do_laser():
 	apply_force(impulse)
 func _shoot_laser():
 	if not laser:
-		laser = Laser.create(laser_power)
+		laser = Laser.create(laser_power, laser_range)
 		laser.global_position = muzzle.global_position
 		get_parent().add_child(laser)
 	_do_laser()

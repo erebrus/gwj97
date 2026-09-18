@@ -37,8 +37,14 @@ metadata/_edit_lock_ = true
 
 [node name="Player" parent="." unique_id=126300614 instance=ExtResource("9_ujsc6")]
 position = Vector2(360, 312)
+impulse_force = null
 backup_impulse_force = 500.0
+fuel_consumption = null
+max_fuel = null
+laser_power = null
 laser_range = 500.0
+laser_thrust = null
+max_cargo = null
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1596738547]
 limit_enabled = false
@@ -787,15 +793,20 @@ navigation_polygon = SubResource("NavigationPolygon_a04hb")
 
 [node name="Alien1" parent="NavigationRegion2D/aliens" unique_id=1045095359 instance=ExtResource("14_ofrd7")]
 position = Vector2(816, 24)
+enabled = false
 
 [node name="Alien2" parent="NavigationRegion2D/aliens" unique_id=1995628810 instance=ExtResource("14_ofrd7")]
 position = Vector2(296, -128)
+enabled = false
 
 [node name="Alien3" parent="NavigationRegion2D/aliens" unique_id=751324808 instance=ExtResource("14_ofrd7")]
 position = Vector2(424, 240)
+enabled = false
 
 [node name="Alien4" parent="NavigationRegion2D/aliens" unique_id=1396482569 instance=ExtResource("14_ofrd7")]
 position = Vector2(-152, 352)
+enabled = false
 
 [node name="Alien5" parent="NavigationRegion2D/aliens" unique_id=877710705 instance=ExtResource("14_ofrd7")]
 position = Vector2(528, 456)
+enabled = false
