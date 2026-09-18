@@ -50,3 +50,13 @@ visible = true
 position = Vector2(-19, 7)
 rotation = 1.3886094
 shape = SubResource("CapsuleShape2D_hd51g")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." index="5" unique_id=728449972]
+position = Vector2(-72, 8)
+rotation = 0.006432742
+radius = 100.35
+
+[node name="NavigationObstacle2D2" type="NavigationObstacle2D" parent="." index="6" unique_id=1616487437]
+position = Vector2(16, -8)
+rotation = 0.006432742
+radius = 131.05

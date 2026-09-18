@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://c7av2c776x0ay"]
+
+[ext_resource type="Texture2D" uid="uid://8wyma3s7mw40" path="res://assets/gfx/enemies/Enemy1.png" id="1_4babs"]
+[ext_resource type="Script" uid="uid://cqcibq5frft2p" path="res://src/systems/aliens/alien.gd" id="1_qrtap"]
+[ext_resource type="Script" uid="uid://1hqukjmprcut" path="res://src/common/components/fs_machine.gd" id="3_qrtap"]
+[ext_resource type="Script" uid="uid://bt5mdn57jlh6" path="res://src/systems/aliens/fsm/move.gd" id="4_38gcv"]
+[ext_resource type="Script" uid="uid://b5s88iybq4tvc" path="res://src/systems/aliens/fsm/engage.gd" id="5_38gcv"]
+[ext_resource type="Script" uid="uid://dwrxee52vcddu" path="res://src/systems/aliens/fsm/fire.gd" id="5_qrtap"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i7cnb"]
+height = 48.62
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i7cnb"]
+radius = 500.0
+
+[node name="Alien" type="CharacterBody2D" unique_id=1045095359]
+collision_layer = 8
+script = ExtResource("1_qrtap")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=204143702]
+path_max_distance = 300.0
+path_postprocessing = 1
+avoidance_enabled = true
+radius = 40.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1674219964]
+texture = ExtResource("1_4babs")
+offset = Vector2(5, -5)
+hframes = 11
+vframes = 2
+frame = 19
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1287040933]
+shape = SubResource("CapsuleShape2D_i7cnb")
+
+[node name="FSM" type="Node" parent="." unique_id=920779397]
+script = ExtResource("3_qrtap")
+
+[node name="move" type="Node" parent="FSM" unique_id=517996034]
+script = ExtResource("4_38gcv")
+anim = "move"
+
+[node name="engage" type="Node" parent="FSM/move" unique_id=800258355]
+script = ExtResource("5_38gcv")
+
+[node name="fire" type="Node" parent="FSM" unique_id=479471143]
+script = ExtResource("5_qrtap")
+anim = "fire"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2021767570]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1341398531]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1265851545]
+shape = SubResource("CircleShape2D_i7cnb")
+
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

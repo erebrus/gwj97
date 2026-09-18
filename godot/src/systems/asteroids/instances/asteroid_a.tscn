@@ -3,3 +3,18 @@
 [ext_resource type="PackedScene" uid="uid://6eidtajo6mqr" path="res://src/systems/asteroids/asteroid.tscn" id="1_qhmu4"]
 
 [node name="AsteroidA" unique_id=874490926 instance=ExtResource("1_qhmu4")]
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." index="4" unique_id=2143661335]
+position = Vector2(-109, 9)
+rotation = 0.006432742
+radius = 100.0
+
+[node name="NavigationObstacle2D2" type="NavigationObstacle2D" parent="." index="5" unique_id=610158737]
+position = Vector2(96.99999, -28)
+rotation = 0.006432742
+radius = 100.0
+
+[node name="NavigationObstacle2D3" type="NavigationObstacle2D" parent="." index="6" unique_id=1212721028]
+position = Vector2(2, -3)
+rotation = 0.006432742
+radius = 120.0

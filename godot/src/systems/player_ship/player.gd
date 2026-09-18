@@ -71,12 +71,18 @@ func _on_thrust_requested():
 func unload_cargo(station:Station):
 	if not cargo.is_empty():
 		station.add_resources(cargo)
-		cargo.clear()
+		cargo = {
+			Types.Resources.ORE: 0,
+			Types.Resources.ETHERIUM : 0
+		}
 		GSLogger.info("Unloaded cargo")
-		
+	collection_area.set_deferred("monitoring", true)
+
+
 func _physics_process(_delta):
 	if Globals.game.control != Game.MouseControl.Ship:
 		return
+	_set_target_angle()
 	if abs(angle_difference(rotation, target_angle)) < PI/60:
 		rotation = target_angle
 	else:
@@ -202,13 +208,7 @@ func is_cargo_full()->bool:
 		sum += cargo[key]
 	return sum >= max_cargo
 
-func unload():
-	#TODO unload
-	cargo = {
-		Types.Resources.ORE: 0,
-		Types.Resources.ETHERIUM : 0
-	}
-	collection_area.monitoring = true
+
 	
 
 func get_speed()->float:

@@ -189,7 +189,6 @@ radius = 128.0
 
 [node name="Player" type="RigidBody2D" unique_id=126300614]
 collision_layer = 4
-collision_mask = 3
 mass = 80.0
 physics_material_override = SubResource("PhysicsMaterial_ujsc6")
 gravity_scale = 0.0

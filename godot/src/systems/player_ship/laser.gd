@@ -27,7 +27,7 @@ func _physics_process(delta: float) -> void:
 func get_collision(start:Vector2, end:Vector2):
 	var space := get_world_2d().direct_space_state
 	var query := PhysicsRayQueryParameters2D.create(start,end)
-	query.collision_mask = LayerNames.PHYSICS_2D.WORLD
+	query.collision_mask = LayerNames.PHYSICS_2D.WORLD + LayerNames.PHYSICS_2D.ENEMIES
 	query.collide_with_bodies = true
 	query.collide_with_areas = false
 	var hit := space.intersect_ray(query)
