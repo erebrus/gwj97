@@ -1,11 +1,12 @@
 class_name Player extends RigidBody2D
 
-@export var impulse_force:float = 1000.0
+@export var impulse_force:float = 50000.0
 @export var backup_impulse_force:float = 100
 @export var fuel_consumption = 1
 @export var max_fuel = 100
 @export var laser_power:float = 1
 @export var laser_range:float = 300
+@export var laser_thrust: float = 5000
 @export var attraction_range:float = 50
 @export var attaction_power:float = 50.0
 @export var max_cargo:=4
@@ -165,7 +166,8 @@ func _do_laser():
 	var vec := (get_global_mouse_position() - global_position). normalized()*(laser_range)
 	Events.laser_position_updated.emit(global_position, global_position + vec)
 	laser.visible = true
-	
+	var impulse = Vector2.RIGHT.rotated(rotation)*(laser_thrust)
+	apply_force(impulse)
 func _shoot_laser():
 	if not laser:
 		laser = Laser.create(laser_power)
