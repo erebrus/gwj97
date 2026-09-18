@@ -104,6 +104,7 @@ default_value = 1.0
 [resource]
 mode = 1
 flags/light_only = false
+preview_params/block_size = "Vector2(64, 64)"
 nodes/fragment/0/position = Vector2(2460, 440)
 nodes/fragment/2/node = SubResource("VisualShaderNodeFloatParameter_27ame")
 nodes/fragment/2/position = Vector2(-900, 40)

@@ -21,13 +21,10 @@ func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mouse_event:= event as InputEventMouseButton
 		if mouse_event.pressed and mouse_event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
-			Events.control_state_changed.emit(Game.MouseControl.Station)
 			_drag_armed = true
 			_drag_offset = get_local_mouse_position()
 		if not _is_dragging and not mouse_event.pressed and mouse_event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
 			pressed.emit(room_scene.instantiate())
-			Events.control_state_changed.emit(Game.MouseControl.Ship)
-
 	
 	if _drag_armed and not _is_dragging and event is InputEventMouseMotion:
 		if get_local_mouse_position().distance_squared_to(_drag_offset) > 10:

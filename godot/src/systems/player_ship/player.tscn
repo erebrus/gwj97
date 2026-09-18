@@ -10,9 +10,8 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ujsc6"]
 friction = 0.4
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m2fog"]
-radius = 4.0
-height = 8.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_f80af"]
+radius = 24.0
 
 [sub_resource type="Animation" id="Animation_ittsc"]
 length = 0.001
@@ -182,15 +181,23 @@ _data = {
 &"thrust_stop": SubResource("Animation_sgyfn")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_a0wdr"]
+radius = 24.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_eykmb"]
-radius = 50.0
+radius = 128.0
 
 [node name="Player" type="RigidBody2D" unique_id=126300614]
 collision_layer = 4
+collision_mask = 3
 mass = 80.0
 physics_material_override = SubResource("PhysicsMaterial_ujsc6")
 gravity_scale = 0.0
 script = ExtResource("1_8b0mp")
+impulse_force = 2000.0
+laser_range = 300.0
+attraction_range = 128.0
+attaction_power = 300.0
 
 [node name="RotationGuide" type="Node2D" parent="." unique_id=1654121031]
 visible = false
@@ -230,7 +237,7 @@ hframes = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=721191109]
 rotation = -1.5707964
-shape = SubResource("CapsuleShape2D_m2fog")
+shape = SubResource("CircleShape2D_f80af")
 
 [node name="sfx" type="Node2D" parent="." unique_id=1012877280]
 
@@ -244,13 +251,15 @@ shape = SubResource("CapsuleShape2D_m2fog")
 libraries/ = SubResource("AnimationLibrary_wj70f")
 
 [node name="Muzzle" type="Node2D" parent="." unique_id=384300727]
+position = Vector2(-35, 0)
 
 [node name="CollectionArea" type="Area2D" parent="." unique_id=1581857068]
 collision_layer = 0
 collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionArea" unique_id=2028238835]
-shape = SubResource("CapsuleShape2D_m2fog")
+visible = false
+shape = SubResource("CircleShape2D_a0wdr")
 debug_color = Color(0.8581961, 0.3003929, 0.53732026, 0.41960785)
 
 [node name="AttractionArea" type="Area2D" parent="." unique_id=1286528095]

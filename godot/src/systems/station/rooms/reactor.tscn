@@ -15,7 +15,7 @@ production_output = Dictionary[int, int]({
 })
 
 [node name="Sprite2D" parent="." index="0" unique_id=276615709]
-position = Vector2(32, 16)
+position = Vector2(64, 32)
 texture = ExtResource("2_egc62")
 
 [node name="Tiles" parent="." index="1" unique_id=740900682]
