@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://d3p0ehflf68eg" path="res://src/systems/asteroids/instances/asteroid_b.tscn" id="4_ohl3f"]
 [ext_resource type="PackedScene" uid="uid://by4ij8hnxj1ym" path="res://src/systems/asteroids/instances/asteroid_c.tscn" id="5_l54d2"]
 [ext_resource type="PackedScene" uid="uid://dl4wcbqooexg3" path="res://src/systems/station/rooms/solar_generator.tscn" id="8_ujsc6"]
+[ext_resource type="PackedScene" uid="uid://bin3o5uufn1qc" path="res://src/systems/player_ship/crosshair.tscn" id="9_a04hb"]
 [ext_resource type="PackedScene" uid="uid://s34hx8xcy6v0" path="res://src/systems/station/rooms/reactor.tscn" id="9_ohl3f"]
 [ext_resource type="PackedScene" uid="uid://b2ge6oaudwi0r" path="res://src/systems/player_ship/player.tscn" id="9_ujsc6"]
 [ext_resource type="PackedScene" uid="uid://1778u0k6j16k" path="res://src/systems/station/rooms/big_reactor.tscn" id="11_m2fog"]
@@ -46,12 +47,15 @@ mass = 10.0
 
 [node name="Player" parent="." unique_id=126300614 instance=ExtResource("9_ujsc6")]
 position = Vector2(264, 264)
-impulse_force = 10000.0
 backup_impulse_force = 500.0
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1596738547]
 limit_enabled = false
 position_smoothing_enabled = true
+
+[node name="Crosshair" parent="." unique_id=839442879 node_paths=PackedStringArray("ship") instance=ExtResource("9_a04hb")]
+position = Vector2(0, -1)
+ship = NodePath("../Player")
 
 [node name="RoomCatalog" type="CanvasLayer" parent="." unique_id=332297952]
 

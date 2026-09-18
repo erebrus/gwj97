@@ -77,7 +77,7 @@ func unload_cargo(station:Station):
 func _physics_process(_delta):
 	if Globals.game.control != Game.MouseControl.Ship:
 		return
-	if angle_difference(rotation, target_angle) < PI/60:
+	if abs(angle_difference(rotation, target_angle)) < PI/60:
 		rotation = target_angle
 	else:
 		rotation=lerp_angle(rotation, target_angle, .05)
@@ -88,9 +88,10 @@ func _physics_process(_delta):
 			Events.fuel_consumed.emit(fuel_consumption)
 		else:
 			GSLogger.trace("Out of fuel.")
-	if laser:
-			var vec := (get_global_mouse_position() - global_position).limit_length(laser_range)
-			Events.laser_position_updated.emit(global_position, global_position + vec)
+	if is_instance_valid(laser):
+			var laser_len = min((get_global_mouse_position() - global_position).length(), laser_range)			
+			Events.laser_position_updated.emit(global_position, 
+				global_position + Vector2.LEFT.rotated(rotation) * laser_len)
 
 	_rotate_sprite()
 	collect_cargo()
@@ -169,8 +170,6 @@ func _shoot_laser():
 
 func _stop_laser():
 	Events.laser_cancelled.emit()
-	laser = null
-	pass
 func _on_timer_timeout():
 	Events.player_position_updated.emit(global_position)
 

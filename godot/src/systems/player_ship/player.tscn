@@ -87,7 +87,7 @@ tracks/2/use_blend = true
 
 [sub_resource type="Animation" id="Animation_8b0mp"]
 resource_name = "thrust_start"
-length = 0.19999999999999998
+length = 0.2
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -131,7 +131,7 @@ tracks/2/use_blend = true
 
 [sub_resource type="Animation" id="Animation_sgyfn"]
 resource_name = "thrust_stop"
-length = 0.19999999999999998
+length = 0.2
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -193,8 +193,10 @@ collision_mask = 3
 mass = 80.0
 physics_material_override = SubResource("PhysicsMaterial_ujsc6")
 gravity_scale = 0.0
+linear_damp_mode = 1
+linear_damp = 1.0
 script = ExtResource("1_8b0mp")
-impulse_force = 2000.0
+impulse_force = 50000.0
 laser_range = 300.0
 attraction_range = 128.0
 attaction_power = 300.0
