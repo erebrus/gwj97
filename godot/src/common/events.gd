@@ -19,3 +19,5 @@ signal successful_production(room:StationRoom)
 signal unsuccessful_production(room:StationRoom)
 
 signal request_hud_update()
+
+signal on_camera_mode_changed(val:bool)

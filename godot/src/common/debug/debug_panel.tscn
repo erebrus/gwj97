@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://ctrd2c74fom4t"]
+[gd_scene format=3 uid="uid://ctrd2c74fom4t"]
 
 [ext_resource type="Script" uid="uid://ba8oovky3bhiq" path="res://src/common/debug/debug_panel.gd" id="1_ihtat"]
 
@@ -8,7 +8,7 @@ content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
 
-[node name="DebugPanel" type="PanelContainer"]
+[node name="DebugPanel" type="PanelContainer" unique_id=1665485158]
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
@@ -21,55 +21,64 @@ size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_kvt4n")
 script = ExtResource("1_ihtat")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=93600568]
 layout_mode = 2
 
-[node name="HFlowContainer2" type="HFlowContainer" parent="VBoxContainer"]
+[node name="HFlowContainer2" type="HFlowContainer" parent="VBoxContainer" unique_id=2137981798]
 layout_mode = 2
 
-[node name="MusicTensionToggle" type="Button" parent="VBoxContainer/HFlowContainer2"]
+[node name="MusicTensionToggle" type="Button" parent="VBoxContainer/HFlowContainer2" unique_id=179199870]
 layout_mode = 2
 focus_mode = 0
 text = "Swap Music"
 
-[node name="Invulnerable" type="Button" parent="VBoxContainer/HFlowContainer2"]
+[node name="Invulnerable" type="Button" parent="VBoxContainer/HFlowContainer2" unique_id=961672344]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 toggle_mode = true
 text = "Invulnerable"
 
-[node name="LevelSelectLabel" type="Label" parent="VBoxContainer"]
+[node name="OverviewCamera" type="Button" parent="VBoxContainer/HFlowContainer2" unique_id=209497125]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+toggle_mode = true
+text = "Overview"
+
+[node name="LevelSelectLabel" type="Label" parent="VBoxContainer" unique_id=1402947714]
+visible = false
 layout_mode = 2
 text = "Game Over"
 
-[node name="HFlowContainer3" type="HFlowContainer" parent="VBoxContainer"]
+[node name="HFlowContainer3" type="HFlowContainer" parent="VBoxContainer" unique_id=614138722]
+visible = false
 layout_mode = 2
 
-[node name="LevelSelection" type="OptionButton" parent="VBoxContainer/HFlowContainer3"]
+[node name="LevelSelection" type="OptionButton" parent="VBoxContainer/HFlowContainer3" unique_id=104632020]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="LoadLevelButton" type="Button" parent="VBoxContainer/HFlowContainer3"]
+[node name="LoadLevelButton" type="Button" parent="VBoxContainer/HFlowContainer3" unique_id=1546292141]
 layout_mode = 2
 focus_mode = 0
 text = "Game Over
 "
 
-[node name="GameOverLabel" type="Label" parent="VBoxContainer"]
+[node name="GameOverLabel" type="Label" parent="VBoxContainer" unique_id=1011887555]
 layout_mode = 2
 text = "Game Over"
 
-[node name="HFlowContainer" type="HFlowContainer" parent="VBoxContainer"]
+[node name="HFlowContainer" type="HFlowContainer" parent="VBoxContainer" unique_id=1609550383]
 layout_mode = 2
 
-[node name="GameOver" type="Button" parent="VBoxContainer/HFlowContainer"]
+[node name="GameOver" type="Button" parent="VBoxContainer/HFlowContainer" unique_id=436400974]
 layout_mode = 2
 focus_mode = 0
 text = "Game Over
 "
 
-[node name="WinGame" type="Button" parent="VBoxContainer/HFlowContainer"]
+[node name="WinGame" type="Button" parent="VBoxContainer/HFlowContainer" unique_id=695546483]
 layout_mode = 2
 focus_mode = 0
 text = "Win Game
@@ -77,6 +86,7 @@ text = "Win Game
 
 [connection signal="pressed" from="VBoxContainer/HFlowContainer2/MusicTensionToggle" to="." method="_on_music_tension_toggle_pressed"]
 [connection signal="toggled" from="VBoxContainer/HFlowContainer2/Invulnerable" to="." method="_on_invulnerable_toggled"]
+[connection signal="toggled" from="VBoxContainer/HFlowContainer2/OverviewCamera" to="." method="_on_overview_camera_toggled"]
 [connection signal="pressed" from="VBoxContainer/HFlowContainer3/LoadLevelButton" to="." method="_on_load_level_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HFlowContainer/GameOver" to="." method="_on_game_over_pressed"]
 [connection signal="pressed" from="VBoxContainer/HFlowContainer/WinGame" to="." method="_on_win_game_pressed"]
