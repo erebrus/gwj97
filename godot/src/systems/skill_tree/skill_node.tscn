@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://2idmm87adajf"]
+
+[ext_resource type="Script" uid="uid://b7d5ecln6iwp4" path="res://src/systems/skill_tree/skill_node.gd" id="1_yx2v4"]
+
+[node name="SkillNode" type="PanelContainer" unique_id=321344098]
+custom_minimum_size = Vector2(150, 90)
+custom_maximum_size = Vector2(150, 90)
+script = ExtResource("1_yx2v4")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=412329145]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="HBoxContainer" unique_id=1646621472]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=2061794232]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=559095565]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PriceContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer" unique_id=1344665940]
+unique_name_in_owner = true
+layout_mode = 2

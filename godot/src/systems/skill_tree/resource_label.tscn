@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dnxvr1hmngl6l"]
+
+[ext_resource type="Script" uid="uid://leb5xdoo0f5e" path="res://src/systems/skill_tree/resource_label.gd" id="1_iakgl"]
+[ext_resource type="Texture2D" uid="uid://764gu7xsu3o3" path="res://assets/gfx/resources/ore.png" id="2_30q7s"]
+[ext_resource type="Texture2D" uid="uid://bd3e2qbbuky44" path="res://assets/gfx/resources/etherium.png" id="3_2ewfw"]
+[ext_resource type="Texture2D" uid="uid://dcmy5r7whewev" path="res://assets/gfx/resources/power.png" id="4_p3hvg"]
+
+[node name="ResourceLabel" type="HBoxContainer" unique_id=1459400934]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+script = ExtResource("1_iakgl")
+icons = Dictionary[int, Texture2D]({
+0: ExtResource("2_30q7s"),
+1: ExtResource("3_2ewfw"),
+2: ExtResource("4_p3hvg")
+})
+
+[node name="Amount" type="Label" parent="." unique_id=1478497230]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="." unique_id=1110860118]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
