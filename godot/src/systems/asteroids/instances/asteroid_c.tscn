@@ -41,22 +41,42 @@ texture = ExtResource("2_lnh8m")
 sprite_frames = SubResource("SpriteFrames_6sd81")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." index="2" unique_id=1557607076]
+visible = false
 position = Vector2(14.999998, -10.000002)
 rotation = -0.67370313
 shape = SubResource("CapsuleShape2D_i7cnb")
 
 [node name="CollisionShape2D" parent="." index="3" unique_id=740251918]
-visible = true
 position = Vector2(-19, 7)
 rotation = 1.3886094
 shape = SubResource("CapsuleShape2D_hd51g")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." index="5" unique_id=728449972]
-position = Vector2(-72, 8)
+visible = false
+position = Vector2(-16.000008, 0)
 rotation = 0.006432742
-radius = 100.35
+radius = 166.14
 
-[node name="NavigationObstacle2D2" type="NavigationObstacle2D" parent="." index="6" unique_id=1616487437]
-position = Vector2(16, -8)
-rotation = 0.006432742
-radius = 131.05
+[node name="Patch1" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="0" unique_id=587809626]
+position = Vector2(32, -24)
+
+[node name="Patch2" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="1" unique_id=1813377508]
+position = Vector2(-8, -88)
+
+[node name="Patch3" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="2" unique_id=578551827]
+position = Vector2(-64, -64)
+
+[node name="Patch4" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="3" unique_id=1536037361]
+position = Vector2(-102, -46)
+
+[node name="Patch5" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="4" unique_id=344175883]
+position = Vector2(-30, 20)
+
+[node name="Patch6" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="5" unique_id=2136722271]
+position = Vector2(54, 41)
+
+[node name="Patch7" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="6" unique_id=436406572]
+position = Vector2(-143, 20)
+
+[node name="Patch8" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="7" unique_id=636455264]
+position = Vector2(86, -62)

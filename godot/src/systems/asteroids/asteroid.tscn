@@ -90,3 +90,21 @@ shape = SubResource("CapsuleShape2D_i7cnb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1919126292]
 libraries/ = SubResource("AnimationLibrary_ajy3r")
+
+[node name="Patches" type="Node2D" parent="." unique_id=1020383836]
+
+[node name="Patch1" type="Node2D" parent="Patches" unique_id=587809626]
+
+[node name="Patch2" type="Node2D" parent="Patches" unique_id=1813377508]
+
+[node name="Patch3" type="Node2D" parent="Patches" unique_id=578551827]
+
+[node name="Patch4" type="Node2D" parent="Patches" unique_id=1536037361]
+
+[node name="Patch5" type="Node2D" parent="Patches" unique_id=344175883]
+
+[node name="Patch6" type="Node2D" parent="Patches" unique_id=2136722271]
+
+[node name="Patch7" type="Node2D" parent="Patches" unique_id=436406572]
+
+[node name="Patch8" type="Node2D" parent="Patches" unique_id=636455264]

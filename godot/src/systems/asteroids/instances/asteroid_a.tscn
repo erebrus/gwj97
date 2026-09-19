@@ -5,16 +5,37 @@
 [node name="AsteroidA" unique_id=874490926 instance=ExtResource("1_qhmu4")]
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." index="4" unique_id=2143661335]
-position = Vector2(-109, 9)
+visible = false
+position = Vector2(-89.00001, 12.000001)
 rotation = 0.006432742
-radius = 100.0
+radius = 139.48
 
-[node name="NavigationObstacle2D2" type="NavigationObstacle2D" parent="." index="5" unique_id=610158737]
-position = Vector2(96.99999, -28)
+[node name="NavigationObstacle2D3" type="NavigationObstacle2D" parent="." index="5" unique_id=1212721028]
+visible = false
+position = Vector2(73, -4)
 rotation = 0.006432742
-radius = 100.0
+radius = 159.47
 
-[node name="NavigationObstacle2D3" type="NavigationObstacle2D" parent="." index="6" unique_id=1212721028]
-position = Vector2(2, -3)
-rotation = 0.006432742
-radius = 120.0
+[node name="Patch1" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="0" unique_id=587809626]
+position = Vector2(-26, 31)
+
+[node name="Patch2" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="1" unique_id=1813377508]
+position = Vector2(99, -47)
+
+[node name="Patch3" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="2" unique_id=578551827]
+position = Vector2(16, -62)
+
+[node name="Patch4" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="3" unique_id=1536037361]
+position = Vector2(-48, -86)
+
+[node name="Patch5" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="4" unique_id=344175883]
+position = Vector2(-113, 50)
+
+[node name="Patch6" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="5" unique_id=2136722271]
+position = Vector2(54, -4)
+
+[node name="Patch7" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="6" unique_id=436406572]
+position = Vector2(-144, -43)
+
+[node name="Patch8" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="7" unique_id=636455264]
+position = Vector2(120, 21)

@@ -2,7 +2,12 @@ class_name Asteroid extends RigidBody2D
 @export
 var angular_speed_interval:Vector2 = Vector2(0.1,.5)
 
-
+const RICHNESS_WEIGHTS := [.3,.4,.2,.1]
+const RICHNESS_MINERALS := [2,4,5,7]
+const MINERAL_TEXS = [
+		preload("res://assets/gfx/map/ore/ore.png"),
+		preload("res://assets/gfx/map/ore/etherium.png")
+	]
 @export 
 var max_structure:float = 250
 @export 
@@ -16,12 +21,33 @@ var flash_time:float=0
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var broken_sprite: AnimatedSprite2D = $BrokenSprite
+@onready var patches: Node2D = $Patches
 
 func _ready():
 	structure = max_structure
 	angular_velocity = randf_range(angular_speed_interval.x, angular_speed_interval.y)
 	GSLogger.debug("%s angular velocity = %2f" % [name, angular_velocity])
-
+	_update_minerals()
+	if mineral_count > 0:
+		if type == Types.Resources.ETHERIUM:
+			GSLogger.info ("generated ETH with count %d" % [mineral_count])
+		else:
+			GSLogger.info ("generated ORE with count %d" % [mineral_count])
+		
+func _update_minerals():
+	var available_patches:Array[int]
+	
+	for i in patches.get_child_count():
+		GameUtils.clear_node(patches.get_child(i))
+		available_patches.append(i)
+		
+	for i in range(mineral_count):
+		var mineral_sprite := Sprite2D.new()
+		mineral_sprite.texture = MINERAL_TEXS[type]
+		var patch = available_patches.pick_random()
+		available_patches.erase(patch)
+		patches.get_child(patch).add_child(mineral_sprite)
+		
 func _physics_process(delta: float) -> void:
 	if flash_time > 0:
 		flash_time -= delta
@@ -62,8 +88,16 @@ func get_broken_sprite_id()->int:
 		else:
 			return 2
 		
-		
+func set_richness(richness:float):
+	var acc := 0.0
+	mineral_count = RICHNESS_MINERALS[RICHNESS_WEIGHTS.size() -1] + randi_range(-1,1)	
 
+	for i in RICHNESS_WEIGHTS.size():
+		acc += RICHNESS_WEIGHTS[i]
+		if richness < acc:
+			mineral_count = RICHNESS_MINERALS[i] + randi_range(-1,1)
+			break
+	print ("mineral: ", mineral_count)
 func destroy():
 	for i in range(mineral_count):
 		var c:Cargo = Cargo.create(type)
