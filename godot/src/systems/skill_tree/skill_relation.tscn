@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://wyblvfvyq55c"]
-
-[ext_resource type="Script" uid="uid://drip4fcnrskf2" path="res://src/systems/skill_tree/skill_relation.gd" id="1_iw4gc"]
-
-[node name="SkillRelation" type="Line2D" unique_id=1850826656]
-script = ExtResource("1_iw4gc")
-curve_factor = 0.8

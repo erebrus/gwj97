@@ -1,5 +1,5 @@
 @tool
-class_name SkillRelation extends Line2D
+class_name SJSkillRelation extends Line2D
 
 @export var curve_factor: float = 0.5:
 	set(value):
@@ -10,7 +10,7 @@ class_name SkillRelation extends Line2D
 			setup()
 
 
-var parent: SkillNode:
+var parent: SJSkillNode:
 	set(value):
 		if value == parent:
 			return
@@ -22,7 +22,7 @@ var parent: SkillNode:
 			setup()
 
 
-var child: SkillNode:
+var child: SJSkillNode:
 	set(value):
 		if value == child:
 			return
@@ -34,22 +34,13 @@ var child: SkillNode:
 			setup()
 
 
-var direction: SkillTree.Direction:
+var direction: SJSkillTree.Direction:
 	set(value):
 		if value == direction:
 			return
 		direction = value
 		if is_node_ready():
 			setup()
-
-
-@warning_ignore("shadowed_variable")
-static func create(parent: SkillNode, child: SkillNode, direction: SkillTree.Direction) -> SkillRelation:
-	var scene := load("uid://wyblvfvyq55c").instantiate() as SkillRelation
-	scene.parent = parent
-	scene.child = child
-	scene.direction = direction
-	return scene
 
 
 func _ready() -> void:
@@ -71,23 +62,25 @@ func update_points() -> void:
 	var parent_out: Vector2
 	var child_out: Vector2
 	
+	# TODO: allow routing through dummy nodes
+	
 	match direction:
-		SkillTree.Direction.LeftRight:
+		SJSkillTree.Direction.LeftRight:
 			parent_position += Vector2(parent_size.x * 0.4, 0)
 			child_position -= Vector2(child_size.x * 0.4, 0)
 			parent_out = Vector2(parent_size.x * curve_factor, 0)
 			child_out = - Vector2(child_size.x * curve_factor, 0)
-		SkillTree.Direction.RightLeft:
+		SJSkillTree.Direction.RightLeft:
 			parent_position -= Vector2(parent_size.x * 0.4, 0)
 			child_position += Vector2(child_size.x * 0.4, 0)
 			parent_out = - Vector2(parent_size.x * curve_factor, 0)
 			child_out = Vector2(child_size.x * curve_factor, 0)
-		SkillTree.Direction.TopDown:
+		SJSkillTree.Direction.TopDown:
 			parent_position += Vector2(0, parent_size.y * 0.4)
 			child_position -= Vector2(0, child_size.y * 0.4)
 			parent_out = Vector2(0, parent_size.y * curve_factor)
 			child_out = - Vector2(0, child_size.y * curve_factor)
-		SkillTree.Direction.DownTop:
+		SJSkillTree.Direction.DownTop:
 			parent_position -= Vector2(0, parent_size.y * 0.4)
 			child_position += Vector2(0, child_size.y * 0.4)
 			parent_out = - Vector2(0, parent_size.y * curve_factor)

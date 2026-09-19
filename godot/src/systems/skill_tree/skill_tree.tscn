@@ -1,12 +1,9 @@
-[gd_scene format=3 uid="uid://cdxfehvpi46yk"]
+[gd_scene format=3 uid="uid://buqqgq2hos540"]
 
-[ext_resource type="Script" uid="uid://bi030sklpjgok" path="res://src/systems/skill_tree/skill_tree.gd" id="1_5j11o"]
+[ext_resource type="PackedScene" uid="uid://cdxfehvpi46yk" path="res://addons/sj/components/skill_tree/ui/skill_tree.tscn" id="1_5j11o"]
+[ext_resource type="PackedScene" uid="uid://drgw2dc3b7ht0" path="res://src/systems/skill_tree/skill_node.tscn" id="2_avqhe"]
+[ext_resource type="Script" uid="uid://cflaytug1356a" path="res://src/systems/skill_tree/skill_tree.gd" id="2_sqnf0"]
 
-[node name="SkillTree" type="MarginContainer" unique_id=408921016]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("1_5j11o")
-direction = 3
+[node name="StationSkillTree" unique_id=408921016 instance=ExtResource("1_5j11o")]
+script = ExtResource("2_sqnf0")
+node_scene = ExtResource("2_avqhe")

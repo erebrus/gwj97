@@ -1,27 +1,31 @@
-[gd_scene format=3 uid="uid://2idmm87adajf"]
+[gd_scene format=3 uid="uid://drgw2dc3b7ht0"]
 
-[ext_resource type="Script" uid="uid://b7d5ecln6iwp4" path="res://src/systems/skill_tree/skill_node.gd" id="1_yx2v4"]
+[ext_resource type="PackedScene" uid="uid://2idmm87adajf" path="res://addons/sj/components/skill_tree/ui/skill_node.tscn" id="1_yx2v4"]
+[ext_resource type="Script" uid="uid://b3lq38akfd8rd" path="res://src/systems/skill_tree/skill_node.gd" id="2_r6dvi"]
 
-[node name="SkillNode" type="PanelContainer" unique_id=321344098]
+[node name="SkillNode" unique_id=321344098 instance=ExtResource("1_yx2v4")]
+script = ExtResource("2_r6dvi")
+
+[node name="PanelContainer" type="PanelContainer" parent="." index="0" unique_id=1048719799]
 custom_minimum_size = Vector2(150, 90)
 custom_maximum_size = Vector2(150, 90)
-script = ExtResource("1_yx2v4")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=412329145]
 layout_mode = 2
 
-[node name="Icon" type="TextureRect" parent="HBoxContainer" unique_id=1646621472]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer" index="0" unique_id=586280217]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="PanelContainer/HBoxContainer" index="0" unique_id=1632367456]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=2061794232]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer" index="1" unique_id=1681709747]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Name" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=559095565]
+[node name="Name" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer" index="0" unique_id=1453861848]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="PriceContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer" unique_id=1344665940]
+[node name="PriceContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer" index="1" unique_id=65587558]
 unique_name_in_owner = true
 layout_mode = 2

@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://sem10nme3b8t"]
+
+[ext_resource type="Script" uid="uid://b683c2snjbbn5" path="res://addons/sj/components/skill_tree/example/example.gd" id="1_5l0pn"]
+[ext_resource type="PackedScene" uid="uid://cdxfehvpi46yk" path="res://addons/sj/components/skill_tree/ui/skill_tree.tscn" id="1_afhw2"]
+[ext_resource type="PackedScene" uid="uid://pho6oneu3rrp" path="res://addons/sj/components/skill_tree/example/example_node.tscn" id="2_sso7i"]
+
+[node name="Example" type="VBoxContainer" unique_id=1763669420]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5l0pn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=909923405]
+layout_mode = 2
+
+[node name="CreateButton" type="Button" parent="HBoxContainer" unique_id=1901409105]
+layout_mode = 2
+text = "Create"
+
+[node name="ShuffleButton" type="Button" parent="HBoxContainer" unique_id=359858494]
+layout_mode = 2
+text = "Shuffle"
+
+[node name="SkillTree" parent="." unique_id=408921016 instance=ExtResource("1_afhw2")]
+unique_name_in_owner = true
+layout_mode = 2
+node_scene = ExtResource("2_sso7i")
+
+[connection signal="pressed" from="HBoxContainer/CreateButton" to="." method="_on_create_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/ShuffleButton" to="." method="_on_shuffle_button_pressed"]

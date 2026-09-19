@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://2idmm87adajf"]
+
+[ext_resource type="Script" uid="uid://b7d5ecln6iwp4" path="res://addons/sj/components/skill_tree/ui/skill_node.gd" id="1_yx2v4"]
+
+[node name="SkillNode" type="MarginContainer" unique_id=1998161604]
+offset_right = 150.0
+offset_bottom = 90.0
+script = ExtResource("1_yx2v4")

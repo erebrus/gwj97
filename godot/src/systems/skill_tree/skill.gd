@@ -1,24 +1,30 @@
-class_name SkillTreeSkill extends Resource
+class_name StationSkill extends SJSkillTreeSkill
 
 
-@export var id: String
 @export var name: String
 @export var description: String
 
 @export var icon: Texture2D
-@export var requirements: Array[String]
 @export var price: Dictionary[Types.Resources, int]
 
 
 @warning_ignore("shadowed_variable")
-static func create_random(id: String, ...requirements: Array) -> SkillTreeSkill:
-	var skill = SkillTreeSkill.new()
-	skill.id = id
-	skill.name = id
+static func create_random(id: String, ...args: Array) -> StationSkill:
+	var skill = StationSkill.new()
 	
-	for r in requirements:
-		if r is SkillTreeSkill:
-			skill.requirements.append(r.id)
+	if args.is_empty():
+		skill.id = id
+	else:
+		var parents: Array[String]
+		for parent in args:
+			if parent is SJSkillTreeSkill:
+				parents.append(parent.id)
+			
+		skill.requirements = parents
+		
+		skill.id = "%s_%s" % [".".join(parents), id]
+	
+	skill.name = skill.id
 	
 	var resources = Types.Resources.values()
 	resources.shuffle()
@@ -28,6 +34,3 @@ static func create_random(id: String, ...requirements: Array) -> SkillTreeSkill:
 		skill.price[resource] = quantity
 	
 	return skill
-
-func _to_string() -> String:
-	return id

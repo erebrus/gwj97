@@ -19,7 +19,7 @@ var game_version: String:
 		return ProjectSettings.get_setting("application/config/version")
 	
 
-var skills: Array[SkillTreeSkill]
+var skills: Array[StationSkill]
 
 @onready var music_manager: MusicManager = $MusicManager
 @onready var ui_sfx: UiSfx = $UiSfx

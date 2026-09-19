@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dnxvr1hmngl6l"]
 
-[ext_resource type="Script" uid="uid://leb5xdoo0f5e" path="res://src/systems/skill_tree/resource_label.gd" id="1_iakgl"]
+[ext_resource type="Script" uid="uid://leb5xdoo0f5e" path="res://src/systems/resource_label/resource_label.gd" id="1_iakgl"]
 [ext_resource type="Texture2D" uid="uid://764gu7xsu3o3" path="res://assets/gfx/resources/ore.png" id="2_30q7s"]
 [ext_resource type="Texture2D" uid="uid://bd3e2qbbuky44" path="res://assets/gfx/resources/etherium.png" id="3_2ewfw"]
 [ext_resource type="Texture2D" uid="uid://dcmy5r7whewev" path="res://assets/gfx/resources/power.png" id="4_p3hvg"]
