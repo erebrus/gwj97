@@ -4,10 +4,7 @@ var angular_speed_interval:Vector2 = Vector2(0.1,.5)
 
 const RICHNESS_WEIGHTS := [.3,.4,.2,.1]
 const RICHNESS_MINERALS := [2,4,5,7]
-const MINERAL_TEXS = [
-		preload("res://assets/gfx/map/ore/ore.png"),
-		preload("res://assets/gfx/map/ore/etherium.png")
-	]
+
 @export 
 var max_structure:float = 250
 @export 
@@ -44,7 +41,7 @@ func _update_minerals():
 	for i in range(mineral_count):
 		var mineral_sprite := Sprite2D.new()
 		
-		mineral_sprite.texture = MINERAL_TEXS[type]
+		mineral_sprite.texture = Cargo.MINERAL_TEXS[type]
 		var patch = available_patches.pick_random()
 		available_patches.erase(patch)
 		patches.get_child(patch).add_child(mineral_sprite)
@@ -101,9 +98,11 @@ func set_richness(richness:float):
 			break
 	#print ("mineral: ", mineral_count)
 func destroy():
-	for i in range(mineral_count):
-		var c:Cargo = Cargo.create(type)
-		c.global_position = Vector2(global_position.x + randf_range(-100,100), global_position.y + randf_range(-100,100))
-		c.linear_velocity = (Vector2.RIGHT * randf_range(50,150)).rotated(randf()*2*PI) # Vector2(randf_range(-15,15),randf_range(-15,15) )
-		get_parent().add_child(c)
+	for patch:Node2D in patches.get_children():
+		if patch.get_child_count():
+			var c:Cargo = Cargo.create(type)
+			c.global_position = patch.global_position
+			c.global_rotation = patch.get_child(0).global_rotation
+			c.linear_velocity = (Vector2.RIGHT * randf_range(50,150)).rotated(randf()*2*PI) 
+			get_parent().add_child(c)
 	queue_free()
