@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="StationSkill" format=3 uid="uid://ce4x68eakfro"]
+
+[ext_resource type="Script" uid="uid://b64ktb1tubexf" path="res://src/systems/skill_tree/skill.gd" id="1_3rcd2"]
+
+[resource]
+script = ExtResource("1_3rcd2")
+name = "Thrust Booster I"
+description = "Add a booster feature to the thruster"
+price = Dictionary[int, int]({
+0: 16,
+1: 4
+})
+id = "skill_boost"
+requirements = Array[String](["skill_speed2"])
+metadata/_custom_type_script = "uid://b64ktb1tubexf"

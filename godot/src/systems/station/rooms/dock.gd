@@ -31,6 +31,7 @@ func dock_ship():
 	tween.parallel().tween_property(ship,"global_rotation",-PI/2,.5)
 	await tween.finished
 	GSLogger.info("Ship Docked")
+	Events.ship_docked.emit()
 	ship.unload_cargo(station)
 	
 func _on_dock_area_body_exited(_body: Node2D) -> void:
@@ -39,6 +40,7 @@ func _on_dock_area_body_exited(_body: Node2D) -> void:
 func undock_ship():
 	ship.autopilot = false
 	ship.apply_impulse(4000*Vector2.DOWN)
+	Events.ship_undocked.emit()
 	
 func has_ship_control() -> bool:
 	return ship and ship.get_speed() < 50

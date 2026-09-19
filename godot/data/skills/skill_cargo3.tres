@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StationSkill" format=3 uid="uid://ucup2s1k2lw5"]
+
+[ext_resource type="Script" uid="uid://b64ktb1tubexf" path="res://src/systems/skill_tree/skill.gd" id="1_0jsw4"]
+
+[resource]
+script = ExtResource("1_0jsw4")
+name = "Cargo III"
+description = "Increase cargo capabilitry to 8."
+price = Dictionary[int, int]({
+0: 8
+})
+id = "skill_cargo3"
+requirements = Array[String](["skill_cargo2"])
+metadata/_custom_type_script = "uid://b64ktb1tubexf"

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="StationSkill" format=3 uid="uid://de6d1rjajhcfv"]
+
+[ext_resource type="Script" uid="uid://b64ktb1tubexf" path="res://src/systems/skill_tree/skill.gd" id="1_s3cqh"]
+
+[resource]
+script = ExtResource("1_s3cqh")
+name = "Momentum Control II"
+description = "Add feature to temporary preserve ship momentum, allowing greater speed at expense of maneuverability."
+price = Dictionary[int, int]({
+0: 12,
+1: 8
+})
+id = "skill_damp_control_extra"
+requirements = Array[String](["skill_damp_control"])
+metadata/_custom_type_script = "uid://b64ktb1tubexf"

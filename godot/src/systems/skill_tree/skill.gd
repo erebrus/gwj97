@@ -2,7 +2,8 @@ class_name StationSkill extends SJSkillTreeSkill
 
 
 @export var name: String
-@export var description: String
+
+@export_multiline() var description: String
 
 @export var icon: Texture2D
 @export var price: Dictionary[Types.Resources, int]

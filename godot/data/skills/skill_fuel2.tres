@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="StationSkill" format=3 uid="uid://5l0o1am5sa22"]
+
+[ext_resource type="Script" uid="uid://b64ktb1tubexf" path="res://src/systems/skill_tree/skill.gd" id="1_unw58"]
+
+[resource]
+script = ExtResource("1_unw58")
+name = "Fuel Efficiency I"
+description = "Improve fuel consumption to 50% of original."
+price = Dictionary[int, int]({
+0: 12,
+1: 4
+})
+id = "skill_fuel2"
+requirements = Array[String](["skill_fuel1"])
+metadata/_custom_type_script = "uid://b64ktb1tubexf"

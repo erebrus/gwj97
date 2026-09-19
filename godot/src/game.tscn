@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cdm2fhla0kigd" path="res://src/common/fade_panel.tscn" id="4_wqvko"]
 [ext_resource type="PackedScene" uid="uid://dlm0sbu8yesaa" path="res://src/ui/ship/cargo_hold/cargo_hold_ui.tscn" id="5_wqvko"]
 [ext_resource type="PackedScene" uid="uid://c8fy8uv4hrqb4" path="res://src/ui/ship/station/station_cargo_ui.tscn" id="6_wqvko"]
+[ext_resource type="PackedScene" uid="uid://buqqgq2hos540" path="res://src/systems/skill_tree/skill_tree.tscn" id="7_cdx1q"]
 
 [sub_resource type="Resource" id="Resource_5q4o7"]
 metadata/__load_path__ = "res://src/tutorial_state.tres"
@@ -48,6 +49,10 @@ size_flags_horizontal = 3
 [node name="StationCargoUi" parent="HUDLayer/MarginContainer/HBoxContainer" unique_id=1895314971 instance=ExtResource("6_wqvko")]
 layout_mode = 2
 size_flags_horizontal = 1
+
+[node name="SkillTree" parent="HUDLayer" unique_id=408921016 instance=ExtResource("7_cdx1q")]
+unique_name_in_owner = true
+visible = false
 
 [node name="OverlayLayer" type="CanvasLayer" parent="." unique_id=1990209073]
 layer = 5

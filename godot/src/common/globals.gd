@@ -34,7 +34,7 @@ func _ready():
 		start_game()
 	
 	_load_skills()
-
+	
 
 func go_to_main_menu():
 	get_tree().change_scene_to_file(START_SCENE_PATH)
@@ -66,9 +66,8 @@ func _init_logger():
 
 
 func _load_skills() -> void:
-	pass
-	#skills = GameUtils.load_resources("res://src/resources/skills")
-	
+	skills.assign(GameUtils.load_resources("res://data/skills")) 
+	GSLogger.info("Skill resources loaded.")
 
 
 func do_lose():
