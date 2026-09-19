@@ -10,22 +10,15 @@ signal asteroid_mined(data: AsteroidData)
 
 @export var asteroid_scenes: Array[PackedScene]
 @export var target: Node2D
-@export var world_seed: int = 1337
 @export var load_radius_cells: int = 8
 @export var unload_padding_cells: int = 3
 @export var cells_per_frame: int = 3      ## build budget, keeps frame times flat
-@export var station:Station
-@export var clear_radius := 800
-var field: AsteroidField
+@export var field: AsteroidField
 
 var _loaded: Dictionary = {}              ## Vector2i -> Array[Node2D]
 var _pending: Array[Vector2i] = []
 var _last_cell := Vector2i(2147483647, 0)
 
-
-func _ready() -> void:
-	field = AsteroidField.new(world_seed)
-	field.add_clear_zone(station.global_position, 800.0)   # keep the home station clear
 
 
 func _process(_delta: float) -> void:

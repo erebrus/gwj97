@@ -1,5 +1,5 @@
 class_name AsteroidField
-extends RefCounted
+extends Node2D
 
 ## Deterministic, streamable asteroid placement.
 ##
@@ -8,14 +8,17 @@ extends RefCounted
 ## and an infinite world costs no memory. The only persistent state is the set
 ## of asteroids the player has already mined out.
 
-const CELL := 1500            ## world units per grid cell
-const MAX_PER_CELL := 4       ## upper bound on asteroids in one cell
-const MIN_DIST := 450.0        ## minimum spacing. MUST be <= CELL (3x3 check)
-const BASE_DENSITY := .8     ## expected count in the emptiest regions
-const CLUMPINESS := 3.0       ## gamma on the density field; higher = rarer, tighter fields
-const MINERAL_COUNT := 3
-const MINERAL_WEIGHTS := [0.6,.35,.15]
+@export var cell_size := 1500            ## world units per grid cell
+@export var  max_per_cell := 4       ## upper bound on asteroids in one cell
+@export var  min_dist := 450.0        ## minimum spacing. MUST be <= CELL (3x3 check)
+@export var  base_density := .8     ## expected count in the emptiest regions
+@export var  clumpiness := 3.0       ## gamma on the density field; higher = rarer, tighter fields
+@export var  mineral_count := 3
+@export var  mineral_weights :Array[float]= [0.6,.35,.15]
+@export var seed_value := 1337 
 var world_seed: int = 0
+@export var station:Station
+@export var clear_radius := 800
 
 var _density := FastNoiseLite.new()
 var _ore := FastNoiseLite.new()
@@ -25,9 +28,8 @@ var _clear_zones: Array[Vector3] = []   ## x,y = centre, z = radius
 var _cand_cache: Dictionary = {}        ## Vector2i -> Array[Dictionary]
 var _mined: Dictionary = {}             ## Vector3i -> true
 
-
-func _init(seed_value: int = 1337) -> void:
-	assert(MIN_DIST <= CELL, "MIN_DIST must be <= CELL or the 3x3 spacing check misses neighbours")
+func _ready():
+	assert(min_dist <= cell_size, "min_dist must be <= CELL or the 3x3 spacing check misses neighbours")
 	world_seed = seed_value
 
 	# Large-scale density field. Low frequency = big asteroid fields.
@@ -45,6 +47,8 @@ func _init(seed_value: int = 1337) -> void:
 	_ore.fractal_type = FastNoiseLite.FRACTAL_NONE
 	_ore.cellular_return_type = FastNoiseLite.RETURN_CELL_VALUE
 	_ore.cellular_jitter = 1.0
+	
+	add_clear_zone(station.global_position, clear_radius)   # keep the home station clear
 
 
 #region Public API
@@ -56,7 +60,7 @@ func add_clear_zone(centre: Vector2, radius: float) -> void:
 
 
 func world_to_cell(world_pos: Vector2) -> Vector2i:
-	return Vector2i(floori(world_pos.x / CELL), floori(world_pos.y / CELL))
+	return Vector2i(floori(world_pos.x / cell_size), floori(world_pos.y / cell_size))
 
 
 ## Every asteroid in one grid cell, spacing already resolved.
@@ -99,7 +103,7 @@ func query_rect(rect: Rect2) -> Array[AsteroidData]:
 func density_at(world_pos: Vector2) -> float:
 	var n := _density.get_noise_2dv(world_pos) * 0.5 + 0.5   # -1..1 -> 0..1
 	n = clampf((n - 0.35) / 0.45, 0.0, 1.0)                  # stretch, then saturate
-	n = pow(n, CLUMPINESS)
+	n = pow(n, clumpiness)
 	return n * _clearance(world_pos)
 
 
@@ -134,9 +138,9 @@ func _candidates(cell: Vector2i) -> Array:
 
 	_rng.seed = _cell_seed(cell)
 
-	var origin := Vector2(cell) * CELL
-	var d := density_at(origin + Vector2(CELL, CELL) * 0.5)
-	var expected := lerpf(BASE_DENSITY, float(MAX_PER_CELL), d)
+	var origin := Vector2(cell) * cell_size
+	var d := density_at(origin + Vector2(cell_size, cell_size) * 0.5)
+	var expected := lerpf(base_density, float(max_per_cell), d)
 
 	# Integer part, plus the fractional part rolled probabilistically. This is
 	# what lets a field average e.g. 1.7 asteroids per cell.
@@ -147,7 +151,7 @@ func _candidates(cell: Vector2i) -> Array:
 	var out: Array = []
 	for i in count:
 		out.append({
-			"pos": origin + Vector2(_rng.randf(), _rng.randf()) * CELL,
+			"pos": origin + Vector2(_rng.randf(), _rng.randf()) * cell_size,
 			"cell": cell,
 			"index": i,
 			"density": d,
@@ -164,7 +168,7 @@ func _candidates(cell: Vector2i) -> Array:
 ## the result does not depend on which chunk the player streamed in first, so
 ## there are no seams at chunk borders.
 func _blocked(c: Dictionary, others: Array) -> bool:
-	var limit := MIN_DIST * MIN_DIST
+	var limit := min_dist * min_dist
 	var pos: Vector2 = c["pos"]
 	for o in others:
 		if not _is_earlier(o, c):
@@ -211,16 +215,16 @@ func _mineral_at(p: Vector2, t: float) -> int:
 	if t > 0.85:
 		v = fposmod(v + 0.37, 1.0)
 	var acc := 0.0
-	for i in MINERAL_WEIGHTS.size():
-		acc += MINERAL_WEIGHTS[i]
+	for i in mineral_weights.size():
+		acc += mineral_weights[i]
 		if v < acc:
 			return i
-	return MINERAL_WEIGHTS.size() -1
+	return mineral_weights.size() -1
 	
-	#var band := int(v * MINERAL_COUNT)
+	#var band := int(v * mineral_count)
 	#if t > 0.85:                                   # a little variety inside a band
 		#band += 1
-	#return clampi(band % MINERAL_COUNT, 0, MINERAL_COUNT - 1)
+	#return clampi(band % mineral_count, 0, mineral_count - 1)
 
 
 func _clearance(p: Vector2) -> float:

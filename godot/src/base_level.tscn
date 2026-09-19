@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b4ytavk038x8p" path="res://src/base_level.gd" id="1_mnxva"]
 [ext_resource type="PackedScene" uid="uid://ct0x1qn140hns" path="res://src/systems/station/grid/station_grid.tscn" id="2_2xr1i"]
+[ext_resource type="Script" uid="uid://b01hcl6af7vyt" path="res://src/systems/asteroids/field/asteroid_field.gd" id="2_f6fmg"]
 [ext_resource type="Script" uid="uid://cex2yh4fyv8us" path="res://src/systems/asteroids/field/asteroid_streamer.gd" id="2_ofrd7"]
 [ext_resource type="PackedScene" uid="uid://dyvtawur8hwpc" path="res://src/systems/station/station.tscn" id="2_ohl3f"]
 [ext_resource type="PackedScene" uid="uid://colgh87172chk" path="res://src/systems/station/placement/room_button.tscn" id="3_82ww6"]
@@ -25,12 +26,16 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-352, -320, -368, 1408,
 [node name="BaseLevel" type="Node2D" unique_id=613843204]
 script = ExtResource("1_mnxva")
 
-[node name="AsteroidStreamer" type="Node2D" parent="." unique_id=1716234031 node_paths=PackedStringArray("target", "station")]
+[node name="AsteroidField" type="Node2D" parent="." unique_id=891395834 node_paths=PackedStringArray("station")]
+script = ExtResource("2_f6fmg")
+station = NodePath("../Station")
+
+[node name="AsteroidStreamer" type="Node2D" parent="." unique_id=1716234031 node_paths=PackedStringArray("target", "field")]
 script = ExtResource("2_ofrd7")
 asteroid_scenes = Array[PackedScene]([ExtResource("3_ujsc6"), ExtResource("4_ohl3f"), ExtResource("5_l54d2")])
 target = NodePath("../Asteroids")
 load_radius_cells = 10
-station = NodePath("../Station")
+field = NodePath("../AsteroidField")
 metadata/_custom_type_script = "uid://cex2yh4fyv8us"
 
 [node name="Station" parent="." unique_id=1288710059 instance=ExtResource("2_ohl3f")]
@@ -50,7 +55,6 @@ backup_impulse_force = 500.0
 laser_range = 500.0
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1596738547]
-enabled = false
 limit_enabled = false
 position_smoothing_enabled = true
 script = ExtResource("6_f5raj")
@@ -114,4 +118,5 @@ position = Vector2(528, 456)
 enabled = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=30537710]
+enabled = false
 zoom = Vector2(0.05, 0.05)
