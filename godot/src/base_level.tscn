@@ -55,14 +55,8 @@ metadata/_edit_lock_ = true
 
 [node name="Player" parent="." unique_id=126300614 instance=ExtResource("9_ujsc6")]
 position = Vector2(360, 312)
-impulse_force = 50000.0
 backup_impulse_force = 500.0
-fuel_consumption = 1
-max_fuel = 100
-laser_power = 1.0
 laser_range = 500.0
-laser_thrust = 5000.0
-max_cargo = 4
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1596738547]
 limit_enabled = false
@@ -74,6 +68,7 @@ position = Vector2(0, -1)
 ship = NodePath("../Player")
 
 [node name="RoomCatalog" type="CanvasLayer" parent="." unique_id=332297952]
+visible = false
 
 [node name="RoomButtons" type="HBoxContainer" parent="RoomCatalog" unique_id=1842233401]
 unique_name_in_owner = true
