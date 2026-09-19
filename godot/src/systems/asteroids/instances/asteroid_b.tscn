@@ -42,11 +42,31 @@ rotation = 1.610043
 shape = SubResource("CapsuleShape2D_qhmu4")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." index="4" unique_id=2126744]
-position = Vector2(-47.000004, -8)
+visible = false
+position = Vector2(-6, -7)
 rotation = 0.006432742
-radius = 126.66
+radius = 192.45
 
-[node name="NavigationObstacle2D2" type="NavigationObstacle2D" parent="." index="5" unique_id=1314023193]
-position = Vector2(44, -5)
-rotation = 0.006432742
-radius = 122.28
+[node name="Patch1" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="0" unique_id=587809626]
+position = Vector2(-6, -32)
+
+[node name="Patch2" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="1" unique_id=1813377508]
+position = Vector2(13, -81)
+
+[node name="Patch3" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="2" unique_id=578551827]
+position = Vector2(68, -75)
+
+[node name="Patch4" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="3" unique_id=1536037361]
+position = Vector2(38, 21)
+
+[node name="Patch5" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="4" unique_id=344175883]
+position = Vector2(-75, 41)
+
+[node name="Patch6" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="5" unique_id=2136722271]
+position = Vector2(-54, -87)
+
+[node name="Patch7" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="6" unique_id=436406572]
+position = Vector2(-111, 65)
+
+[node name="Patch8" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="7" unique_id=636455264]
+position = Vector2(136, -16)

@@ -9,10 +9,6 @@ enum MouseControl {Ship, Station}
 @onready var level_manager: LevelManager = $LevelManager
 @onready var fade_panel: FadePanel = %FadePanel
 
-@onready var power_label: Label = %PowerLabel
-@onready var ore_label: Label = %OreLabel
-@onready var eth_label: Label = %EthLabel
-
 
 
 var control:MouseControl = MouseControl.Ship
@@ -25,7 +21,6 @@ func _ready():
 	Debug.set_levels(level_manager.levels)
 	Globals.game = self
 	Events.control_state_changed.connect(_on_control_state_changed)
-	Events.request_hud_update.connect(_on_request_hud_update)
 
 func _on_control_state_changed(control_type:MouseControl):
 	control = control_type
@@ -51,6 +46,9 @@ func _on_level_manager_level_unloaded() -> void:
 func get_level()->BaseLevel:
 	return level_manager.current_level
 	
+func _input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed("camera"):
+		Events.on_camera_mode_changed.emit(not get_level().overview_camera.enabled)
 
 func _on_level_manager_level_ready() -> void:
 	if get_level().override_game_state:
@@ -59,10 +57,4 @@ func _on_level_manager_level_ready() -> void:
 		if level_manager.current_level_idx==0:
 			game_state = start_state.duplicate()
 		get_level().set_state(game_state)
-	
-
-func _on_request_hud_update():
-	power_label.text="Power: %d / %d" % [get_level().station.get_total_power_consumption(), get_level().station.get_total_power_production()]
-	ore_label.text="Ore: %d" % [get_level().station.resources[Types.Resources.ORE]]
-	eth_label.text="Etherium: %d" % [get_level().station.resources[Types.Resources.ETHERIUM]]
 	

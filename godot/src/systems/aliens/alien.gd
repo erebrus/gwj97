@@ -5,6 +5,7 @@ signal lost_target
 
 @export var speed := 200
 @export var max_hp := 40.0
+@export var enabled:= true
 
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
 @onready var sprite: Sprite2D = $Sprite2D
@@ -20,6 +21,8 @@ func _ready() -> void:
 	set_target_position(Globals.game.get_level().station.global_position)
 	nav.max_speed = speed
 func _physics_process(delta: float) -> void:
+	if not enabled:
+		return
 	fsm.do_update(delta)
 	var desired_direction = (nav.get_next_path_position() - global_position).normalized()
 
@@ -43,7 +46,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	acquired_target.emit()
 
 
-func _on_area_2d_body_exited(body: Node2D) -> void:
+func _on_area_2d_body_exited(_body: Node2D) -> void:
 	target = null
 	lost_target.emit()
 	set_target_position(Globals.game.get_level().station.global_position)

@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://c8fy8uv4hrqb4"]
+
+[ext_resource type="Script" uid="uid://2chqdw6xwjnr" path="res://src/ui/ship/station/station_cargo_ui.gd" id="1_eskvx"]
+[ext_resource type="Texture2D" uid="uid://dkvedmxhxlwt0" path="res://assets/gfx/map/ore/ore.png" id="1_stswj"]
+[ext_resource type="Texture2D" uid="uid://dxyio87pg0tad" path="res://assets/gfx/map/ore/etherium.png" id="2_eskvx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eykmb"]
+
+[node name="StationCargoUi" type="PanelContainer" unique_id=1895314971]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -234.0
+offset_bottom = 80.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_eykmb")
+script = ExtResource("1_eskvx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1082874926]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer" unique_id=1587891909]
+layout_mode = 2
+theme_override_constants/separation = -8
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/HBoxContainer" unique_id=1316403757]
+layout_mode = 2
+texture = ExtResource("1_stswj")
+
+[node name="OreLabel" type="Label" parent="HBoxContainer/HBoxContainer" unique_id=1791276704]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "x10"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer" unique_id=747833478]
+layout_mode = 2
+theme_override_constants/separation = -8
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/HBoxContainer2" unique_id=1296314662]
+layout_mode = 2
+texture = ExtResource("2_eskvx")
+
+[node name="EthLabel" type="Label" parent="HBoxContainer/HBoxContainer2" unique_id=625657557]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "x10"

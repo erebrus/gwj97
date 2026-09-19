@@ -1,21 +1,38 @@
 extends Node
-
+@warning_ignore("unused_signal")
 signal level_ended()
 
+@warning_ignore("unused_signal")
+signal ship_init_completed(ship:Player)
+@warning_ignore("unused_signal")
 signal thrust_requested()
+@warning_ignore("unused_signal")
 signal thrust_stopped()
+@warning_ignore("unused_signal")
 signal out_of_fuel()
+@warning_ignore("unused_signal")
 signal player_position_updated(pos:Vector2)
+@warning_ignore("unused_signal")
 signal fuel_consumed(fuel:int)
+@warning_ignore("unused_signal")
+signal cargo_updated(cargo:Dictionary[Types.Resources, int])
 
-
+@warning_ignore("unused_signal")
 signal laser_position_updated(start:Vector2, end:Vector2)
+@warning_ignore("unused_signal")
 signal laser_cancelled()
 
+@warning_ignore("unused_signal")
+signal station_cargo_updated(cargo:Dictionary[Types.Resources, int])
 
+@warning_ignore("unused_signal")
 signal control_state_changed(control_type:Game.MouseControl)
 
+@warning_ignore("unused_signal")
 signal successful_production(room:StationRoom)
+@warning_ignore("unused_signal")
 signal unsuccessful_production(room:StationRoom)
 
-signal request_hud_update()
+#signal request_hud_update()
+@warning_ignore("unused_signal")
+signal on_camera_mode_changed(val:bool)

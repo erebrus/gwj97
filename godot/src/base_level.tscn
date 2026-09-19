@@ -2,11 +2,14 @@
 
 [ext_resource type="Script" uid="uid://b4ytavk038x8p" path="res://src/base_level.gd" id="1_mnxva"]
 [ext_resource type="PackedScene" uid="uid://ct0x1qn140hns" path="res://src/systems/station/grid/station_grid.tscn" id="2_2xr1i"]
+[ext_resource type="Script" uid="uid://b01hcl6af7vyt" path="res://src/systems/asteroids/field/asteroid_field.gd" id="2_f6fmg"]
+[ext_resource type="Script" uid="uid://cex2yh4fyv8us" path="res://src/systems/asteroids/field/asteroid_streamer.gd" id="2_ofrd7"]
 [ext_resource type="PackedScene" uid="uid://dyvtawur8hwpc" path="res://src/systems/station/station.tscn" id="2_ohl3f"]
 [ext_resource type="PackedScene" uid="uid://colgh87172chk" path="res://src/systems/station/placement/room_button.tscn" id="3_82ww6"]
 [ext_resource type="PackedScene" uid="uid://cr1k77e4uh33v" path="res://src/systems/asteroids/instances/asteroid_a.tscn" id="3_ujsc6"]
 [ext_resource type="PackedScene" uid="uid://d3p0ehflf68eg" path="res://src/systems/asteroids/instances/asteroid_b.tscn" id="4_ohl3f"]
 [ext_resource type="PackedScene" uid="uid://by4ij8hnxj1ym" path="res://src/systems/asteroids/instances/asteroid_c.tscn" id="5_l54d2"]
+[ext_resource type="Script" uid="uid://gntq48ft4gmg" path="res://src/camera_2d.gd" id="6_f5raj"]
 [ext_resource type="PackedScene" uid="uid://dl4wcbqooexg3" path="res://src/systems/station/rooms/solar_generator.tscn" id="8_ujsc6"]
 [ext_resource type="PackedScene" uid="uid://bin3o5uufn1qc" path="res://src/systems/player_ship/crosshair.tscn" id="9_a04hb"]
 [ext_resource type="PackedScene" uid="uid://s34hx8xcy6v0" path="res://src/systems/station/rooms/reactor.tscn" id="9_ohl3f"]
@@ -23,8 +26,24 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-352, -320, -368, 1408,
 [node name="BaseLevel" type="Node2D" unique_id=613843204]
 script = ExtResource("1_mnxva")
 
+[node name="AsteroidField" type="Node2D" parent="." unique_id=891395834 node_paths=PackedStringArray("station")]
+script = ExtResource("2_f6fmg")
+max_per_cell = 5
+min_dist = 300.0
+base_density = 1.0
+mineral_count = 2
+station = NodePath("../Station")
+
+[node name="AsteroidStreamer" type="Node2D" parent="." unique_id=1716234031 node_paths=PackedStringArray("target", "field")]
+script = ExtResource("2_ofrd7")
+asteroid_scenes = Array[PackedScene]([ExtResource("3_ujsc6"), ExtResource("4_ohl3f"), ExtResource("5_l54d2")])
+target = NodePath("../Asteroids")
+load_radius_cells = 10
+field = NodePath("../AsteroidField")
+metadata/_custom_type_script = "uid://cex2yh4fyv8us"
+
 [node name="Station" parent="." unique_id=1288710059 instance=ExtResource("2_ohl3f")]
-position = Vector2(776, 520)
+position = Vector2(-40, -64)
 
 [node name="Dock" parent="Station" unique_id=1243543416 instance=ExtResource("12_a04hb")]
 position = Vector2(0, -8)
@@ -37,16 +56,19 @@ metadata/_edit_lock_ = true
 [node name="Player" parent="." unique_id=126300614 instance=ExtResource("9_ujsc6")]
 position = Vector2(360, 312)
 backup_impulse_force = 500.0
+laser_range = 500.0
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1596738547]
 limit_enabled = false
 position_smoothing_enabled = true
+script = ExtResource("6_f5raj")
 
 [node name="Crosshair" parent="." unique_id=839442879 node_paths=PackedStringArray("ship") instance=ExtResource("9_a04hb")]
 position = Vector2(0, -1)
 ship = NodePath("../Player")
 
 [node name="RoomCatalog" type="CanvasLayer" parent="." unique_id=332297952]
+visible = false
 
 [node name="RoomButtons" type="HBoxContainer" parent="RoomCatalog" unique_id=1842233401]
 unique_name_in_owner = true
@@ -75,22 +97,6 @@ room_scene = ExtResource("12_a04hb")
 
 [node name="Asteroids" type="Node2D" parent="." unique_id=888332613]
 
-[node name="AsteroidA" parent="Asteroids" unique_id=874490926 instance=ExtResource("3_ujsc6")]
-position = Vector2(264.00006, 1064)
-rotation = 0.72478133
-collision_layer = 1
-mass = 10.0
-
-[node name="AsteroidB" parent="Asteroids" unique_id=927420345 instance=ExtResource("4_ohl3f")]
-position = Vector2(768, 1536)
-collision_layer = 1
-mass = 10.0
-
-[node name="AsteroidC" parent="Asteroids" unique_id=1122160183 instance=ExtResource("5_l54d2")]
-position = Vector2(1000, 1080)
-collision_layer = 1
-mass = 10.0
-
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=166771977]
 navigation_polygon = SubResource("NavigationPolygon_a04hb")
 
@@ -98,15 +104,24 @@ navigation_polygon = SubResource("NavigationPolygon_a04hb")
 
 [node name="Alien1" parent="NavigationRegion2D/aliens" unique_id=1045095359 instance=ExtResource("14_ofrd7")]
 position = Vector2(816, 24)
+enabled = false
 
 [node name="Alien2" parent="NavigationRegion2D/aliens" unique_id=1995628810 instance=ExtResource("14_ofrd7")]
 position = Vector2(296, -128)
+enabled = false
 
 [node name="Alien3" parent="NavigationRegion2D/aliens" unique_id=751324808 instance=ExtResource("14_ofrd7")]
 position = Vector2(424, 240)
+enabled = false
 
 [node name="Alien4" parent="NavigationRegion2D/aliens" unique_id=1396482569 instance=ExtResource("14_ofrd7")]
 position = Vector2(-152, 352)
+enabled = false
 
 [node name="Alien5" parent="NavigationRegion2D/aliens" unique_id=877710705 instance=ExtResource("14_ofrd7")]
 position = Vector2(528, 456)
+enabled = false
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=30537710]
+enabled = false
+zoom = Vector2(0.05, 0.05)

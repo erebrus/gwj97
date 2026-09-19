@@ -2,6 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://bitorv40my1rq" path="res://src/systems/player_ship/laser.gdshader" id="1_d0ine"]
 [ext_resource type="Script" uid="uid://ckwmktl485wj0" path="res://src/systems/player_ship/laser.gd" id="2_g7rik"]
+[ext_resource type="Texture2D" uid="uid://cx3hsuidfosam" path="res://assets/gfx/player/laser_particle.png" id="3_6vk5t"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tv4qb"]
 shader = ExtResource("1_d0ine")
@@ -24,11 +25,39 @@ shader_parameter/noise_scale = Vector2(2, 2)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_i7cnb"]
 
+[sub_resource type="Curve" id="Curve_g7rik"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.472973, 0.9325843), 0.0, 0.0, 0, 0, Vector2(1, 0.022471905), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_6vk5t"]
+curve = SubResource("Curve_g7rik")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_eykmb"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_max = 161.45999
+gravity = Vector3(0, 0, 0)
+damping_max = 96.774
+scale_curve = SubResource("CurveTexture_6vk5t")
+
 [node name="Laser" type="Line2D" unique_id=1330834192]
-z_index = -1
 material = SubResource("ShaderMaterial_tv4qb")
 points = PackedVector2Array(0, 0, 100, 0)
 width = 24.0
 texture = SubResource("PlaceholderTexture2D_i7cnb")
 texture_mode = 2
 script = ExtResource("2_g7rik")
+
+[node name="ContactPoint" type="Polygon2D" parent="." unique_id=1481274650]
+position = Vector2(100, 0)
+polygon = PackedVector2Array(0, -3, 4, 0, 0, 3)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="ContactPoint" unique_id=698931036]
+amount = 50
+texture = ExtResource("3_6vk5t")
+lifetime = 0.2
+explosiveness = 0.62
+randomness = 0.59
+use_fixed_seed = true
+seed = 3015383997
+process_material = SubResource("ParticleProcessMaterial_eykmb")

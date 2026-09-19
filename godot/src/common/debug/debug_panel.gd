@@ -59,3 +59,7 @@ func _on_load_level_button_pressed() -> void:
 	var level_idx = level_selection.selected
 	Globals.game.level_manager.load_level(level_idx)
 	
+
+
+func _on_overview_camera_toggled(toggled_on: bool) -> void:
+	Events.on_camera_mode_changed.emit(toggled_on)

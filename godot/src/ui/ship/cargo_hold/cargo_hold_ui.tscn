@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dlm0sbu8yesaa"]
+
+[ext_resource type="Script" uid="uid://4f0mx4vhreef" path="res://src/ui/ship/cargo_hold/cargo_hold_ui.gd" id="1_s65q4"]
+
+[node name="CargoHoldUi" type="GridContainer" unique_id=983534174]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 4
+script = ExtResource("1_s65q4")
