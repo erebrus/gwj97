@@ -36,7 +36,7 @@ texture = ExtResource("2_f3a72")
 visible = false
 sprite_frames = SubResource("SpriteFrames_m2fog")
 
-[node name="CollisionShape2D" parent="." index="2" unique_id=740251918]
+[node name="CollisionShape2D" parent="." index="3" unique_id=740251918]
 position = Vector2(-11, -11.000001)
 rotation = 1.610043
 shape = SubResource("CapsuleShape2D_qhmu4")
@@ -70,3 +70,15 @@ position = Vector2(-111, 65)
 
 [node name="Patch8" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="7" unique_id=636455264]
 position = Vector2(136, -16)
+
+[node name="Decor1" parent="Decor" parent_id_path=PackedInt32Array(1519415270) index="0" unique_id=250165226]
+position = Vector2(-17, -93)
+
+[node name="Decor2" parent="Decor" parent_id_path=PackedInt32Array(1519415270) index="1" unique_id=1894737708]
+position = Vector2(38, 55)
+
+[node name="Decor3" parent="Decor" parent_id_path=PackedInt32Array(1519415270) index="2" unique_id=1778693621]
+position = Vector2(-124, -30)
+
+[node name="Decor4" parent="Decor" parent_id_path=PackedInt32Array(1519415270) index="3" unique_id=946254591]
+position = Vector2(-140, 32)

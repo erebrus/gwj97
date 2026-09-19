@@ -1,7 +1,15 @@
 class_name Asteroid extends RigidBody2D
 @export
 var angular_speed_interval:Vector2 = Vector2(0.1,.5)
-
+const MINERAL_CLUSTER_TEXS = [
+	[preload("res://assets/gfx/map/ore/ore_cluster1.png"), preload("res://assets/gfx/map/ore/ore_cluster2.png"), preload("res://assets/gfx/map/ore/ore_cluster3.png"), preload("res://assets/gfx/map/ore/ore_cluster4.png")],
+	[preload("res://assets/gfx/map/ore/etherium_cluster1.png"), preload("res://assets/gfx/map/ore/etherium_cluster2.png"), preload("res://assets/gfx/map/ore/etherium_cluster3.png"), preload("res://assets/gfx/map/ore/etherium_cluster4.png")]
+]
+const MINERAL_TEXS = [
+		preload("res://assets/gfx/map/ore/ore_asteroid.png"),
+		preload("res://assets/gfx/map/ore/etherium_asteroid.png"),
+		
+	]
 const RICHNESS_WEIGHTS := [.3,.4,.2,.1]
 const RICHNESS_MINERALS := [2,4,5,7]
 
@@ -19,6 +27,7 @@ var flash_time:float=0
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var broken_sprite: AnimatedSprite2D = $BrokenSprite
 @onready var patches: Node2D = $Patches
+@onready var decor: Node2D = $Decor
 
 func _ready():
 	structure = max_structure
@@ -38,14 +47,30 @@ func _update_minerals():
 		GameUtils.clear_node(patches.get_child(i))
 		available_patches.append(i)
 		
+	
 	for i in range(mineral_count):
 		var mineral_sprite := Sprite2D.new()
 		
-		mineral_sprite.texture = Cargo.MINERAL_TEXS[type]
+		mineral_sprite.texture = MINERAL_TEXS[type]
 		var patch = available_patches.pick_random()
 		available_patches.erase(patch)
 		patches.get_child(patch).add_child(mineral_sprite)
 		mineral_sprite.rotation = 2*PI * randf()
+		
+	available_patches.clear()
+	if mineral_count:
+		for i in decor.get_child_count():
+			GameUtils.clear_node(decor.get_child(i))
+			available_patches.append(i)
+		
+		for i in range(randi_range(2,4)):
+			var mineral_sprite := Sprite2D.new()
+			
+			mineral_sprite.texture = MINERAL_CLUSTER_TEXS[type][randi() % MINERAL_CLUSTER_TEXS[type].size()]
+			var cluster = available_patches.pick_random()
+			available_patches.erase(cluster)
+			decor.get_child(cluster).add_child(mineral_sprite)
+			mineral_sprite.rotation = 2*PI * randf()
 		
 func _physics_process(delta: float) -> void:
 	if flash_time > 0:

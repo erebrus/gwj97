@@ -39,3 +39,15 @@ position = Vector2(-144, -43)
 
 [node name="Patch8" parent="Patches" parent_id_path=PackedInt32Array(1020383836) index="7" unique_id=636455264]
 position = Vector2(120, 21)
+
+[node name="Decor1" parent="Decor" parent_id_path=PackedInt32Array(1519415270) index="0" unique_id=250165226]
+position = Vector2(-161, -19)
+
+[node name="Decor2" parent="Decor" parent_id_path=PackedInt32Array(1519415270) index="1" unique_id=1894737708]
+position = Vector2(71, -58)
+
+[node name="Decor3" parent="Decor" parent_id_path=PackedInt32Array(1519415270) index="2" unique_id=1778693621]
+position = Vector2(-56, 17)
+
+[node name="Decor4" parent="Decor" parent_id_path=PackedInt32Array(1519415270) index="3" unique_id=946254591]
+position = Vector2(129, -15)
