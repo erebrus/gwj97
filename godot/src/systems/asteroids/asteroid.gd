@@ -43,10 +43,12 @@ func _update_minerals():
 		
 	for i in range(mineral_count):
 		var mineral_sprite := Sprite2D.new()
+		
 		mineral_sprite.texture = MINERAL_TEXS[type]
 		var patch = available_patches.pick_random()
 		available_patches.erase(patch)
 		patches.get_child(patch).add_child(mineral_sprite)
+		mineral_sprite.rotation = 2*PI * randf()
 		
 func _physics_process(delta: float) -> void:
 	if flash_time > 0:
@@ -97,7 +99,7 @@ func set_richness(richness:float):
 		if richness < acc:
 			mineral_count = RICHNESS_MINERALS[i] + randi_range(-1,1)
 			break
-	print ("mineral: ", mineral_count)
+	#print ("mineral: ", mineral_count)
 func destroy():
 	for i in range(mineral_count):
 		var c:Cargo = Cargo.create(type)
