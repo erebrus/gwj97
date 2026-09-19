@@ -14,7 +14,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="Game Template"
+config/name="GWJ97"
 config/version="0.0.0"
 run/main_scene="uid://ke438w5ne7cw"
 config/features=PackedStringArray("4.7", "Forward Plus")
@@ -99,3 +99,7 @@ dock={
 [physics]
 
 2d/default_angular_damp=0.0
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
