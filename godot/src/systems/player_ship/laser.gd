@@ -43,7 +43,7 @@ func get_collision(start:Vector2, end:Vector2):
 
 func _on_laser_position_updated(start:Vector2, end:Vector2):
 	var vec:=(end-start).limit_length(length)
-	GSLogger.info("Laser length:%2f" % vec.length())
+	GSLogger.trace("Laser length:%2f" % vec.length())
 	end = start + vec 
 	
 	var collision:Dictionary = get_collision(start, end)

@@ -68,6 +68,7 @@ func take_damage(damage:float):
 	GSLogger.debug("%s takes damage. Structure = %2f" % [name, structure])
 	flash_time = .5
 	if structure < 0:
+		collision_layer = 0
 		destroy()
 
 func get_broken_sprite_id()->int:
@@ -98,6 +99,7 @@ func set_richness(richness:float):
 			break
 	#print ("mineral: ", mineral_count)
 func destroy():
+	animation_player.play("explode")
 	for patch:Node2D in patches.get_children():
 		if patch.get_child_count():
 			var c:Cargo = Cargo.create(type)
@@ -105,4 +107,5 @@ func destroy():
 			c.global_rotation = patch.get_child(0).global_rotation
 			c.linear_velocity = (Vector2.RIGHT * randf_range(50,150)).rotated(randf()*2*PI) 
 			get_parent().add_child(c)
+	await animation_player.animation_finished
 	queue_free()

@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b38117cgee56q" path="res://assets/gfx/map/asteroids/asteroid1/crack1.png" id="3_18mke"]
 [ext_resource type="Texture2D" uid="uid://nh47blyqv0t4" path="res://assets/gfx/map/asteroids/asteroid1/crack2.png" id="4_jy2ub"]
 [ext_resource type="Texture2D" uid="uid://b1k5pnintgjxe" path="res://assets/gfx/map/asteroids/asteroid1/crack3.png" id="5_p3431"]
+[ext_resource type="Texture2D" uid="uid://c1nbngnbmnaqt" path="res://assets/gfx/map/asteroids/asteroid_explosion.png" id="6_jy2ub"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_y6u74"]
 friction = 0.0
@@ -44,6 +45,70 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ExplosionSprite:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_p3431"]
+resource_name = "explode"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ExplosionSprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0), Vector2i(5, 0), Vector2i(6, 0), Vector2i(7, 0), Vector2i(8, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 0.57434916),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BrokenSprite:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_onhs6"]
 resource_name = "flash"
@@ -66,6 +131,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ajy3r"]
 _data = {
 &"RESET": SubResource("Animation_1y8a4"),
+&"explode": SubResource("Animation_p3431"),
 &"flash": SubResource("Animation_onhs6")
 }
 
@@ -81,6 +147,10 @@ texture = ExtResource("2_g1ntp")
 
 [node name="BrokenSprite" type="AnimatedSprite2D" parent="." unique_id=1473793723]
 sprite_frames = SubResource("SpriteFrames_i7cnb")
+
+[node name="ExplosionSprite" type="Sprite2D" parent="." unique_id=1069924990]
+texture = ExtResource("6_jy2ub")
+hframes = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=740251918]
 visible = false

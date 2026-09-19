@@ -46,7 +46,7 @@ position = Vector2(14.999998, -10.000002)
 rotation = -0.67370313
 shape = SubResource("CapsuleShape2D_i7cnb")
 
-[node name="CollisionShape2D" parent="." index="3" unique_id=740251918]
+[node name="CollisionShape2D" parent="." index="4" unique_id=740251918]
 position = Vector2(-19, 7)
 rotation = 1.3886094
 shape = SubResource("CapsuleShape2D_hd51g")
