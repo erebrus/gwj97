@@ -7,6 +7,7 @@ var game_state:GameState
 
 var placeholder: Placeholder
 @onready var station: Station = $Station
+@onready var asteroids_node: Node2D = $Asteroids
 
 @onready var grid: StationGrid = %StationGrid
 @onready var player_camera: Camera2D = $Player/Camera2D

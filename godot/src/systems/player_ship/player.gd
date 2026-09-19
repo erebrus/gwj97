@@ -62,10 +62,8 @@ var autopilot:bool :
 var laser:Laser
 
 var target_cargo:Array[Cargo]
-var cargo:Dictionary[Types.Resources, int] = {
-	Types.Resources.ORE: 0,
-	Types.Resources.ETHERIUM : 0
-}
+var cargo:Array[Types.Resources]
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Events.thrust_requested.connect(_on_thrust_requested)
@@ -87,11 +85,15 @@ func _on_thrust_requested():
 	
 func unload_cargo(station:Station):
 	if not cargo.is_empty():
-		station.add_resources(cargo)
-		cargo = {
+		var cargo_manifest:Dictionary[Types.Resources, int] = {
 			Types.Resources.ORE: 0,
 			Types.Resources.ETHERIUM : 0
 		}
+		for c:Types.Resources in cargo:
+			cargo_manifest[c] += 1
+			
+		station.add_resources(cargo_manifest)
+		cargo.clear()
 		GSLogger.info("Unloaded cargo")
 	Events.cargo_updated.emit(cargo)
 	collection_area.set_deferred("monitoring", true)
@@ -177,9 +179,22 @@ func _stop_thrust():
 	thrust_on = false
 	animation_player.play("thrust_stop") 
 	
+func jettison_cargo():
+	var ct :Types.Resources= cargo.pop_back()
+	var c:Cargo = Cargo.create(ct)
+	c.collision_layer = 0
+	c.global_position = global_position
+	c.linear_velocity = Vector2.RIGHT.rotated(rotation) * randf_range(250,350) 
+	Globals.game.get_level().asteroids_node.add_child(c)
+	Events.cargo_updated.emit()
+	await get_tree().create_timer(1.0).timeout
+	c.collision_layer = LayerNames.PHYSICS_2D.CARGO
+	
 func _input(event):
 	if Globals.game.control != Game.MouseControl.Ship:
 		return
+	if Input.is_action_just_pressed("jettison"):
+		jettison_cargo()
 	if Input.is_action_just_pressed("turbo"):
 		do_turbo()
 	var should_stop_damp := Input.is_action_pressed("damp_null")
@@ -236,7 +251,7 @@ func crush():
 
 
 func _on_collection_area_body_entered(body: Node2D) -> void:
-	cargo[body.type] += 1
+	cargo.append(body.type)
 	body.queue_free()
 	if is_cargo_full():
 		collection_area.set_deferred("monitoring", false)
@@ -245,10 +260,7 @@ func _on_collection_area_body_entered(body: Node2D) -> void:
 		
 
 func is_cargo_full()->bool:
-	var sum = 0
-	for key in cargo.keys():
-		sum += cargo[key]
-	return sum >= max_cargo
+	return cargo.size() >= max_cargo
 
 
 	
