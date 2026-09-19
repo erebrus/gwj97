@@ -10,6 +10,7 @@ class_name Player extends RigidBody2D
 @export var attraction_range:float = 50
 @export var attaction_power:float = 50.0
 @export var max_cargo:=4
+@export var boost_thrust = 200000
 
 var thrust_on:bool = false
 
@@ -25,9 +26,23 @@ var fuel = max_fuel
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var muzzle: Node2D = $Muzzle
 @onready var attraction_collision_shape_2d: CollisionShape2D = $AttractionArea/CollisionShape2D
+@onready var turbo_timer: Timer = $TurboTimer
 
 @onready var collection_area: Area2D = $CollectionArea
+@onready var backup_damp = linear_damp
 
+var damp_null_enabled := false:
+	set(_v):
+		damp_null_enabled = _v
+		if is_node_ready():
+			if _v:
+				linear_damp = 0
+			else:
+				_start_damp_recovery()
+@onready
+var damp_tween:Tween
+	
+var turbo_available := true
 var autopilot:bool :
 	set(_v):
 		autopilot = _v
@@ -59,7 +74,8 @@ func _ready():
 	_on_timer_timeout()
 	Events.out_of_fuel.connect(_on_out_of_fuel)
 	attraction_collision_shape_2d.shape.radius =  attraction_range
-	
+	await get_tree().physics_frame
+	Events.ship_init_completed.emit(self)
 func _on_out_of_fuel():
 	sfx_out_of_fuel.play()
 	
@@ -77,6 +93,7 @@ func unload_cargo(station:Station):
 			Types.Resources.ETHERIUM : 0
 		}
 		GSLogger.info("Unloaded cargo")
+	Events.cargo_updated.emit(cargo)
 	collection_area.set_deferred("monitoring", true)
 
 
@@ -123,7 +140,25 @@ func _rotate_sprite() -> void:
 ##	crush_sprite.rotation = sprite.rotation + deg_to_rad(135) TODO restore crush animation
 	#rotation_guide.rotation = -rotation
 	
+func do_turbo():
+	
+	var impulse = Vector2.RIGHT.rotated(rotation)*-(boost_thrust)
+	apply_central_impulse(impulse)
+	#if not damp_null_enabled:
+	linear_damp = 0
+		#_start_damp_recovery()
+	
+	turbo_available = false
+	turbo_timer.start()
 
+func _start_damp_recovery():
+	#if damp_tween:
+		#await damp_tween.finished
+		#damp_tween = null
+	#damp_tween = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
+	#damp_tween.tween_property(self, "linear_damp", backup_damp, .5)
+	linear_damp = backup_damp
+	
 func _set_target_angle():
 	var pos = get_global_mouse_position()
 	target_angle = pos.angle_to_point(global_position)
@@ -145,6 +180,11 @@ func _stop_thrust():
 func _input(event):
 	if Globals.game.control != Game.MouseControl.Ship:
 		return
+	if Input.is_action_just_pressed("turbo"):
+		do_turbo()
+	var should_stop_damp := Input.is_action_pressed("damp_null")
+	if not damp_null_enabled and should_stop_damp or (damp_null_enabled and not should_stop_damp):
+		damp_null_enabled = should_stop_damp
 		
 	if event is InputEventMouseMotion:
 		_set_target_angle()
@@ -200,7 +240,7 @@ func _on_collection_area_body_entered(body: Node2D) -> void:
 	body.queue_free()
 	if is_cargo_full():
 		collection_area.set_deferred("monitoring", false)
-	
+	Events.cargo_updated.emit(cargo)
 	GSLogger.debug("Cargo collected")
 		
 
@@ -225,3 +265,9 @@ func _on_attraction_area_body_exited(body: Node2D) -> void:
 		var cargo:Cargo = body as Cargo
 		while cargo in target_cargo:
 			target_cargo.erase(cargo)
+
+
+func _on_turbo_timer_timeout() -> void:
+	turbo_available = true
+	if not damp_null_enabled:
+		_start_damp_recovery()

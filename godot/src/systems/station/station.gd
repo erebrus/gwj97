@@ -15,8 +15,9 @@ func _ready() -> void:
 	for child in get_children():
 		if child is StationRoom:
 			add_room(child as StationRoom)
-		
-		
+	await get_tree().physics_frame
+	Events.station_cargo_updated.emit(resources)
+
 func add_room(room: StationRoom):
 	room.reparent(rooms)
 	room.station = self
@@ -34,7 +35,8 @@ func _on_timer_timeout() -> void:
 	resources[Types.Resources.POWER] = 0
 	do_power_production()
 	do_other_production()
-	Events.request_hud_update.emit()
+	#Events.request_hud_update.emit()
+	Events.station_cargo_updated.emit(resources)
 
 func has_resources(_resources:Dictionary[Types.Resources, int]) -> bool:
 	if _resources.is_empty():

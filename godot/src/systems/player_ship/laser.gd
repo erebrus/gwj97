@@ -52,7 +52,7 @@ func _on_laser_position_updated(start:Vector2, end:Vector2):
 		len_tween.stop()
 		length = last_actual_length
 		end = start + vec.limit_length(last_actual_length)
-		GSLogger.info("restarting laser tween from %2f to %2f" % [last_actual_length])
+		#GSLogger.info("restarting laser tween from %2f to %2f" % [last_actual_length])
 		len_tween = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)
 		len_tween.tween_property(self,"length",rng,remap(rng - length,0, rng,0,.3))
 		

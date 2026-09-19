@@ -33,7 +33,7 @@ func dock_ship():
 	GSLogger.info("Ship Docked")
 	ship.unload_cargo(station)
 	
-func _on_dock_area_body_exited(body: Node2D) -> void:
+func _on_dock_area_body_exited(_body: Node2D) -> void:
 	ship = null
 
 func undock_ship():

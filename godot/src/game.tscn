@@ -5,6 +5,8 @@
 [ext_resource type="Resource" uid="uid://7vtuecoxqef2" path="res://src/start_state.tres" id="2_pk08u"]
 [ext_resource type="PackedScene" uid="uid://lqtollaovard" path="res://src/base_level.tscn" id="3_pk08u"]
 [ext_resource type="PackedScene" uid="uid://cdm2fhla0kigd" path="res://src/common/fade_panel.tscn" id="4_wqvko"]
+[ext_resource type="PackedScene" uid="uid://dlm0sbu8yesaa" path="res://src/ui/ship/cargo_hold/cargo_hold_ui.tscn" id="5_wqvko"]
+[ext_resource type="PackedScene" uid="uid://c8fy8uv4hrqb4" path="res://src/ui/ship/station/station_cargo_ui.tscn" id="6_wqvko"]
 
 [sub_resource type="Resource" id="Resource_5q4o7"]
 metadata/__load_path__ = "res://src/tutorial_state.tres"
@@ -22,28 +24,30 @@ level_container = NodePath("../Level")
 
 [node name="HUDLayer" type="CanvasLayer" parent="." unique_id=10557319]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HUDLayer" unique_id=933696937]
+[node name="MarginContainer" type="MarginContainer" parent="HUDLayer" unique_id=872381243]
 anchors_preset = 10
 anchor_right = 1.0
+offset_bottom = 23.0
 grow_horizontal = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUDLayer/MarginContainer" unique_id=933696937]
+layout_mode = 2
 theme_override_constants/separation = 40
 alignment = 2
 
-[node name="PowerLabel" type="Label" parent="HUDLayer/HBoxContainer" unique_id=1931315043]
-unique_name_in_owner = true
+[node name="CargoHoldUi" parent="HUDLayer/MarginContainer/HBoxContainer" unique_id=983534174 instance=ExtResource("5_wqvko")]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="HUDLayer/MarginContainer/HBoxContainer" unique_id=1020971509]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Power: 5 / 10"
 
-[node name="OreLabel" type="Label" parent="HUDLayer/HBoxContainer" unique_id=1355033895]
-unique_name_in_owner = true
+[node name="StationCargoUi" parent="HUDLayer/MarginContainer/HBoxContainer" unique_id=1895314971 instance=ExtResource("6_wqvko")]
 layout_mode = 2
-text = "Ore: 5"
-
-[node name="EthLabel" type="Label" parent="HUDLayer/HBoxContainer" unique_id=471866777]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Etherium: 5"
+size_flags_horizontal = 1
 
 [node name="OverlayLayer" type="CanvasLayer" parent="." unique_id=1990209073]
 layer = 5

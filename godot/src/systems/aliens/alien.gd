@@ -46,7 +46,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	acquired_target.emit()
 
 
-func _on_area_2d_body_exited(body: Node2D) -> void:
+func _on_area_2d_body_exited(_body: Node2D) -> void:
 	target = null
 	lost_target.emit()
 	set_target_position(Globals.game.get_level().station.global_position)

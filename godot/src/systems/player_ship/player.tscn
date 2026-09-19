@@ -184,16 +184,8 @@ gravity_scale = 0.0
 linear_damp_mode = 1
 linear_damp = 1.0
 script = ExtResource("1_8b0mp")
-impulse_force = null
-backup_impulse_force = null
-fuel_consumption = null
-max_fuel = null
-laser_power = null
-laser_range = null
-laser_thrust = null
 attraction_range = 128.0
 attaction_power = 300.0
-max_cargo = null
 
 [node name="RotationGuide" type="Node2D" parent="." unique_id=1654121031]
 visible = false
@@ -266,6 +258,10 @@ collision_mask = 32
 visible = false
 shape = SubResource("CircleShape2D_eykmb")
 
+[node name="TurboTimer" type="Timer" parent="." unique_id=1388550418]
+one_shot = true
+
 [connection signal="body_entered" from="CollectionArea" to="." method="_on_collection_area_body_entered"]
 [connection signal="body_entered" from="AttractionArea" to="." method="_on_attraction_area_body_entered"]
 [connection signal="body_exited" from="AttractionArea" to="." method="_on_attraction_area_body_exited"]
+[connection signal="timeout" from="TurboTimer" to="." method="_on_turbo_timer_timeout"]
