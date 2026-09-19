@@ -75,8 +75,8 @@ func _on_laser_cancelled():
 	cancelling = true
 
 
-static func create(power:float, rng:float)->Laser:
+static func create(_power:float, _rng:float)->Laser:
 	var ret:Laser = _SCENE.instantiate()
-	ret.power = power
-	ret.rng = rng
+	ret.power = _power
+	ret.rng = _rng
 	return ret

@@ -262,9 +262,9 @@ func _on_attraction_area_body_entered(body: Node2D) -> void:
 
 func _on_attraction_area_body_exited(body: Node2D) -> void:
 	if body is Cargo:
-		var cargo:Cargo = body as Cargo
-		while cargo in target_cargo:
-			target_cargo.erase(cargo)
+		var _cargo:Cargo = body as Cargo
+		while _cargo in target_cargo:
+			target_cargo.erase(_cargo)
 
 
 func _on_turbo_timer_timeout() -> void:

@@ -28,7 +28,7 @@ func get_state()->Dictionary:
 		"scope":scope,
 	}
 
-func update_value(game:Game):
+func update_value(_game:Game):
 	pass
 	
 func set_state(state:Dictionary):

@@ -5,14 +5,14 @@ var ship:Player
 func _setup_collision() -> void:
 	pass
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	pass
 	#if ship and 
 		#
 		#else:
 			#GSLogger.info("Ship moving too fast, can't dock")
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if ship and Input.is_action_just_pressed("dock"):
 		if not ship.autopilot:
 			if has_ship_control() :

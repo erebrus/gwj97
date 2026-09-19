@@ -6,11 +6,11 @@ signal placed(room: StationRoom)
 var room: StationRoom
 var valid_position: bool
 
-static func create(room: StationRoom) -> Placeholder:
+static func create(_room: StationRoom) -> Placeholder:
 	var placeholder = Placeholder.new()
-	placeholder.room = room
+	placeholder.room = _room
 	placeholder.top_level = true
-	placeholder.add_child(room)
+	placeholder.add_child(_room)
 	
 	return placeholder
 

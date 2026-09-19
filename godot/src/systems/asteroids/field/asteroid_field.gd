@@ -203,7 +203,7 @@ func _build(c: Dictionary) -> AsteroidData:
 
 	#a.radius = lerpf(6.0, 22.0, t * t)            # small rocks common, big ones rare
 	#a.radius *= lerpf(0.8, 1.35, a.richness)      # denser fields run bigger
-	a.scene = t * 65535
+	a.scene = int(t * 65535)
 	a.mineral = _mineral_at(a.position, t)
 	#print ("mineral: ", a.mineral)
 	return a

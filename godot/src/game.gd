@@ -46,7 +46,7 @@ func _on_level_manager_level_unloaded() -> void:
 func get_level()->BaseLevel:
 	return level_manager.current_level
 	
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("camera"):
 		Events.on_camera_mode_changed.emit(not get_level().overview_camera.enabled)
 
