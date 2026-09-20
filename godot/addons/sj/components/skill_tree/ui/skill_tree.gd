@@ -92,7 +92,7 @@ func setup() -> void:
 		for skill in tier:
 			var child: Control
 			if skill == null:
-				var dummy:= SJSkillTreeSkill.new()
+				var dummy:= SJSkill.new()
 				dummy.is_dummy = true
 				child = _create_node(dummy)
 			else:
@@ -115,7 +115,7 @@ func setup() -> void:
  
 ## Used by the tree to instantiate a skill node. Override or set [member node_scene]
 ## for a custom skill node scenee
-func _create_node(skill: SJSkillTreeSkill) -> SJSkillNode:
+func _create_node(skill: SJSkill) -> SJSkillNode:
 	var node = node_scene.instantiate() as SJSkillNode
 	node.skill = skill
 	return node

@@ -1,19 +1,19 @@
 extends VBoxContainer
 
-var skills: Array[SJSkillTreeSkill]
+var skills: Array[SJSkill]
 
 func _ready() -> void:
 	_on_create_button_pressed()
 
 
-func _create_skill(id: String, ...args: Array) -> SJSkillTreeSkill:
-	var skill = SJSkillTreeSkill.new()
+func _create_skill(id: String, ...args: Array) -> SJSkill:
+	var skill = SJSkill.new()
 	if args.is_empty():
 		skill.id = id
 	else:
 		var parents: Array[String]
 		for parent in args:
-			if parent is SJSkillTreeSkill:
+			if parent is SJSkill:
 				parents.append(parent.id)
 			
 		skill.requirements = parents

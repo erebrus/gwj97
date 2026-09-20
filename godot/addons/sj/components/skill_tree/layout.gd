@@ -2,7 +2,7 @@ class_name SJSkillTreeLayout extends Resource
 
 @export var tiers: Array[Array]
 
-var skill_by_id: Dictionary[String, SJSkillTreeSkill]
+var skill_by_id: Dictionary[String, SJSkill]
 var skill_children: Dictionary[String, Array]
 var skill_requirements: Dictionary[String, Array]
 
@@ -10,13 +10,13 @@ var tier_by_id: Dictionary[String, int]
 var lane_by_id: Dictionary[String, int]
 
 
-static func create(skills: Array[SJSkillTreeSkill]) -> SJSkillTreeLayout:
+static func create(skills: Array[SJSkill]) -> SJSkillTreeLayout:
 	var layout := SJSkillTreeLayout.new()
 	layout._setup(skills)
 	return layout
 
 
-func _setup(skills: Array[SJSkillTreeSkill]) -> void:
+func _setup(skills: Array[SJSkill]) -> void:
 	for skill in skills:
 		skill_by_id[skill.id] = skill
 		tier_by_id[skill.id] = 0
@@ -34,13 +34,13 @@ func _setup(skills: Array[SJSkillTreeSkill]) -> void:
 
 
 func _calculate_base_tier_by_id() -> void:
-	for skill: SJSkillTreeSkill in skill_by_id.values():
+	for skill: SJSkill in skill_by_id.values():
 		tier_by_id[skill.id] = 0
 	
 	var tier_changed:= true
 	while tier_changed:
 		tier_changed = false
-		for skill: SJSkillTreeSkill in skill_by_id.values():
+		for skill: SJSkill in skill_by_id.values():
 			for req_id in skill.requirements:
 				var new_tier := tier_by_id[req_id] + 1
 				if new_tier > tier_by_id[skill.id]:
@@ -51,7 +51,7 @@ func _calculate_base_tier_by_id() -> void:
 func _calculate_base_lane_by_id() -> void:
 	# walk from parent to child, grouping
 	var current_lane := 0
-	for skill: SJSkillTreeSkill in skill_by_id.values():
+	for skill: SJSkill in skill_by_id.values():
 		if skill_requirements[skill.id].is_empty():
 			current_lane = _calculate_base_lane_for_children(skill.id, current_lane)
 	
@@ -79,7 +79,7 @@ func _group_by_tier() -> void:
 	var max_tier:int = tier_by_id.values().max()
 	var max_lane:int = lane_by_id.values().max()
 	
-	var empty: Array[SJSkillTreeSkill]
+	var empty: Array[SJSkill]
 	empty.resize(max_lane+1)
 	
 	tiers.resize(max_tier+1)
@@ -95,7 +95,7 @@ func _group_by_tier() -> void:
 
 
 func _add_dummy_skills() -> void:
-	for skill: SJSkillTreeSkill in skill_by_id.values():
+	for skill: SJSkill in skill_by_id.values():
 		var requirements: Array[String] = skill.requirements.duplicate()
 		var skill_tier:= tier_by_id[skill.id]
 		for req in requirements:

@@ -1,4 +1,4 @@
-class_name SJSkillTreeSkill extends Resource
+class_name SJSkill extends Resource
 
 @export var id: String
 @export var requirements: Array[String]
@@ -6,8 +6,8 @@ class_name SJSkillTreeSkill extends Resource
 @export var is_dummy: bool = false
 
 
-func create_dummy_requirement(parent: SJSkillTreeSkill) -> SJSkillTreeSkill:
-	var dummy = SJSkillTreeSkill.new()
+func create_dummy_requirement(parent: SJSkill) -> SJSkill:
+	var dummy = SJSkill.new()
 	if parent.is_dummy:
 		var i = parent.id.rfind("_")
 		var parent_name = parent.id.substr(0, i)

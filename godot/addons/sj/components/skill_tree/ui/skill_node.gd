@@ -5,7 +5,7 @@ class_name SJSkillNode extends MarginContainer
 signal transform_changed
 
 
-@export var skill: SJSkillTreeSkill:
+@export var skill: SJSkill:
 	set(value):
 		if value == skill:
 			return

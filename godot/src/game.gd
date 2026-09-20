@@ -24,7 +24,7 @@ func _ready():
 	Events.control_state_changed.connect(_on_control_state_changed)
 	#Events.ship_docked.connect(func():skill_tree.visible = true)
 	#Events.ship_undocked.connect(func():skill_tree.visible = false)
-	var tmp_skills:Array[SJSkillTreeSkill]
+	var tmp_skills:Array[SJSkill]
 	tmp_skills.assign(Globals.skills)
 	skill_tree.skills = SJSkillTreeLayout.create(tmp_skills)
 	skill_tree.setup()

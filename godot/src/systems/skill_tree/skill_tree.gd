@@ -29,7 +29,7 @@ func _create_debug_tree() -> void:
 	var skillC1B11 = StationSkill.create_random("1", skillC, skillB1)
 	
 	
-	var all_skills: Array[SJSkillTreeSkill] = [
+	var all_skills: Array[SJSkill] = [
 		skillA, skillB, skillC, 
 		skillA1, skillAB1, skillB1, skillB2, skillC1, skillC2, 
 		skillB11, skillB12, skillC1B11

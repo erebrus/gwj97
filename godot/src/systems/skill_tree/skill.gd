@@ -1,4 +1,4 @@
-class_name StationSkill extends SJSkillTreeSkill
+class_name StationSkill extends SJSkill
 
 
 @export var name: String
@@ -18,7 +18,7 @@ static func create_random(id: String, ...args: Array) -> StationSkill:
 	else:
 		var parents: Array[String]
 		for parent in args:
-			if parent is SJSkillTreeSkill:
+			if parent is SJSkill:
 				parents.append(parent.id)
 			
 		skill.requirements = parents
