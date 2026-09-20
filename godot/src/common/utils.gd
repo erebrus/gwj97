@@ -45,7 +45,7 @@ func parse_list(string: String) -> Array[String]:
 		list.append(item.strip_edges())
 	return list
 
-func load_resources(path: String) -> Array:
+func load_resources(path: String) -> Array[Resource]:
 	var result: Array[Resource]
 	GSLogger.info("Loading resources in %s" % path)
 	

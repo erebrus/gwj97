@@ -46,6 +46,27 @@ focus_mode = 0
 toggle_mode = true
 text = "Overview"
 
+[node name="ToggleShipDock" type="Button" parent="VBoxContainer/HFlowContainer2" unique_id=1873537895]
+layout_mode = 2
+toggle_mode = true
+text = "Dock/Undock"
+
+[node name="ResourcesLabel" type="Label" parent="VBoxContainer" unique_id=1161506293]
+layout_mode = 2
+text = "Resources"
+
+[node name="OreButton" type="Button" parent="VBoxContainer" unique_id=2010668340]
+layout_mode = 2
+text = "Add Ore"
+
+[node name="EtheriumButton" type="Button" parent="VBoxContainer" unique_id=410454365]
+layout_mode = 2
+text = "Add Etherium"
+
+[node name="PowerButton" type="Button" parent="VBoxContainer" unique_id=211527378]
+layout_mode = 2
+text = "Add Power"
+
 [node name="LevelSelectLabel" type="Label" parent="VBoxContainer" unique_id=1402947714]
 visible = false
 layout_mode = 2
@@ -87,6 +108,10 @@ text = "Win Game
 [connection signal="pressed" from="VBoxContainer/HFlowContainer2/MusicTensionToggle" to="." method="_on_music_tension_toggle_pressed"]
 [connection signal="toggled" from="VBoxContainer/HFlowContainer2/Invulnerable" to="." method="_on_invulnerable_toggled"]
 [connection signal="toggled" from="VBoxContainer/HFlowContainer2/OverviewCamera" to="." method="_on_overview_camera_toggled"]
+[connection signal="toggled" from="VBoxContainer/HFlowContainer2/ToggleShipDock" to="." method="_on_toggle_ship_dock_toggled"]
+[connection signal="pressed" from="VBoxContainer/OreButton" to="." method="_on_ore_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/EtheriumButton" to="." method="_on_etherium_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/PowerButton" to="." method="_on_power_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HFlowContainer3/LoadLevelButton" to="." method="_on_load_level_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HFlowContainer/GameOver" to="." method="_on_game_over_pressed"]
 [connection signal="pressed" from="VBoxContainer/HFlowContainer/WinGame" to="." method="_on_win_game_pressed"]

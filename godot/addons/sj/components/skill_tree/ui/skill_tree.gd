@@ -1,6 +1,11 @@
 @tool
 class_name SJSkillTree extends MarginContainer
 
+
+signal skill_selected(skill: SJSkill)
+signal skill_pressed(skill: SJSkill)
+
+
 enum Direction {
 	LeftRight,
 	RightLeft,
@@ -89,7 +94,7 @@ func setup() -> void:
 				spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			tier_container.add_child(spacer)
 		
-		for skill in tier:
+		for skill: SJSkill in tier:
 			var child: Control
 			if skill == null:
 				var dummy:= SJSkill.new()
@@ -97,6 +102,12 @@ func setup() -> void:
 				child = _create_node(dummy)
 			else:
 				child = _create_node(skill)
+				child.selected.connect(_on_skill_node_selected)
+				child.pressed.connect(_on_skill_node_pressed)
+				skill.bought.connect(_on_skill_bought.bind(skill))
+				
+				child.is_available = skills.is_available(skill.id)
+				
 				nodes_by_id[skill.id] = child
 			
 			child.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
@@ -128,3 +139,21 @@ func _create_relation(parent_node: SJSkillNode, child_node: SJSkillNode) -> SJSk
 	relation.child = child_node
 	relation.direction = direction
 	return relation
+
+
+func _on_skill_node_selected(skill: SJSkill) -> void:
+	for skill_id in nodes_by_id:
+		if skill_id != skill.id:
+			nodes_by_id[skill_id].is_selected = false
+	
+	skill_selected.emit(skill)
+
+func _on_skill_node_pressed(skill: SJSkill) -> void:
+	skill_pressed.emit(skill)
+
+
+func _on_skill_bought(skill: SJSkill) -> void:
+	for child in skills.skill_children[skill.id]:
+		if skills.is_available(child):
+			nodes_by_id[child].is_available = true
+	

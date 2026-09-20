@@ -27,6 +27,11 @@ func set_state(_game_state:GameState):
 	game_state = _game_state
 	
 
+func buy_skill(skill: StationSkill) -> void:
+	if station.has_resources(skill.price):
+		skill.buy()
+		station.consume_resources(skill.price)
+
 func _on_room_button_pressed(room: StationRoom) -> void:
 	if is_instance_valid(placeholder):
 		placeholder.queue_free()

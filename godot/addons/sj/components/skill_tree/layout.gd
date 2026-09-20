@@ -16,6 +16,13 @@ static func create(skills: Array[SJSkill]) -> SJSkillTreeLayout:
 	return layout
 
 
+func is_available(skill_id: String) -> bool:
+	for requirement_id in skill_requirements[skill_id]:
+		if not skill_by_id[requirement_id].is_bought:
+			return false
+	return true
+
+
 func _setup(skills: Array[SJSkill]) -> void:
 	for skill in skills:
 		skill_by_id[skill.id] = skill

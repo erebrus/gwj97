@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://pp4u141ndyrg" path="res://assets/gfx/ui/sliders/slider_grabber_disabled.png" id="2_o7re1"]
 [ext_resource type="Texture2D" uid="uid://3b6b1pq730jr" path="res://assets/gfx/ui/sliders/slider_area_normal.png" id="3_cwe5m"]
 [ext_resource type="Texture2D" uid="uid://dxnxycvgfbcw4" path="res://assets/gfx/ui/sliders/slider_grabber_highlight.png" id="3_r2kde"]
+[ext_resource type="Texture2D" uid="uid://hvxqaef3dnc2" path="res://assets/gfx/ui/small_panel.png" id="9_jc0sv"]
+[ext_resource type="Texture2D" uid="uid://8w1iuvw6roeg" path="res://assets/gfx/ui/big_panel.png" id="10_b66wi"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ty3yj"]
 texture = ExtResource("1_r7xqo")
@@ -36,15 +38,22 @@ texture_margin_bottom = 3.0
 expand_margin_top = 3.0
 expand_margin_bottom = 3.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r2kde"]
-bg_color = Color(0.14767182, 0.14767179, 0.14767179, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.6784314, 0.6784314, 0.6784314, 1)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uo5td"]
+texture = ExtResource("9_jc0sv")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b66wi"]
+texture = ExtResource("10_b66wi")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
 
 [resource]
+default_font_size = 16
 CheckBox/icons/checked = ExtResource("1_r2kde")
 CheckBox/icons/unchecked = ExtResource("2_jc0sv")
 HSlider/icons/grabber = ExtResource("1_ty3yj")
@@ -59,13 +68,15 @@ MarginContainerLarge/constants/margin_left = 80
 MarginContainerLarge/constants/margin_right = 80
 MarginContainerLarge/constants/margin_top = 40
 MarginContainerMedium/base_type = &"MarginContainer"
-MarginContainerMedium/constants/margin_bottom = 8
+MarginContainerMedium/constants/margin_bottom = 16
 MarginContainerMedium/constants/margin_left = 16
 MarginContainerMedium/constants/margin_right = 16
-MarginContainerMedium/constants/margin_top = 8
+MarginContainerMedium/constants/margin_top = 16
 MarginContainerSmall/base_type = &"MarginContainer"
-MarginContainerSmall/constants/margin_bottom = 4
-MarginContainerSmall/constants/margin_left = 8
-MarginContainerSmall/constants/margin_right = 8
-MarginContainerSmall/constants/margin_top = 4
-PanelContainer/styles/panel = SubResource("StyleBoxFlat_r2kde")
+MarginContainerSmall/constants/margin_bottom = 0
+MarginContainerSmall/constants/margin_left = 3
+MarginContainerSmall/constants/margin_right = 3
+MarginContainerSmall/constants/margin_top = 0
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_uo5td")
+PanelContainerLarge/base_type = &"PanelContainer"
+PanelContainerLarge/styles/panel = SubResource("StyleBoxTexture_b66wi")

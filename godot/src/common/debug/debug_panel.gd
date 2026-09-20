@@ -2,6 +2,7 @@ extends PanelContainer
 
 @onready var level_selection: OptionButton = %LevelSelection
 
+
 func _ready() -> void:
 	hide()
 	%Invulnerable.button_pressed = Debug.invulnerable
@@ -63,3 +64,33 @@ func _on_load_level_button_pressed() -> void:
 
 func _on_overview_camera_toggled(toggled_on: bool) -> void:
 	Events.on_camera_mode_changed.emit(toggled_on)
+
+
+func _on_toggle_ship_dock_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		Events.ship_docked.emit()
+	else:
+		Events.ship_undocked.emit()
+
+
+func _on_ore_button_pressed() -> void:
+	_buy(Types.Resources.ORE)
+
+
+func _on_etherium_button_pressed() -> void:
+	_buy(Types.Resources.ETHERIUM)
+
+
+func _on_power_button_pressed() -> void:
+	_buy(Types.Resources.POWER)
+
+func _buy(resource: Types.Resources) -> void:
+	if Globals.game == null:
+		return
+	if Globals.game.get_level() == null:
+		return
+	
+	var station: Station = Globals.game.get_level().station
+	var resources: Dictionary[Types.Resources, int] = {resource: 1}
+	
+	station.add_resources(resources)

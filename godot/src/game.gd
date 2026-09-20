@@ -8,8 +8,7 @@ enum MouseControl {Ship, Station}
 
 @onready var level_manager: LevelManager = $LevelManager
 @onready var fade_panel: FadePanel = %FadePanel
-@onready var skill_tree: StationSkillTree = %SkillTree
-
+@onready var skills_panel: StationSkills = %SkillsPanel
 
 
 var control:MouseControl = MouseControl.Ship
@@ -22,12 +21,7 @@ func _ready():
 	Debug.set_levels(level_manager.levels)
 	Globals.game = self
 	Events.control_state_changed.connect(_on_control_state_changed)
-	#Events.ship_docked.connect(func():skill_tree.visible = true)
-	#Events.ship_undocked.connect(func():skill_tree.visible = false)
-	var tmp_skills:Array[SJSkill]
-	tmp_skills.assign(Globals.skills)
-	skill_tree.skills = SJSkillTreeLayout.create(tmp_skills)
-	skill_tree.setup()
+
 func _on_control_state_changed(control_type:MouseControl):
 	control = control_type
 	GSLogger.info("Control type changed to %d " % control)
@@ -63,4 +57,5 @@ func _on_level_manager_level_ready() -> void:
 		if level_manager.current_level_idx==0:
 			game_state = start_state.duplicate()
 		get_level().set_state(game_state)
+	skills_panel.buy_skill_requested.connect(get_level().buy_skill)
 	

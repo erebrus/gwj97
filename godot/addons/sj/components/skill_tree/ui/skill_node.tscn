@@ -5,4 +5,5 @@
 [node name="SkillNode" type="MarginContainer" unique_id=1998161604]
 offset_right = 150.0
 offset_bottom = 90.0
+mouse_filter = 2
 script = ExtResource("1_yx2v4")

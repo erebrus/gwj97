@@ -2,30 +2,77 @@
 
 [ext_resource type="PackedScene" uid="uid://2idmm87adajf" path="res://addons/sj/components/skill_tree/ui/skill_node.tscn" id="1_yx2v4"]
 [ext_resource type="Script" uid="uid://b3lq38akfd8rd" path="res://src/systems/skill_tree/skill_node.gd" id="2_r6dvi"]
+[ext_resource type="Texture2D" uid="uid://4xxk5widyrem" path="res://assets/gfx/ui/skill_tree/node_empty.png" id="3_qfq37"]
+[ext_resource type="Texture2D" uid="uid://c4tgxr222atd7" path="res://assets/gfx/ui/skill_tree/node_unavailable.png" id="4_6jwou"]
+[ext_resource type="Texture2D" uid="uid://bhfabubwa25my" path="res://assets/gfx/ui/skill_tree/node_selected.png" id="5_axa3n"]
+[ext_resource type="Texture2D" uid="uid://x2qe8qv45b57" path="res://assets/gfx/ui/skill_tree/node_bought.png" id="6_axa3n"]
 
-[node name="SkillNode" unique_id=321344098 instance=ExtResource("1_yx2v4")]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bu0e8"]
+texture = ExtResource("3_qfq37")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kn2iy"]
+texture = ExtResource("4_6jwou")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1ric6"]
+texture = ExtResource("5_axa3n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uh31s"]
+texture = ExtResource("6_axa3n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r6dvi"]
+texture = ExtResource("3_qfq37")
+
+[node name="SkillNode" unique_id=321344098 node_paths=PackedStringArray("root_input_node") instance=ExtResource("1_yx2v4")]
+offset_right = 159.0
+offset_bottom = 27.0
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
 script = ExtResource("2_r6dvi")
+available_stylebox = SubResource("StyleBoxTexture_bu0e8")
+unavailable_stylebox = SubResource("StyleBoxTexture_kn2iy")
+selected_stylebox = SubResource("StyleBoxTexture_1ric6")
+bought_stylebox = SubResource("StyleBoxTexture_uh31s")
+root_input_node = NodePath("NodePanel")
 
-[node name="PanelContainer" type="PanelContainer" parent="." index="0" unique_id=1048719799]
-custom_minimum_size = Vector2(150, 90)
-custom_maximum_size = Vector2(150, 90)
+[node name="NodePanel" type="PanelContainer" parent="." index="0" unique_id=1048719799]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(155, 99)
+custom_maximum_size = Vector2(155, 99)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_r6dvi")
+
+[node name="RombusArea" type="CenterContainer" parent="NodePanel" index="0" unique_id=2059709066]
+custom_minimum_size = Vector2(99, 99)
+custom_maximum_size = Vector2(99, 99)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer" index="0" unique_id=586280217]
+[node name="ReferenceRect" type="ReferenceRect" parent="NodePanel/RombusArea" index="0" unique_id=2026206294]
+custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
+mouse_filter = 2
 
-[node name="Icon" type="TextureRect" parent="PanelContainer/HBoxContainer" index="0" unique_id=1632367456]
+[node name="Icon" type="TextureRect" parent="NodePanel/RombusArea" index="1" unique_id=1632367456]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer" index="1" unique_id=1681709747]
+[node name="PriceArea" type="MarginContainer" parent="NodePanel" index="1" unique_id=1636345628]
+custom_minimum_size = Vector2(86, 0)
+custom_maximum_size = Vector2(86, -1)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 10
+theme_override_constants/margin_top = 23
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 23
 
-[node name="Name" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer" index="0" unique_id=1453861848]
+[node name="ReferenceRect" type="ReferenceRect" parent="NodePanel/PriceArea" index="0" unique_id=808746555]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="NodePanel/PriceArea" index="1" unique_id=2090013941]
+layout_mode = 2
+theme_type_variation = &"MarginContainerSmall"
+
+[node name="PriceContainer" type="VBoxContainer" parent="NodePanel/PriceArea/MarginContainer" index="0" unique_id=65587558]
 unique_name_in_owner = true
 layout_mode = 2
-
-[node name="PriceContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer" index="1" unique_id=65587558]
-unique_name_in_owner = true
-layout_mode = 2
+size_flags_vertical = 4

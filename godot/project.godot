@@ -45,6 +45,10 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/gs_logger/plugin.cfg", "res://addons/layerNames/plugin.cfg")
 
+[gui]
+
+theme/custom="uid://k0yx4w2osxxx"
+
 [input]
 
 move_right={
@@ -123,3 +127,4 @@ jettison={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.14901961, 0.15294118, 0.16862746, 1)

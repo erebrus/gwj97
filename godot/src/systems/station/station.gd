@@ -41,7 +41,7 @@ func _on_timer_timeout() -> void:
 func has_resources(_resources:Dictionary[Types.Resources, int]) -> bool:
 	if _resources.is_empty():
 		return true
-	for type:Types.Resources in _resources.keys():
+	for type:Types.Resources in _resources:
 		if _resources[type] > resources[type]:
 			return false
 	return true
@@ -51,15 +51,16 @@ func consume_resources(_resources:Dictionary[Types.Resources, int]) -> bool:
 		return true
 	if not has_resources(_resources):
 		return false
-	for type:Types.Resources in _resources.keys():
+	for type:Types.Resources in _resources:
 		resources[type] -= _resources[type]
 
 	return true
 
 func add_resources(_resources:Dictionary[Types.Resources, int]):
-	for type:Types.Resources in _resources.keys():
+	for type:Types.Resources in _resources:
 		resources[type] += _resources[type]
-	
+
+
 func get_total_power_production()->int:
 	var sum := 0
 	for room:StationRoom in rooms.get_children():

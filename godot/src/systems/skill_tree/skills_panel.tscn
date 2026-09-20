@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://b7hbncgi43j7h"]
+
+[ext_resource type="PackedScene" uid="uid://cdxfehvpi46yk" path="res://addons/sj/components/skill_tree/ui/skill_tree.tscn" id="1_m6n7r"]
+[ext_resource type="Script" uid="uid://l57ny7jk3sr3" path="res://src/systems/skill_tree/skills_panel.gd" id="1_ybjot"]
+[ext_resource type="PackedScene" uid="uid://drgw2dc3b7ht0" path="res://src/systems/skill_tree/skill_node.tscn" id="2_ybjot"]
+
+[node name="SkillsPanel" type="MarginContainer" unique_id=737614502]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"MarginContainerMedium"
+script = ExtResource("1_ybjot")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1628421474]
+layout_mode = 2
+
+[node name="SelectedSkillPanel" type="PanelContainer" parent="HBoxContainer" unique_id=117859429]
+custom_minimum_size = Vector2(396, 0)
+custom_maximum_size = Vector2(396, -1)
+layout_mode = 2
+theme_type_variation = &"PanelContainerLarge"
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/SelectedSkillPanel" unique_id=1645644481]
+layout_mode = 2
+theme_type_variation = &"MarginContainerMedium"
+
+[node name="SelectedSkillDetails" type="VBoxContainer" parent="HBoxContainer/SelectedSkillPanel/MarginContainer" unique_id=72650551]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/SelectedSkillPanel/MarginContainer/SelectedSkillDetails" unique_id=1464656351]
+layout_mode = 2
+
+[node name="SkillName" type="Label" parent="HBoxContainer/SelectedSkillPanel/MarginContainer/SelectedSkillDetails/PanelContainer" unique_id=1500337097]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+
+[node name="PanelContainer2" type="PanelContainer" parent="HBoxContainer/SelectedSkillPanel/MarginContainer/SelectedSkillDetails" unique_id=1226606539]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/SelectedSkillPanel/MarginContainer/SelectedSkillDetails" unique_id=848114401]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer3" type="PanelContainer" parent="HBoxContainer/SelectedSkillPanel/MarginContainer/SelectedSkillDetails" unique_id=114061367]
+layout_mode = 2
+
+[node name="SkillTreePanel" type="PanelContainer" parent="HBoxContainer" unique_id=731293352]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PanelContainerLarge"
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/SkillTreePanel" unique_id=723075302]
+layout_mode = 2
+theme_type_variation = &"MarginContainerLarge"
+
+[node name="SkillTree" parent="HBoxContainer/SkillTreePanel/MarginContainer" unique_id=408921016 instance=ExtResource("1_m6n7r")]
+unique_name_in_owner = true
+layout_mode = 2
+node_scene = ExtResource("2_ybjot")
