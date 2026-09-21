@@ -10,9 +10,9 @@ var tier_by_id: Dictionary[String, int]
 var lane_by_id: Dictionary[String, int]
 
 
-static func create(skills: Array[SJSkill]) -> SJSkillTreeLayout:
+static func create(skills: Array[SJSkill], reduce_crossings_iterations: int = 10) -> SJSkillTreeLayout:
 	var layout := SJSkillTreeLayout.new()
-	layout._setup(skills)
+	layout._create_square_grid(skills, reduce_crossings_iterations)
 	return layout
 
 
@@ -23,7 +23,8 @@ func is_available(skill_id: String) -> bool:
 	return true
 
 
-func _setup(skills: Array[SJSkill]) -> void:
+func _create_square_grid(skills: Array[SJSkill], reduce_crossings_iterations: int) -> void:
+	print("Creating square grid layout")
 	for skill in skills:
 		skill_by_id[skill.id] = skill
 		tier_by_id[skill.id] = 0
@@ -36,8 +37,39 @@ func _setup(skills: Array[SJSkill]) -> void:
 	
 	_calculate_base_tier_by_id()
 	_add_dummy_skills()
-	_calculate_base_lane_by_id()
 	_group_by_tier()
+	
+	var best_crossings := _count_all_crossings()
+	
+	if best_crossings > 0:
+		var best_lanes: Dictionary[String, int] = lane_by_id.duplicate()
+		var best_tiers: Array[Array] = tiers.duplicate(true)
+		
+		for i in reduce_crossings_iterations:
+			var crossings = _reduce_crossings(reduce_crossings_iterations)
+			
+			if crossings == 0:
+				best_crossings = 0
+				break
+			
+			if crossings < best_crossings:
+				best_crossings = crossings
+				best_lanes = lane_by_id.duplicate()
+				best_tiers = tiers.duplicate(true)
+				
+				if crossings == 0:
+					break
+			
+			_group_by_tier()
+		
+		lane_by_id = best_lanes
+		tiers = best_tiers
+	
+	#_make_sparse_tier_lists() Brandes-Köpf
+	
+	print(tiers)
+	
+	initialized = true
 
 
 func _calculate_base_tier_by_id() -> void:
@@ -53,52 +85,6 @@ func _calculate_base_tier_by_id() -> void:
 				if new_tier > tier_by_id[skill.id]:
 					tier_by_id[skill.id] = new_tier
 					tier_changed = true
-
-
-func _calculate_base_lane_by_id() -> void:
-	# walk from parent to child, grouping
-	var current_lane := 0
-	for skill: SJSkill in skill_by_id.values():
-		if skill_requirements[skill.id].is_empty():
-			current_lane = _calculate_base_lane_for_children(skill.id, current_lane)
-	
-	# walk from child to parent(s), rearranging for 
-	
-	# repeat N times, or until nothing changes
-	pass
-	
-
-func _calculate_base_lane_for_children(parent_id: String, current_lane: int) -> int:
-	if lane_by_id.has(parent_id):
-		print("%s already has lane %s" % [parent_id, lane_by_id[parent_id]])
-		return current_lane + 1 # TODO: when 1 is added is wrong in this whole method, but it's late
-	
-	print("%s lane %s" % [parent_id, current_lane])
-	lane_by_id[parent_id] = current_lane
-	
-	for child_id in skill_children[parent_id]:
-		current_lane = _calculate_base_lane_for_children(child_id, current_lane) 
-	
-	return current_lane + 1 if skill_children[parent_id].is_empty() else current_lane
-
-
-func _group_by_tier() -> void:
-	var max_tier:int = tier_by_id.values().max()
-	var max_lane:int = lane_by_id.values().max()
-	
-	var empty: Array[SJSkill]
-	empty.resize(max_lane+1)
-	
-	tiers.resize(max_tier+1)
-	for i in tiers.size():
-		tiers[i] = empty.duplicate()
-	
-	for skill_id in skill_by_id:
-		var tier := tier_by_id[skill_id]
-		var lane := lane_by_id[skill_id]
-		
-		assert(tiers[tier][lane] == null)
-		tiers[tier][lane] = skill_by_id[skill_id]
 
 
 func _add_dummy_skills() -> void:
@@ -128,6 +114,236 @@ func _add_dummy_skills() -> void:
 					skill_requirements[child.id].append(dummy.id)
 					
 					child = dummy
+
+
+func _group_by_tier() -> void:
+	var max_tier: int = tier_by_id.values().max()
+	var empty: Array[SJSkill]
+	tiers.resize(max_tier + 1)
+	
+	for i in tiers.size():
+		tiers[i] = empty.duplicate()
+
+	var visited: Dictionary[String, bool]
+	var queue: Array[String]
+
+	var roots: Array[String]
+	roots.assign(skill_by_id.keys().filter(func(x): return tier_by_id[x] == 0))
+	roots.shuffle()
+	
+	for root_id in roots:
+		if not visited.has(root_id):
+			visited[root_id] = true
+			queue.append(root_id)
+	
+	while not queue.is_empty():
+		var skill_id: String = queue.pop_front()
+		var tier_index: int = tier_by_id[skill_id]
+		
+		lane_by_id[skill_id] = tiers[tier_index].size()
+		tiers[tier_index].append(skill_by_id[skill_id])
+		
+		var children: Array[String] = skill_children[skill_id].duplicate()
+		children.shuffle()
+		
+		for child_id in children:
+			if not visited.has(child_id):
+				visited[child_id] = true
+				queue.append(child_id)
+
+
+func _reduce_crossings(reduce_crossings_iterations: int) -> int:
+	var crossings = 0
+	
+	for i in reduce_crossings_iterations:
+		for t in range(1, tiers.size()):
+			_sort_tier_by_weight(t, true)
+		
+		crossings = _count_all_crossings()
+		if crossings == 0:
+			return 0
+		
+		for t in range(tiers.size() -2, -1, -1):
+			_sort_tier_by_weight(t, false)
+		
+		crossings = _count_all_crossings()
+		if crossings == 0:
+			return 0
+		
+		_transpose()
+		
+		crossings = _count_all_crossings()
+		if crossings == 0:
+			return 0
+	
+	return crossings
+
+
+func _transpose() -> bool:
+	var changed := false
+	var improved := true
+
+	while improved:
+		improved = false
+
+		for t in tiers.size():
+			var tier: Array[SJSkill] = tiers[t]
+
+			for i in range(tier.size() - 1):
+				var before := _count_all_crossings()
+
+				# Swap adjacent nodes.
+				var tmp := tier[i]
+				tier[i] = tier[i + 1]
+				tier[i + 1] = tmp
+
+				lane_by_id[tier[i].id] = i
+				lane_by_id[tier[i + 1].id] = i + 1
+
+				var after := _count_all_crossings()
+
+				if after < before:
+					improved = true
+					changed = true
+				else:
+					# Undo.
+					tmp = tier[i]
+					tier[i] = tier[i + 1]
+					tier[i + 1] = tmp
+
+					lane_by_id[tier[i].id] = i
+					lane_by_id[tier[i + 1].id] = i + 1
+
+	return changed
+
+
+func _make_sparse_tier_lists() -> void:
+	var desired_lane: Dictionary[String, float] 
+	for t in range(tiers.size() -2, -1, -1):
+		var tier: Array[SJSkill] = tiers[t]
+		
+		for i in tier.size():
+			var skill:= tier[i]
+			var desired:= roundi(_get_barycenter(skill.id, skill_children[skill.id]))
+			
+			if i > 0:
+				var previous:= lane_by_id[tier[i-1].id]
+				lane_by_id[skill.id] = max(desired, previous + 1)
+			else:
+				lane_by_id[skill.id] = desired
+	
+	var max_lane: int = lane_by_id.values().max()
+	for tier in tiers:
+		var skills: Array[SJSkill] = tier.duplicate()
+		
+		tier.resize(max_lane + 1)
+		tier.fill(null)
+		
+		for skill in skills:
+			var lane = lane_by_id[skill.id]
+			tier[lane] = skill
+
+
+func _sort_tier_by_weight(tier_index: int, look_upward: bool) -> void:
+	var tier: Array[SJSkill] = tiers[tier_index]
+	var neighbors: Array[String]
+	var barycenters: Dictionary[String, float] 
+	var medians: Dictionary[String, float] 
+	var max_parent: Dictionary[String, int]
+	
+	for skill in tier:
+		if look_upward:
+			neighbors = skill_requirements[skill.id]
+		else:
+			neighbors = skill_children[skill.id]
+		
+		barycenters[skill.id] = _get_barycenter(skill.id, neighbors)
+		medians[skill.id] = _get_median(skill.id, neighbors, look_upward)
+		max_parent[skill.id] = 0
+		for n in neighbors:
+			if lane_by_id[n] > max_parent[skill.id]:
+				max_parent[skill.id] = lane_by_id[n]
+	
+	tier.sort_custom(func(a: SJSkill, b: SJSkill) -> bool:
+		if not is_equal_approx(medians[a.id], medians[b.id]):
+			return medians[a.id] < medians[b.id]
+		
+		if not is_equal_approx(barycenters[a.id], barycenters[b.id]):
+			return barycenters[a.id] < barycenters[b.id]
+		
+		return max_parent[a.id] < max_parent[b.id]
+	)
+	
+	for lane in tier.size():
+		lane_by_id[tier[lane].id] = lane
+
+
+func _count_all_crossings() -> int:
+	var result := 0
+
+	for t in range(tiers.size() - 1):
+		result += _count_crossings_between_tiers(t)
+
+	return result
+
+
+func _count_crossings_between_tiers(upper_index: int) -> int:
+	var crossings := 0
+
+	var upper := tiers[upper_index]
+	var lower_index := upper_index + 1
+
+	for i in upper.size():
+		var a: SJSkill = upper[i]
+
+		for child_a_id in skill_children[a.id]:
+			if tier_by_id[child_a_id] != lower_index:
+				continue
+
+			var child_a_lane := lane_by_id[child_a_id]
+
+			for j in range(i + 1, upper.size()):
+				var b: SJSkill = upper[j]
+
+				for child_b_id in skill_children[b.id]:
+					if tier_by_id[child_b_id] != lower_index:
+						continue
+
+					var child_b_lane := lane_by_id[child_b_id]
+
+					if child_a_lane > child_b_lane:
+						crossings += 1
+
+	return crossings
+
+
+func _get_barycenter(skill_id: String, neighbors: Array[String]) -> float:
+	if neighbors.is_empty():
+		return lane_by_id[skill_id]
+	
+	var sum_lanes: float = 0.0
+	for neighbor_id in neighbors:
+		sum_lanes += lane_by_id[neighbor_id]
+	return sum_lanes / neighbors.size()
+	
+
+func _get_median(skill_id: String, neighbors: Array[String], look_upward: bool) -> float:
+	if neighbors.is_empty():
+		return lane_by_id[skill_id]
+	
+	var positions: Array[float]
+	for neighbor_id in neighbors:
+		positions.append(lane_by_id[neighbor_id])
+	
+	positions.sort()
+	
+	var middle:= positions.size() / 2
+	
+	if positions.size() % 2 == 1:
+		return positions[middle]
+	
+	var bias = 0.45 if look_upward else 0.55
+	return lerp(positions[middle - 1], positions[middle], bias)
 
 
 func _to_string() -> String:

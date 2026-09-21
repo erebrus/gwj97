@@ -104,7 +104,8 @@ func setup() -> void:
 				child = _create_node(skill)
 				child.selected.connect(_on_skill_node_selected)
 				child.pressed.connect(_on_skill_node_pressed)
-				skill.bought.connect(_on_skill_bought.bind(skill))
+				if not skill.bought.is_connected(_on_skill_bought):
+					skill.bought.connect(_on_skill_bought.bind(skill))
 				
 				child.is_available = skills.is_available(skill.id)
 				
