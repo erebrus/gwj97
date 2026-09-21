@@ -9,10 +9,12 @@ var skill_requirements: Dictionary[String, Array]
 var tier_by_id: Dictionary[String, int]
 var lane_by_id: Dictionary[String, int]
 
+var initialized: bool
 
-static func create(skills: Array[SJSkill], reduce_crossings_iterations: int = 10) -> SJSkillTreeLayout:
+
+static func create(skills: Array[SJSkill], reduce_crossings_iterations: int = 10, initial_temperature: float = 1.5) -> SJSkillTreeLayout:
 	var layout := SJSkillTreeLayout.new()
-	layout._create_square_grid(skills, reduce_crossings_iterations)
+	layout._create_square_grid(skills, reduce_crossings_iterations, initial_temperature)
 	return layout
 
 
@@ -23,7 +25,7 @@ func is_available(skill_id: String) -> bool:
 	return true
 
 
-func _create_square_grid(skills: Array[SJSkill], reduce_crossings_iterations: int) -> void:
+func _create_square_grid(skills: Array[SJSkill], reduce_crossings_iterations: int, initial_temperature: float) -> void:
 	print("Creating square grid layout")
 	for skill in skills:
 		skill_by_id[skill.id] = skill
@@ -46,11 +48,7 @@ func _create_square_grid(skills: Array[SJSkill], reduce_crossings_iterations: in
 		var best_tiers: Array[Array] = tiers.duplicate(true)
 		
 		for i in reduce_crossings_iterations:
-			var crossings = _reduce_crossings(reduce_crossings_iterations)
-			
-			if crossings == 0:
-				best_crossings = 0
-				break
+			var crossings = _reduce_crossings(reduce_crossings_iterations, initial_temperature)
 			
 			if crossings < best_crossings:
 				best_crossings = crossings
@@ -65,10 +63,10 @@ func _create_square_grid(skills: Array[SJSkill], reduce_crossings_iterations: in
 		lane_by_id = best_lanes
 		tiers = best_tiers
 	
-	#_make_sparse_tier_lists() Brandes-Köpf
-	
+	_make_sparse_tier_lists() # TODO: Brandes-Köpf
+
 	print(tiers)
-	
+
 	initialized = true
 
 
@@ -152,45 +150,48 @@ func _group_by_tier() -> void:
 				queue.append(child_id)
 
 
-func _reduce_crossings(reduce_crossings_iterations: int) -> int:
-	var crossings = 0
-	
+func _reduce_crossings(reduce_crossings_iterations: int, initial_temperature: float) -> int:
+	var best_crossings := _count_all_crossings()
+	var best_lanes: Dictionary[String, int] = lane_by_id.duplicate()
+	var best_tiers: Array[Array] = tiers.duplicate(true)
+
 	for i in reduce_crossings_iterations:
+		var temperature := initial_temperature * (1.0 - float(i) / reduce_crossings_iterations)
+
 		for t in range(1, tiers.size()):
 			_sort_tier_by_weight(t, true)
-		
-		crossings = _count_all_crossings()
-		if crossings == 0:
-			return 0
-		
+
 		for t in range(tiers.size() -2, -1, -1):
 			_sort_tier_by_weight(t, false)
-		
-		crossings = _count_all_crossings()
-		if crossings == 0:
-			return 0
-		
-		_transpose()
-		
-		crossings = _count_all_crossings()
-		if crossings == 0:
-			return 0
-	
-	return crossings
+
+		_transpose(temperature)
+
+		var crossings := _count_all_crossings()
+		if crossings < best_crossings:
+			best_crossings = crossings
+			best_lanes = lane_by_id.duplicate()
+			best_tiers = tiers.duplicate(true)
+
+			if crossings == 0:
+				break
+
+	lane_by_id = best_lanes
+	tiers = best_tiers
+	return best_crossings
 
 
-func _transpose() -> bool:
-	var changed := false
-	var improved := true
+func _transpose(temperature: float, passes: int = 2) -> void:
+	for _pass in passes:
+		var tier_order := range(tiers.size())
+		tier_order.shuffle()
 
-	while improved:
-		improved = false
-
-		for t in tiers.size():
+		for t in tier_order:
 			var tier: Array[SJSkill] = tiers[t]
+			var index_order := range(tier.size() - 1)
+			index_order.shuffle()
 
-			for i in range(tier.size() - 1):
-				var before := _count_all_crossings()
+			for i in index_order:
+				var before := _count_crossings_around_tier(t)
 
 				# Swap adjacent nodes.
 				var tmp := tier[i]
@@ -200,12 +201,14 @@ func _transpose() -> bool:
 				lane_by_id[tier[i].id] = i
 				lane_by_id[tier[i + 1].id] = i + 1
 
-				var after := _count_all_crossings()
+				var after := _count_crossings_around_tier(t)
+				var delta := after - before
 
-				if after < before:
-					improved = true
-					changed = true
-				else:
+				var accept := delta <= 0
+				if not accept and temperature > 0.0:
+					accept = randf() < exp(-delta / temperature)
+
+				if not accept:
 					# Undo.
 					tmp = tier[i]
 					tier[i] = tier[i + 1]
@@ -213,8 +216,6 @@ func _transpose() -> bool:
 
 					lane_by_id[tier[i].id] = i
 					lane_by_id[tier[i + 1].id] = i + 1
-
-	return changed
 
 
 func _make_sparse_tier_lists() -> void:
@@ -284,6 +285,15 @@ func _count_all_crossings() -> int:
 	for t in range(tiers.size() - 1):
 		result += _count_crossings_between_tiers(t)
 
+	return result
+
+
+func _count_crossings_around_tier(t: int) -> int:
+	var result := 0
+	if t > 0:
+		result += _count_crossings_between_tiers(t - 1)
+	if t < tiers.size() - 1:
+		result += _count_crossings_between_tiers(t)
 	return result
 
 
