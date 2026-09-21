@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://nh47blyqv0t4" path="res://assets/gfx/map/asteroids/asteroid1/crack2.png" id="4_jy2ub"]
 [ext_resource type="Texture2D" uid="uid://b1k5pnintgjxe" path="res://assets/gfx/map/asteroids/asteroid1/crack3.png" id="5_p3431"]
 [ext_resource type="Texture2D" uid="uid://c1nbngnbmnaqt" path="res://assets/gfx/map/asteroids/asteroid_explosion.png" id="6_jy2ub"]
+[ext_resource type="AudioStream" uid="uid://c5xylwtejnhlf" path="res://assets/sfx/Asteroid_Break_1.ogg" id="7_ajy3r"]
+[ext_resource type="AudioStream" uid="uid://chrm4qnxi8voy" path="res://assets/sfx/Asteroid_Break_2.ogg" id="8_flrma"]
+[ext_resource type="AudioStream" uid="uid://ddb80tcf2qiok" path="res://assets/sfx/Asteroid_Break_3.ogg" id="9_f36op"]
+[ext_resource type="AudioStream" uid="uid://ddssanlr1h5hi" path="res://assets/sfx/Asteroid_Break_4.ogg" id="10_bdry0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_y6u74"]
 friction = 0.0
@@ -70,6 +74,13 @@ tracks/2/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_i7cnb"]
+streams_count = 4
+stream_0/stream = ExtResource("7_ajy3r")
+stream_1/stream = ExtResource("8_flrma")
+stream_2/stream = ExtResource("9_f36op")
+stream_3/stream = ExtResource("10_bdry0")
+
 [sub_resource type="Animation" id="Animation_p3431"]
 resource_name = "explode"
 step = 0.1
@@ -109,6 +120,21 @@ tracks/2/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("break_sfx")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": SubResource("AudioStreamRandomizer_i7cnb")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/3/use_blend = true
 
 [sub_resource type="Animation" id="Animation_onhs6"]
 resource_name = "flash"
@@ -188,3 +214,5 @@ libraries/ = SubResource("AnimationLibrary_ajy3r")
 [node name="Decor3" type="Node2D" parent="Decor" unique_id=1778693621]
 
 [node name="Decor4" type="Node2D" parent="Decor" unique_id=946254591]
+
+[node name="break_sfx" type="AudioStreamPlayer2D" parent="." unique_id=977184180]
