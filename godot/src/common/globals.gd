@@ -75,7 +75,10 @@ func _load_skills() -> void:
 			GSLogger.warn("Resource %s in skill folder is not a StationSkill" % [r.resource_path])
 	
 	GSLogger.info("Generating skill tree layout")
-	skills = SJSkillTree.create(all_skills)
+	var tree := SJSkillTree.new()
+	tree.skills = all_skills
+	SJSkillTreeSugiyamaLayoutGenerator.new().generate(tree)
+	skills = tree
 	
 	GSLogger.info("Skill resources loaded.")
 

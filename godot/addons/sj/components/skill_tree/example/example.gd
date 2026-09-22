@@ -50,9 +50,17 @@ func _on_create_button_pressed() -> void:
 	var children = _create_subtree(skillA, skillB, skillC)
 	_create_subtree(children[0], children[1], children[2])
 	
-	%SkillTree.skill_tree = SJSkillTree.create(skills)
+	%SkillTree.skill_tree = _generate_layout(skills)
 
 
 func _on_shuffle_button_pressed() -> void:
 	skills.shuffle()
-	%SkillTree.skill_tree = SJSkillTree.create(skills)
+	SJSkillTreeSugiyamaLayoutGenerator.new().generate(%SkillTree.skill_tree)
+	%SkillTree.setup()
+
+
+func _generate_layout(skills: Array[SJSkill]) -> SJSkillTree:
+	var tree := SJSkillTree.new()
+	tree.skills = skills
+	SJSkillTreeSugiyamaLayoutGenerator.new().generate(tree)
+	return tree
