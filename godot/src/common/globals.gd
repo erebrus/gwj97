@@ -19,7 +19,7 @@ var game_version: String:
 		return ProjectSettings.get_setting("application/config/version")
 	
 
-var skills: SJSkillTreeLayout
+var skills: SJSkillTree
 
 @onready var music_manager: MusicManager = $MusicManager
 @onready var ui_sfx: UiSfx = $UiSfx
@@ -75,7 +75,7 @@ func _load_skills() -> void:
 			GSLogger.warn("Resource %s in skill folder is not a StationSkill" % [r.resource_path])
 	
 	GSLogger.info("Generating skill tree layout")
-	skills = SJSkillTreeLayout.create(all_skills)
+	skills = SJSkillTree.create(all_skills)
 	
 	GSLogger.info("Skill resources loaded.")
 

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://sem10nme3b8t"]
 
 [ext_resource type="Script" uid="uid://b683c2snjbbn5" path="res://addons/sj/components/skill_tree/example/example.gd" id="1_5l0pn"]
-[ext_resource type="PackedScene" uid="uid://cdxfehvpi46yk" path="res://addons/sj/components/skill_tree/ui/skill_tree.tscn" id="1_afhw2"]
+[ext_resource type="PackedScene" uid="uid://cdxfehvpi46yk" path="res://addons/sj/components/skill_tree/ui/skill_tree_control.tscn" id="1_afhw2"]
 [ext_resource type="PackedScene" uid="uid://pho6oneu3rrp" path="res://addons/sj/components/skill_tree/example/example_node.tscn" id="2_sso7i"]
 
 [node name="Example" type="VBoxContainer" unique_id=1763669420]

@@ -1,4 +1,4 @@
-class_name SJSkillTreeLayout extends Resource
+class_name SJSkillTree extends Resource
 
 @export var skills: Array[SJSkill]
 @export var dummy_skills: Array[SJSkill]
@@ -15,8 +15,8 @@ var _tiers: Array[Array]
 var _initialized: bool
 
 
-static func create(skills: Array[SJSkill], reduce_crossings_iterations: int = 10, initial_temperature: float = 1.5) -> SJSkillTreeLayout:
-	var layout := SJSkillTreeLayout.new()
+static func create(skills: Array[SJSkill], reduce_crossings_iterations: int = 10, initial_temperature: float = 1.5) -> SJSkillTree:
+	var layout := SJSkillTree.new()
 	layout._create_square_grid(skills, reduce_crossings_iterations, initial_temperature)
 	return layout
 
@@ -27,7 +27,7 @@ func setup() -> void:
 	
 	for skill in skills:
 		if not tier_by_id.has(skill.id):
-			assert(false, "Trying to load SJSkillTreeLayout with invalid skills")
+			assert(false, "Trying to load SJSkillTree with invalid skills")
 			return
 	
 	for skill in skills:

@@ -1,5 +1,5 @@
 @tool
-class_name SJSkillTree extends MarginContainer
+class_name SJSkillTreeControl extends MarginContainer
 
 
 signal skill_selected(skill: SJSkill)
@@ -25,11 +25,11 @@ enum Direction {
 		if is_node_ready():
 			setup()
 
-var skills: SJSkillTreeLayout:
+var skill_tree: SJSkillTree:
 	set(value):
-		if value == skills:
+		if value == skill_tree:
 			return
-		skills = value
+		skill_tree = value
 		if is_node_ready():
 			setup()
 
@@ -51,7 +51,7 @@ func setup() -> void:
 		lines_container.queue_free()
 	nodes_by_id.clear()
 	
-	if skills == null:
+	if skill_tree == null:
 		return
 	
 	lines_container = Node2D.new()
@@ -68,7 +68,7 @@ func setup() -> void:
 	
 	add_child(tier_container)
 	
-	var tiers: Array[Array] = skills.get_tiers()
+	var tiers: Array[Array] = skill_tree.get_tiers()
 	if direction == Direction.RightLeft or direction == Direction.DownTop:
 		tiers.reverse()
 	
@@ -81,7 +81,7 @@ func setup() -> void:
 		if node.skill.is_dummy:
 			continue
 		
-		var chains:= skills.get_children_chains(node.skill.id)
+		var chains:= skill_tree.get_children_chains(node.skill.id)
 		
 		if chains.is_empty():
 			continue

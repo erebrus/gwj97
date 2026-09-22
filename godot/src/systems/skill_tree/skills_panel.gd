@@ -4,7 +4,7 @@ class_name StationSkills extends MarginContainer
 signal buy_skill_requested(skill: StationSkill)
 
 
-@onready var tree: SJSkillTree = %SkillTree
+@onready var tree: SJSkillTreeControl = %SkillTree
 @onready var skill_details: Container = %SelectedSkillDetails
 
 @onready var skill_name: Label = %SkillName
@@ -16,7 +16,7 @@ var selected_skill: StationSkill
 func _ready() -> void:
 	_close()
 	
-	tree.skills = Globals.skills
+	tree.skill_tree = Globals.skills
 	
 	Events.ship_docked.connect(show)
 	Events.ship_undocked.connect(_close)

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b7hbncgi43j7h"]
 
-[ext_resource type="PackedScene" uid="uid://cdxfehvpi46yk" path="res://addons/sj/components/skill_tree/ui/skill_tree.tscn" id="1_m6n7r"]
+[ext_resource type="PackedScene" uid="uid://cdxfehvpi46yk" path="res://addons/sj/components/skill_tree/ui/skill_tree_control.tscn" id="1_m6n7r"]
 [ext_resource type="Script" uid="uid://l57ny7jk3sr3" path="res://src/systems/skill_tree/skills_panel.gd" id="1_ybjot"]
 [ext_resource type="PackedScene" uid="uid://drgw2dc3b7ht0" path="res://src/systems/skill_tree/skill_node.tscn" id="2_ybjot"]
 

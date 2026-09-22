@@ -3,10 +3,10 @@ class_name SJSkillRelation extends Line2D
 
 
 const DIRECTION_AXIS := {
-	SJSkillTree.Direction.LeftRight: Vector2.RIGHT,
-	SJSkillTree.Direction.RightLeft: Vector2.LEFT,
-	SJSkillTree.Direction.TopDown:   Vector2.DOWN,
-	SJSkillTree.Direction.DownTop:   Vector2.UP,
+	SJSkillTreeControl.Direction.LeftRight: Vector2.RIGHT,
+	SJSkillTreeControl.Direction.RightLeft: Vector2.LEFT,
+	SJSkillTreeControl.Direction.TopDown:   Vector2.DOWN,
+	SJSkillTreeControl.Direction.DownTop:   Vector2.UP,
 }
 
 
@@ -35,7 +35,7 @@ var nodes: Array[SJSkillNode]:
 			setup()
 
 
-var direction: SJSkillTree.Direction:
+var direction: SJSkillTreeControl.Direction:
 	set(value):
 		if value == direction:
 			return
