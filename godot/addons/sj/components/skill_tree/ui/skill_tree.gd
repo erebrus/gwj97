@@ -68,52 +68,14 @@ func setup() -> void:
 	
 	add_child(tier_container)
 	
-	var tiers: Array[Array] = skills.tiers.duplicate()
-	
+	var tiers: Array[Array] = skills.get_tiers()
 	if direction == Direction.RightLeft or direction == Direction.DownTop:
 		tiers.reverse()
 	
 	for n in tiers.size():
-		var tier:= tiers[n]
-		var skill_container: Container
-		
-		if direction == Direction.TopDown or direction == Direction.DownTop:
-			skill_container = HBoxContainer.new()
-			skill_container.size_flags_horizontal = Control.SIZE_FILL
-		else:
-			skill_container = VBoxContainer.new()
-			skill_container.size_flags_vertical = Control.SIZE_FILL
-		
-		tier_container.add_child(skill_container)
-		
+		_create_tier(tiers[n])
 		if n < tiers.size() - 1:
-			var spacer = Control.new()
-			if direction == Direction.TopDown or direction == Direction.DownTop:
-				spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
-			else:
-				spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			tier_container.add_child(spacer)
-		
-		for skill: SJSkill in tier:
-			var child: Control
-			if skill == null:
-				var dummy:= SJSkill.new()
-				dummy.is_dummy = true
-				child = _create_node(dummy)
-			else:
-				child = _create_node(skill)
-				child.selected.connect(_on_skill_node_selected)
-				child.pressed.connect(_on_skill_node_pressed)
-				if not skill.bought.is_connected(_on_skill_bought):
-					skill.bought.connect(_on_skill_bought.bind(skill))
-				
-				child.is_available = skills.is_available(skill.id)
-				
-				nodes_by_id[skill.id] = child
-			
-			child.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-			child.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-			skill_container.add_child(child)
+			_create_tier_spacer()
 	
 	for parent_node: SJSkillNode in nodes_by_id.values():
 		for child_id in skills.skill_children[parent_node.skill.id]:
@@ -124,7 +86,47 @@ func setup() -> void:
 			var child_node:= nodes_by_id[child_id]
 			var line:= _create_relation(parent_node, child_node)
 			lines_container.add_child(line)
- 
+
+
+func _create_tier(tier: Array[SJSkill]) -> void:
+	var skill_container: Container
+	
+	if direction == Direction.TopDown or direction == Direction.DownTop:
+		skill_container = HBoxContainer.new()
+		skill_container.size_flags_horizontal = Control.SIZE_FILL
+	else:
+		skill_container = VBoxContainer.new()
+		skill_container.size_flags_vertical = Control.SIZE_FILL
+	
+	tier_container.add_child(skill_container)
+	
+	for skill: SJSkill in tier:
+		var child: Control
+		if skill == null:
+			var dummy:= SJSkill.new()
+			dummy.is_dummy = true
+			child = _create_node(dummy)
+		else:
+			child = _create_node(skill)
+			child.selected.connect(_on_skill_node_selected)
+			child.pressed.connect(_on_skill_node_pressed)
+			
+			nodes_by_id[skill.id] = child
+		
+		child.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		child.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		skill_container.add_child(child)
+
+
+func _create_tier_spacer() -> void:
+	var spacer = Control.new()
+	if direction == Direction.TopDown or direction == Direction.DownTop:
+		spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	else:
+		spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tier_container.add_child(spacer)
+
+
 ## Used by the tree to instantiate a skill node. Override or set [member node_scene]
 ## for a custom skill node scenee
 func _create_node(skill: SJSkill) -> SJSkillNode:
@@ -149,12 +151,6 @@ func _on_skill_node_selected(skill: SJSkill) -> void:
 	
 	skill_selected.emit(skill)
 
+
 func _on_skill_node_pressed(skill: SJSkill) -> void:
 	skill_pressed.emit(skill)
-
-
-func _on_skill_bought(skill: SJSkill) -> void:
-	for child in skills.skill_children[skill.id]:
-		if skills.is_available(child):
-			nodes_by_id[child].is_available = true
-	

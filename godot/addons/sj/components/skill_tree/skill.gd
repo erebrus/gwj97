@@ -10,28 +10,49 @@ signal bought
 @export var is_dummy: bool = false
 @export var is_bought: bool
 
+var _initialized: bool
+var parents: Array[SJSkill]
+
+
+func setup(skill_by_id: Dictionary[String, SJSkill]) -> void:
+	parents.clear()
+	for req_id in requirements:
+		assert(skill_by_id.has(req_id))
+		parents.append(skill_by_id[req_id])
+		
+	_initialized = true
+
+
+func is_available() -> bool:
+	if is_dummy:
+		return false
+	
+	if not _check_initialized():
+		return false
+	
+	for parent in parents:
+		if not parent.is_bought:
+			return false
+	return true
+
 
 func buy() -> void:
-	assert(not is_bought)
+	if not is_available():
+		assert(false, "Cannot buy unavailable skill")
+		return
+	
+	if is_bought:
+		assert(false, "Cannot buy already-bought skill")
+		return
+	
 	is_bought = true
 	bought.emit()
 
 
-func create_dummy_requirement(parent: SJSkill) -> SJSkill:
-	var dummy = SJSkill.new()
-	if parent.is_dummy:
-		var i = parent.id.rfind("_")
-		var parent_name = parent.id.substr(0, i)
-		var suffix = parent.id.substr(i)
-		var count = int(suffix) + 1
-		dummy.id = parent_name + "_%s" % count
-	else:
-		dummy.id = parent.id + "_dummy_1"
+func _check_initialized() -> bool:
+	assert(_initialized, "Trying to interact with uninitizalized skill. Ensure you are calling setup for each skill")
 	
-	dummy.is_dummy = true
-	dummy.requirements.append(parent.id)
-	
-	return dummy
+	return _initialized
 
 
 func _to_string() -> String:

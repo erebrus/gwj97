@@ -47,7 +47,7 @@ func _on_skill_pressed(skill: SJSkill) -> void:
 	if skill != selected_skill:
 		return
 		
-	if not Globals.skills.is_available(skill.id):
+	if not skill.is_available():
 		return
 	
 	buy_skill_requested.emit(selected_skill) 

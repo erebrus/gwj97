@@ -1,15 +1,18 @@
 class_name SJSkillTreeLayout extends Resource
 
-@export var tiers: Array[Array]
+@export var skills: Array[SJSkill]
+@export var dummy_skills: Array[SJSkill]
 
-var skill_by_id: Dictionary[String, SJSkill]
-var skill_children: Dictionary[String, Array]
-var skill_requirements: Dictionary[String, Array]
+@export var skill_children: Dictionary[String, Array]
+@export var skill_requirements: Dictionary[String, Array]
 
-var tier_by_id: Dictionary[String, int]
-var lane_by_id: Dictionary[String, int]
+@export var tier_by_id: Dictionary[String, int]
+@export var lane_by_id: Dictionary[String, int]
 
-var initialized: bool
+
+var _skill_by_id: Dictionary[String, SJSkill]
+var _tiers: Array[Array]
+var _initialized: bool
 
 
 static func create(skills: Array[SJSkill], reduce_crossings_iterations: int = 10, initial_temperature: float = 1.5) -> SJSkillTreeLayout:
@@ -17,18 +20,54 @@ static func create(skills: Array[SJSkill], reduce_crossings_iterations: int = 10
 	layout._create_square_grid(skills, reduce_crossings_iterations, initial_temperature)
 	return layout
 
+## Call after loading from saved layout. Initializes helper properties from exported fields
+func setup() -> void:
+	if _initialized:
+		return
+	
+	for skill in skills:
+		if not tier_by_id.has(skill.id):
+			assert(false, "Trying to load SJSkillTreeLayout with invalid skills")
+			return
+	
+	for skill in skills:
+		_skill_by_id[skill.id] = skill
+	
+	for dummy in dummy_skills:
+		_skill_by_id[dummy.id] = dummy
+	
+	for skill: SJSkill in _skill_by_id.values():
+		skill.setup(_skill_by_id)
+	
+	var max_tier: int = tier_by_id.values().max()
+	var max_lane: int = lane_by_id.values().max()
+	var empty: Array[SJSkill]
+	empty.resize(max_lane)
+	_tiers.resize(max_tier + 1)
+	
+	for i in _tiers.size():
+		_tiers[i] = empty.duplicate()
+	
+	for skill_id in _skill_by_id:
+		var tier := tier_by_id[skill_id]
+		var lane := lane_by_id[skill_id]
+		
+		_tiers[tier][lane] = _skill_by_id[skill_id]
+	
+	_initialized = true
 
-func is_available(skill_id: String) -> bool:
-	for requirement_id in skill_requirements[skill_id]:
-		if not skill_by_id[requirement_id].is_bought:
-			return false
-	return true
+
+func get_tiers() -> Array[Array]:
+	if not _initialized:
+		setup()
+	
+	return _tiers.duplicate(true)
 
 
 func _create_square_grid(skills: Array[SJSkill], reduce_crossings_iterations: int, initial_temperature: float) -> void:
 	print("Creating square grid layout")
 	for skill in skills:
-		skill_by_id[skill.id] = skill
+		_skill_by_id[skill.id] = skill
 		tier_by_id[skill.id] = 0
 		_init_string_array_value(skill_children, skill.id)
 		_init_string_array_value(skill_requirements, skill.id)
@@ -36,6 +75,9 @@ func _create_square_grid(skills: Array[SJSkill], reduce_crossings_iterations: in
 			_init_string_array_value(skill_children, req_id)
 			skill_children[req_id].append(skill.id)
 			skill_requirements[skill.id].append(req_id)
+	
+	for skill in skills:
+		skill.setup(_skill_by_id)
 	
 	_calculate_base_tier_by_id()
 	_add_dummy_skills()
@@ -45,7 +87,7 @@ func _create_square_grid(skills: Array[SJSkill], reduce_crossings_iterations: in
 	
 	if best_crossings > 0:
 		var best_lanes: Dictionary[String, int] = lane_by_id.duplicate()
-		var best_tiers: Array[Array] = tiers.duplicate(true)
+		var best_tiers: Array[Array] = _tiers.duplicate(true)
 		
 		for i in reduce_crossings_iterations:
 			var crossings = _reduce_crossings(reduce_crossings_iterations, initial_temperature)
@@ -53,7 +95,7 @@ func _create_square_grid(skills: Array[SJSkill], reduce_crossings_iterations: in
 			if crossings < best_crossings:
 				best_crossings = crossings
 				best_lanes = lane_by_id.duplicate()
-				best_tiers = tiers.duplicate(true)
+				best_tiers = _tiers.duplicate(true)
 				
 				if crossings == 0:
 					break
@@ -61,23 +103,23 @@ func _create_square_grid(skills: Array[SJSkill], reduce_crossings_iterations: in
 			_group_by_tier()
 		
 		lane_by_id = best_lanes
-		tiers = best_tiers
+		_tiers = best_tiers
 	
 	_make_sparse_tier_lists() # TODO: Brandes-Köpf
 
-	print(tiers)
+	print(_tiers)
 
-	initialized = true
+	_initialized = true
 
 
 func _calculate_base_tier_by_id() -> void:
-	for skill: SJSkill in skill_by_id.values():
+	for skill: SJSkill in _skill_by_id.values():
 		tier_by_id[skill.id] = 0
 	
 	var tier_changed:= true
 	while tier_changed:
 		tier_changed = false
-		for skill: SJSkill in skill_by_id.values():
+		for skill: SJSkill in _skill_by_id.values():
 			for req_id in skill.requirements:
 				var new_tier := tier_by_id[req_id] + 1
 				if new_tier > tier_by_id[skill.id]:
@@ -86,47 +128,25 @@ func _calculate_base_tier_by_id() -> void:
 
 
 func _add_dummy_skills() -> void:
-	for skill: SJSkill in skill_by_id.values():
-		var requirements: Array[String] = skill.requirements.duplicate()
-		var skill_tier:= tier_by_id[skill.id]
-		for req in requirements:
-			var parent := skill_by_id[req]
-			var parent_tier:= tier_by_id[req] 
-			
-			if skill_tier - parent_tier > 1:
-				var child := skill
-				for i in range(skill_tier - 1, parent_tier, -1):
-					var dummy := child.create_dummy_requirement(parent)
-					assert(not dummy.id in skill_by_id)
-					skill_by_id[dummy.id] = dummy
-					tier_by_id[dummy.id] = i
-					
-					_init_string_array_value(skill_children, dummy.id)
-					skill_children[dummy.id].append(child.id)
-					skill_children[parent.id].erase(child.id)
-					skill_children[parent.id].append(dummy.id)
-					
-					_init_string_array_value(skill_requirements, dummy.id)
-					skill_requirements[dummy.id].append(parent.id)
-					skill_requirements[child.id].erase(parent.id)
-					skill_requirements[child.id].append(dummy.id)
-					
-					child = dummy
+	for skill: SJSkill in _skill_by_id.values():
+		for req in skill.requirements:
+			var parent := _skill_by_id[req]
+			_create_dummies_between(parent, skill)
 
 
 func _group_by_tier() -> void:
 	var max_tier: int = tier_by_id.values().max()
 	var empty: Array[SJSkill]
-	tiers.resize(max_tier + 1)
+	_tiers.resize(max_tier + 1)
 	
-	for i in tiers.size():
-		tiers[i] = empty.duplicate()
-
+	for i in _tiers.size():
+		_tiers[i] = empty.duplicate()
+	
 	var visited: Dictionary[String, bool]
 	var queue: Array[String]
-
+	
 	var roots: Array[String]
-	roots.assign(skill_by_id.keys().filter(func(x): return tier_by_id[x] == 0))
+	roots.assign(_skill_by_id.keys().filter(func(x): return tier_by_id[x] == 0))
 	roots.shuffle()
 	
 	for root_id in roots:
@@ -138,8 +158,8 @@ func _group_by_tier() -> void:
 		var skill_id: String = queue.pop_front()
 		var tier_index: int = tier_by_id[skill_id]
 		
-		lane_by_id[skill_id] = tiers[tier_index].size()
-		tiers[tier_index].append(skill_by_id[skill_id])
+		lane_by_id[skill_id] = _tiers[tier_index].size()
+		_tiers[tier_index].append(_skill_by_id[skill_id])
 		
 		var children: Array[String] = skill_children[skill_id].duplicate()
 		children.shuffle()
@@ -153,75 +173,37 @@ func _group_by_tier() -> void:
 func _reduce_crossings(reduce_crossings_iterations: int, initial_temperature: float) -> int:
 	var best_crossings := _count_all_crossings()
 	var best_lanes: Dictionary[String, int] = lane_by_id.duplicate()
-	var best_tiers: Array[Array] = tiers.duplicate(true)
-
+	var best_tiers: Array[Array] = _tiers.duplicate(true)
+	
 	for i in reduce_crossings_iterations:
 		var temperature := initial_temperature * (1.0 - float(i) / reduce_crossings_iterations)
-
-		for t in range(1, tiers.size()):
+		
+		for t in range(1, _tiers.size()):
 			_sort_tier_by_weight(t, true)
-
-		for t in range(tiers.size() -2, -1, -1):
+		
+		for t in range(_tiers.size() -2, -1, -1):
 			_sort_tier_by_weight(t, false)
-
+		
 		_transpose(temperature)
-
+		
 		var crossings := _count_all_crossings()
 		if crossings < best_crossings:
 			best_crossings = crossings
 			best_lanes = lane_by_id.duplicate()
-			best_tiers = tiers.duplicate(true)
-
+			best_tiers = _tiers.duplicate(true)
+			
 			if crossings == 0:
 				break
-
+	
 	lane_by_id = best_lanes
-	tiers = best_tiers
+	_tiers = best_tiers
 	return best_crossings
-
-
-func _transpose(temperature: float, passes: int = 2) -> void:
-	for _pass in passes:
-		var tier_order := range(tiers.size())
-		tier_order.shuffle()
-
-		for t in tier_order:
-			var tier: Array[SJSkill] = tiers[t]
-			var index_order := range(tier.size() - 1)
-			index_order.shuffle()
-
-			for i in index_order:
-				var before := _count_crossings_around_tier(t)
-
-				# Swap adjacent nodes.
-				var tmp := tier[i]
-				tier[i] = tier[i + 1]
-				tier[i + 1] = tmp
-
-				lane_by_id[tier[i].id] = i
-				lane_by_id[tier[i + 1].id] = i + 1
-
-				var after := _count_crossings_around_tier(t)
-				var delta := after - before
-
-				var accept := delta <= 0
-				if not accept and temperature > 0.0:
-					accept = randf() < exp(-delta / temperature)
-
-				if not accept:
-					# Undo.
-					tmp = tier[i]
-					tier[i] = tier[i + 1]
-					tier[i + 1] = tmp
-
-					lane_by_id[tier[i].id] = i
-					lane_by_id[tier[i + 1].id] = i + 1
 
 
 func _make_sparse_tier_lists() -> void:
 	var desired_lane: Dictionary[String, float] 
-	for t in range(tiers.size() -2, -1, -1):
-		var tier: Array[SJSkill] = tiers[t]
+	for t in range(_tiers.size() -2, -1, -1):
+		var tier: Array[SJSkill] = _tiers[t]
 		
 		for i in tier.size():
 			var skill:= tier[i]
@@ -234,7 +216,7 @@ func _make_sparse_tier_lists() -> void:
 				lane_by_id[skill.id] = desired
 	
 	var max_lane: int = lane_by_id.values().max()
-	for tier in tiers:
+	for tier in _tiers:
 		var skills: Array[SJSkill] = tier.duplicate()
 		
 		tier.resize(max_lane + 1)
@@ -245,8 +227,76 @@ func _make_sparse_tier_lists() -> void:
 			tier[lane] = skill
 
 
+func _create_dummies_between(parent: SJSkill, child: SJSkill) -> void:
+	var parent_tier:= tier_by_id[parent.id]
+	var child_tier:= tier_by_id[child.id]
+	
+	assert(child_tier - parent_tier > 0)
+	if child_tier - parent_tier == 1:
+		return
+	
+	var current: SJSkill = parent
+	
+	for i in range(parent_tier + 1, child_tier):
+		var dummy = SJSkill.new()
+		dummy.id = "%s_%s_dummy_%s" % [parent.id, child.id, i]
+		dummy.is_dummy = true
+		
+		assert(not dummy.id in _skill_by_id)
+		dummy_skills.append(dummy)
+		_skill_by_id[dummy.id] = dummy
+		tier_by_id[dummy.id] = i
+		
+		_init_string_array_value(skill_children, dummy.id)
+		skill_children[dummy.id].append(child.id)
+		skill_children[current.id].erase(child.id)
+		skill_children[current.id].append(dummy.id)
+		
+		_init_string_array_value(skill_requirements, dummy.id)
+		skill_requirements[dummy.id].append(current.id)
+		skill_requirements[child.id].erase(current.id)
+		skill_requirements[child.id].append(dummy.id)
+		
+		current = dummy
+
+
+func _transpose(temperature: float, passes: int = 2) -> void:
+	for _pass in passes:
+		var tier_order := range(_tiers.size())
+		tier_order.shuffle()
+		
+		for t in tier_order:
+			var tier: Array[SJSkill] = _tiers[t]
+			var index_order := range(tier.size() - 1)
+			index_order.shuffle()
+			
+			for i in index_order:
+				var before := _count_crossings_around_tier(t)
+				
+				_swap_lanes(tier, i, i+1)
+				
+				var after := _count_crossings_around_tier(t)
+				var delta := after - before
+				
+				var accept := delta <= 0
+				if not accept and temperature > 0.0:
+					accept = randf() < exp(-delta / temperature)
+				
+				if not accept:
+					_swap_lanes(tier, i, i+1)
+
+
+func _swap_lanes(tier: Array[SJSkill], index_a: int, index_b: int) -> void:
+	var tmp := tier[index_a]
+	tier[index_a] = tier[index_b]
+	tier[index_b] = tmp
+	
+	lane_by_id[tier[index_a].id] = index_a
+	lane_by_id[tier[index_b].id] = index_b
+
+
 func _sort_tier_by_weight(tier_index: int, look_upward: bool) -> void:
-	var tier: Array[SJSkill] = tiers[tier_index]
+	var tier: Array[SJSkill] = _tiers[tier_index]
 	var neighbors: Array[String]
 	var barycenters: Dictionary[String, float] 
 	var medians: Dictionary[String, float] 
@@ -281,10 +331,10 @@ func _sort_tier_by_weight(tier_index: int, look_upward: bool) -> void:
 
 func _count_all_crossings() -> int:
 	var result := 0
-
-	for t in range(tiers.size() - 1):
+	
+	for t in range(_tiers.size() - 1):
 		result += _count_crossings_between_tiers(t)
-
+	
 	return result
 
 
@@ -292,38 +342,38 @@ func _count_crossings_around_tier(t: int) -> int:
 	var result := 0
 	if t > 0:
 		result += _count_crossings_between_tiers(t - 1)
-	if t < tiers.size() - 1:
+	if t < _tiers.size() - 1:
 		result += _count_crossings_between_tiers(t)
 	return result
 
 
 func _count_crossings_between_tiers(upper_index: int) -> int:
 	var crossings := 0
-
-	var upper := tiers[upper_index]
+	
+	var upper := _tiers[upper_index]
 	var lower_index := upper_index + 1
-
+	
 	for i in upper.size():
 		var a: SJSkill = upper[i]
-
+		
 		for child_a_id in skill_children[a.id]:
 			if tier_by_id[child_a_id] != lower_index:
 				continue
-
+			
 			var child_a_lane := lane_by_id[child_a_id]
-
+			
 			for j in range(i + 1, upper.size()):
 				var b: SJSkill = upper[j]
-
+				
 				for child_b_id in skill_children[b.id]:
 					if tier_by_id[child_b_id] != lower_index:
 						continue
-
+					
 					var child_b_lane := lane_by_id[child_b_id]
-
+					
 					if child_a_lane > child_b_lane:
 						crossings += 1
-
+	
 	return crossings
 
 
@@ -335,7 +385,7 @@ func _get_barycenter(skill_id: String, neighbors: Array[String]) -> float:
 	for neighbor_id in neighbors:
 		sum_lanes += lane_by_id[neighbor_id]
 	return sum_lanes / neighbors.size()
-	
+
 
 func _get_median(skill_id: String, neighbors: Array[String], look_upward: bool) -> float:
 	if neighbors.is_empty():
@@ -357,7 +407,7 @@ func _get_median(skill_id: String, neighbors: Array[String], look_upward: bool) 
 
 
 func _to_string() -> String:
-	return "%s" % [tiers]
+	return "%s" % [_tiers]
 
 
 static func _init_string_array_value(dictionary: Dictionary, key: Variant) -> void:
