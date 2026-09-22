@@ -77,14 +77,29 @@ func setup() -> void:
 		if n < tiers.size() - 1:
 			_create_tier_spacer()
 	
-	for parent_node: SJSkillNode in nodes_by_id.values():
-		for child_id in skills.skill_children[parent_node.skill.id]:
-			assert(nodes_by_id.has(child_id))
-			if not nodes_by_id.has(child_id):
+	for node: SJSkillNode in nodes_by_id.values():
+		if node.skill.is_dummy:
+			continue
+		
+		var chains:= skills.get_children_chains(node.skill.id)
+		
+		if chains.is_empty():
+			continue
+		
+		for chain: Array[SJSkill] in chains:
+			var nodes: Array[SJSkillNode]
+			
+			for skill in chain:
+				if not nodes_by_id.has(skill.id):
+					assert(false, "Tree does not have chain node")
+					break
+				
+				nodes.append(nodes_by_id[skill.id])
+			
+			if chain.size() < 2:
 				continue
 			
-			var child_node:= nodes_by_id[child_id]
-			var line:= _create_relation(parent_node, child_node)
+			var line:= _create_relation(nodes)
 			lines_container.add_child(line)
 
 
@@ -135,11 +150,13 @@ func _create_node(skill: SJSkill) -> SJSkillNode:
 	return node
 
 ## Used by the tree to instantiate a skill relation. Override or set [member relation_scene]
-## for a custom skill relation scenee
-func _create_relation(parent_node: SJSkillNode, child_node: SJSkillNode) -> SJSkillRelation:
+## for a custom skill relation scene. [br]
+## [param nodes]: list of nodes contained by this relation, ordered by tier.
+## [code]nodes.front()[/code] is the canonical parent. [code]nodes.back()[/code] is 
+## the canonical child. Internal nodes are dummy nodes (one per tier jump).
+func _create_relation(nodes: Array[SJSkillNode]) -> SJSkillRelation:
 	var relation := relation_scene.instantiate() as SJSkillRelation
-	relation.parent = parent_node
-	relation.child = child_node
+	relation.nodes = nodes
 	relation.direction = direction
 	return relation
 

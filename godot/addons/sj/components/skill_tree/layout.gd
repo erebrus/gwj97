@@ -64,6 +64,26 @@ func get_tiers() -> Array[Array]:
 	return _tiers.duplicate(true)
 
 
+func get_children_chains(parent_id: String) -> Array[Array]:
+	if not _initialized:
+		setup()
+	
+	var chains: Array[Array]
+	for child_id in skill_children[parent_id]:
+		var chain: Array[SJSkill]
+		chains.append(chain)
+		
+		chain.append(_skill_by_id[parent_id])
+		chain.append(_skill_by_id[child_id])
+		
+		while _skill_by_id[child_id].is_dummy:
+			assert(skill_children[child_id].size() == 1, "Multiple children per dummy not implemented")
+			child_id = skill_children[child_id].front()
+			chain.append(_skill_by_id[child_id])
+	
+	return chains
+
+
 func _create_square_grid(skills: Array[SJSkill], reduce_crossings_iterations: int, initial_temperature: float) -> void:
 	print("Creating square grid layout")
 	for skill in skills:
