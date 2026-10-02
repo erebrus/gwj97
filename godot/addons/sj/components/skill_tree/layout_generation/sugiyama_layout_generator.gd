@@ -7,6 +7,7 @@ var initial_temperature: float = 1.5
 var _tiers: Array[Array]
 
 
+
 func generate(tree: SJSkillTree) -> void:
 	_reset_topology(tree)
 	
@@ -36,7 +37,7 @@ func generate(tree: SJSkillTree) -> void:
 		tree.lane_by_id = best_lanes
 		_tiers = best_tiers
 	
-	_make_sparse_tier_lists(tree) # TODO: Brandes-Köpf
+	_balance_lanes_per_tier(tree)
 
 
 func _calculate_base_tier_by_id(tree: SJSkillTree) -> void:
@@ -127,20 +128,20 @@ func _reduce_crossings(tree: SJSkillTree, reduce_crossings_iterations: int, init
 	return best_crossings
 
 
-func _make_sparse_tier_lists(tree: SJSkillTree) -> void:
-	var desired_lane: Dictionary[String, float]
-	for t in range(_tiers.size() -2, -1, -1):
-		var tier: Array[SJSkill] = _tiers[t]
+## Brandes-Köpf lane assignment. Assumes tier order is already fixed by crossing minimization;
+## only assigns positions, never reorders.
+func _balance_lanes_per_tier(tree: SJSkillTree) -> void:
+	var lanes := SJSkillTreeLaneAssigner.new(tree, _tiers, _skill_by_id).balanced_lanes()
+	var min_desired_lane: float = lanes.values().min()
+	
+	for tier in _tiers:
+		var previous_lane := -1
 		
-		for i in tier.size():
-			var skill:= tier[i]
-			var desired:= roundi(_get_barycenter(tree, skill.id, tree.skill_children[skill.id]))
-			
-			if i > 0:
-				var previous:= tree.lane_by_id[tier[i-1].id]
-				tree.lane_by_id[skill.id] = max(desired, previous + 1)
-			else:
-				tree.lane_by_id[skill.id] = desired
+		for skill: SJSkill in tier:
+			var desired := roundi(lanes[skill.id] - min_desired_lane)
+			var lane: int = max(desired, previous_lane + 1)
+			tree.lane_by_id[skill.id] = lane
+			previous_lane = lane
 	
 	var max_lane: int = tree.lane_by_id.values().max()
 	for tier in _tiers:
@@ -300,7 +301,7 @@ func _count_crossings_between_tiers(tree: SJSkillTree, upper_index: int) -> int:
 					
 					if child_a_lane > child_b_lane:
 						crossings += 1
-
+	
 	return crossings
 
 
