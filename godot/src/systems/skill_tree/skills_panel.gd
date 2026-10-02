@@ -16,8 +16,6 @@ var selected_skill: StationSkill
 func _ready() -> void:
 	_close()
 	
-	tree.skill_tree = Globals.skills
-	
 	Events.ship_docked.connect(show)
 	Events.ship_undocked.connect(_close)
 	

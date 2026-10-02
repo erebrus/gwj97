@@ -25,11 +25,16 @@ enum Direction {
 		if is_node_ready():
 			setup()
 
-var skill_tree: SJSkillTree:
+@export var skill_tree: SJSkillTree:
 	set(value):
 		if value == skill_tree:
 			return
+		if skill_tree != null:
+			skill_tree.changed.disconnect(setup)
+		
 		skill_tree = value
+		if skill_tree != null:
+			skill_tree.changed.connect(setup)
 		if is_node_ready():
 			setup()
 

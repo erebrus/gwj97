@@ -1,3 +1,4 @@
+@tool
 class_name SJSkillTreeSugiyamaLayoutGenerator extends SJSkillTreeLayoutGenerator
 
 
@@ -38,6 +39,7 @@ func generate(tree: SJSkillTree) -> void:
 		_tiers = best_tiers
 	
 	_balance_lanes_per_tier(tree)
+	tree.emit_changed()
 
 
 func _calculate_base_tier_by_id(tree: SJSkillTree) -> void:

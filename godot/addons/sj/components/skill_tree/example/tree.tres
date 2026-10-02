@@ -1,0 +1,221 @@
+[gd_resource type="Resource" script_class="SJSkillTree" format=3 uid="uid://c0q72i2m8gyh4"]
+
+[ext_resource type="Script" uid="uid://c8r03uniq7xmf" path="res://addons/sj/components/skill_tree/skill.gd" id="1_ms5sl"]
+[ext_resource type="Script" uid="uid://d1sby71hlh3sx" path="res://addons/sj/components/skill_tree/tree.gd" id="2_tju04"]
+
+[sub_resource type="Resource" id="Resource_ms5sl"]
+script = ExtResource("1_ms5sl")
+id = "C_L_dummy_1"
+is_dummy = true
+
+[sub_resource type="Resource" id="Resource_tju04"]
+script = ExtResource("1_ms5sl")
+id = "L_U_dummy_3"
+is_dummy = true
+
+[sub_resource type="Resource" id="Resource_8lytl"]
+script = ExtResource("1_ms5sl")
+id = "A"
+
+[sub_resource type="Resource" id="Resource_e11n8"]
+script = ExtResource("1_ms5sl")
+id = "B"
+
+[sub_resource type="Resource" id="Resource_wlnjq"]
+script = ExtResource("1_ms5sl")
+id = "C"
+
+[sub_resource type="Resource" id="Resource_7162b"]
+script = ExtResource("1_ms5sl")
+id = "D"
+requirements = Array[String](["A"])
+
+[sub_resource type="Resource" id="Resource_yngo5"]
+script = ExtResource("1_ms5sl")
+id = "E"
+requirements = Array[String](["A", "B"])
+
+[sub_resource type="Resource" id="Resource_vfqbb"]
+script = ExtResource("1_ms5sl")
+id = "F"
+requirements = Array[String](["B"])
+
+[sub_resource type="Resource" id="Resource_tfm8q"]
+script = ExtResource("1_ms5sl")
+id = "G"
+requirements = Array[String](["B"])
+
+[sub_resource type="Resource" id="Resource_iwj87"]
+script = ExtResource("1_ms5sl")
+id = "H"
+requirements = Array[String](["C"])
+
+[sub_resource type="Resource" id="Resource_n62bf"]
+script = ExtResource("1_ms5sl")
+id = "I"
+requirements = Array[String](["C"])
+
+[sub_resource type="Resource" id="Resource_pwkui"]
+script = ExtResource("1_ms5sl")
+id = "J"
+requirements = Array[String](["F"])
+
+[sub_resource type="Resource" id="Resource_1pbxr"]
+script = ExtResource("1_ms5sl")
+id = "K"
+requirements = Array[String](["F"])
+
+[sub_resource type="Resource" id="Resource_gkaul"]
+script = ExtResource("1_ms5sl")
+id = "L"
+requirements = Array[String](["C", "F"])
+
+[sub_resource type="Resource" id="Resource_8jeej"]
+script = ExtResource("1_ms5sl")
+id = "M"
+requirements = Array[String](["K"])
+
+[sub_resource type="Resource" id="Resource_ghfjb"]
+script = ExtResource("1_ms5sl")
+id = "N"
+requirements = Array[String](["K", "J"])
+
+[sub_resource type="Resource" id="Resource_yhrsy"]
+script = ExtResource("1_ms5sl")
+id = "O"
+requirements = Array[String](["J"])
+
+[sub_resource type="Resource" id="Resource_px2bj"]
+script = ExtResource("1_ms5sl")
+id = "P"
+requirements = Array[String](["J"])
+
+[sub_resource type="Resource" id="Resource_qbr61"]
+script = ExtResource("1_ms5sl")
+id = "Q"
+requirements = Array[String](["L"])
+
+[sub_resource type="Resource" id="Resource_61na5"]
+script = ExtResource("1_ms5sl")
+id = "R"
+requirements = Array[String](["L"])
+
+[sub_resource type="Resource" id="Resource_am6nq"]
+script = ExtResource("1_ms5sl")
+id = "S"
+requirements = Array[String](["O"])
+
+[sub_resource type="Resource" id="Resource_r87c4"]
+script = ExtResource("1_ms5sl")
+id = "T"
+requirements = Array[String](["O"])
+
+[sub_resource type="Resource" id="Resource_4gie3"]
+script = ExtResource("1_ms5sl")
+id = "U"
+requirements = Array[String](["L", "O"])
+
+[resource]
+script = ExtResource("2_tju04")
+skills = Array[ExtResource("1_ms5sl")]([SubResource("Resource_8lytl"), SubResource("Resource_e11n8"), SubResource("Resource_wlnjq"), SubResource("Resource_7162b"), SubResource("Resource_yngo5"), SubResource("Resource_vfqbb"), SubResource("Resource_tfm8q"), SubResource("Resource_iwj87"), SubResource("Resource_n62bf"), SubResource("Resource_pwkui"), SubResource("Resource_1pbxr"), SubResource("Resource_gkaul"), SubResource("Resource_8jeej"), SubResource("Resource_ghfjb"), SubResource("Resource_yhrsy"), SubResource("Resource_px2bj"), SubResource("Resource_qbr61"), SubResource("Resource_61na5"), SubResource("Resource_am6nq"), SubResource("Resource_r87c4"), SubResource("Resource_4gie3")])
+dummy_skills = Array[ExtResource("1_ms5sl")]([SubResource("Resource_ms5sl"), SubResource("Resource_tju04")])
+skill_children = Dictionary[String, Array]({
+"A": Array[String](["D", "E"]),
+"B": Array[String](["E", "F", "G"]),
+"C": Array[String](["H", "I", "C_L_dummy_1"]),
+"C_L_dummy_1": Array[String](["L"]),
+"D": Array[String]([]),
+"E": Array[String]([]),
+"F": Array[String](["J", "K", "L"]),
+"G": Array[String]([]),
+"H": Array[String]([]),
+"I": Array[String]([]),
+"J": Array[String](["N", "O", "P"]),
+"K": Array[String](["M", "N"]),
+"L": Array[String](["Q", "R", "L_U_dummy_3"]),
+"L_U_dummy_3": Array[String](["U"]),
+"M": Array[String]([]),
+"N": Array[String]([]),
+"O": Array[String](["S", "T", "U"]),
+"P": Array[String]([]),
+"Q": Array[String]([]),
+"R": Array[String]([]),
+"S": Array[String]([]),
+"T": Array[String]([]),
+"U": Array[String]([])
+})
+skill_requirements = Dictionary[String, Array]({
+"A": Array[String]([]),
+"B": Array[String]([]),
+"C": Array[String]([]),
+"C_L_dummy_1": Array[String](["C"]),
+"D": Array[String](["A"]),
+"E": Array[String](["A", "B"]),
+"F": Array[String](["B"]),
+"G": Array[String](["B"]),
+"H": Array[String](["C"]),
+"I": Array[String](["C"]),
+"J": Array[String](["F"]),
+"K": Array[String](["F"]),
+"L": Array[String](["F", "C_L_dummy_1"]),
+"L_U_dummy_3": Array[String](["L"]),
+"M": Array[String](["K"]),
+"N": Array[String](["K", "J"]),
+"O": Array[String](["J"]),
+"P": Array[String](["J"]),
+"Q": Array[String](["L"]),
+"R": Array[String](["L"]),
+"S": Array[String](["O"]),
+"T": Array[String](["O"]),
+"U": Array[String](["O", "L_U_dummy_3"])
+})
+tier_by_id = Dictionary[String, int]({
+"A": 0,
+"B": 0,
+"C": 0,
+"C_L_dummy_1": 1,
+"D": 1,
+"E": 1,
+"F": 1,
+"G": 1,
+"H": 1,
+"I": 1,
+"J": 2,
+"K": 2,
+"L": 2,
+"L_U_dummy_3": 3,
+"M": 3,
+"N": 3,
+"O": 3,
+"P": 3,
+"Q": 3,
+"R": 3,
+"S": 4,
+"T": 4,
+"U": 4
+})
+lane_by_id = Dictionary[String, int]({
+"A": 4,
+"B": 2,
+"C": 6,
+"C_L_dummy_1": 7,
+"D": 4,
+"E": 3,
+"F": 2,
+"G": 1,
+"H": 6,
+"I": 5,
+"J": 1,
+"K": 3,
+"L": 7,
+"L_U_dummy_3": 8,
+"M": 3,
+"N": 2,
+"O": 1,
+"P": 0,
+"Q": 7,
+"R": 6,
+"S": 1,
+"T": 0,
+"U": 8
+})

@@ -1,3 +1,4 @@
+@tool
 class_name SJSkill extends Resource
 
 

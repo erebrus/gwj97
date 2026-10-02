@@ -19,8 +19,6 @@ var game_version: String:
 		return ProjectSettings.get_setting("application/config/version")
 	
 
-var skills: SJSkillTree
-
 @onready var music_manager: MusicManager = $MusicManager
 @onready var ui_sfx: UiSfx = $UiSfx
 
@@ -33,7 +31,6 @@ func _ready():
 	if get_tree().current_scene.scene_file_path == GAME_SCENE_PATH:
 		start_game()
 	
-	_load_skills()
 	
 
 func go_to_main_menu():
@@ -63,24 +60,6 @@ func _init_logger():
 	file_appender.logger_format=GSLogger.LOG_FORMAT_FULL
 	file_appender.logger_level = GSLogger.LOG_LEVEL_DEBUG
 	GSLogger.info("GSLogger initialized.")
-
-
-func _load_skills() -> void:
-	var resources := GameUtils.load_resources("res://data/skills")
-	var all_skills: Array[SJSkill]
-	for r in resources:
-		if r is StationSkill:
-			all_skills.append(r)
-		else:
-			GSLogger.warn("Resource %s in skill folder is not a StationSkill" % [r.resource_path])
-	
-	GSLogger.info("Generating skill tree layout")
-	var tree := SJSkillTree.new()
-	tree.skills = all_skills
-	SJSkillTreeSugiyamaLayoutGenerator.new().generate(tree)
-	skills = tree
-	
-	GSLogger.info("Skill resources loaded.")
 
 
 func do_lose():

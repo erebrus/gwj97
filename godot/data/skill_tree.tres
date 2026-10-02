@@ -1,0 +1,102 @@
+[gd_resource type="Resource" script_class="SJSkillTree" format=3 uid="uid://cycy5w0asq1jb"]
+
+[ext_resource type="Script" uid="uid://c8r03uniq7xmf" path="res://addons/sj/components/skill_tree/skill.gd" id="1_8q64v"]
+[ext_resource type="Script" uid="uid://d1sby71hlh3sx" path="res://addons/sj/components/skill_tree/tree.gd" id="2_asuww"]
+[ext_resource type="Resource" uid="uid://duhxalwxnx2pd" path="res://data/skills/skill_beacon.tres" id="3_rphkp"]
+[ext_resource type="Resource" uid="uid://ce4x68eakfro" path="res://data/skills/skill_boost.tres" id="4_jeeyf"]
+[ext_resource type="Resource" uid="uid://biseco6gnp14" path="res://data/skills/skill_boost_extra.tres" id="5_uviob"]
+[ext_resource type="Resource" uid="uid://cbkebjchlaji3" path="res://data/skills/skill_boost_faster.tres" id="6_shvp3"]
+[ext_resource type="Resource" uid="uid://b71e11fryh5iu" path="res://data/skills/skill_cargo1.tres" id="7_8ngiy"]
+[ext_resource type="Resource" uid="uid://d3240xrfmoqbn" path="res://data/skills/skill_cargo2.tres" id="8_adbhr"]
+[ext_resource type="Resource" uid="uid://ucup2s1k2lw5" path="res://data/skills/skill_cargo3.tres" id="9_36wpu"]
+[ext_resource type="Resource" uid="uid://xixjsyc5sfua" path="res://data/skills/skill_damp_control.tres" id="10_h53cd"]
+[ext_resource type="Resource" uid="uid://de6d1rjajhcfv" path="res://data/skills/skill_damp_control_extra.tres" id="11_y8lx6"]
+[ext_resource type="Resource" uid="uid://d31o77pmnwfco" path="res://data/skills/skill_fuel1.tres" id="12_m7hq3"]
+[ext_resource type="Resource" uid="uid://5l0o1am5sa22" path="res://data/skills/skill_fuel2.tres" id="13_p32lw"]
+[ext_resource type="Resource" uid="uid://cssagrojyob1y" path="res://data/skills/skill_fuel_tank.tres" id="14_sv2iq"]
+[ext_resource type="Resource" uid="uid://dd7bdpqyqmese" path="res://data/skills/skill_laser1.tres" id="15_17876"]
+[ext_resource type="Resource" uid="uid://c8klbom815nq8" path="res://data/skills/skill_laser2.tres" id="16_pmhwo"]
+[ext_resource type="Resource" uid="uid://vadwy0cw7m03" path="res://data/skills/skill_speed1.tres" id="17_4145n"]
+[ext_resource type="Resource" uid="uid://bm14vjs7f48sa" path="res://data/skills/skill_speed2.tres" id="18_mk85p"]
+[ext_resource type="Resource" uid="uid://bysynk6558ywg" path="res://data/skills/skill_speed3.tres" id="19_t5h83"]
+
+[resource]
+script = ExtResource("2_asuww")
+skills = Array[ExtResource("1_8q64v")]([ExtResource("3_rphkp"), ExtResource("4_jeeyf"), ExtResource("5_uviob"), ExtResource("6_shvp3"), ExtResource("7_8ngiy"), ExtResource("8_adbhr"), ExtResource("9_36wpu"), ExtResource("10_h53cd"), ExtResource("11_y8lx6"), ExtResource("12_m7hq3"), ExtResource("13_p32lw"), ExtResource("14_sv2iq"), ExtResource("15_17876"), ExtResource("16_pmhwo"), ExtResource("17_4145n"), ExtResource("18_mk85p"), ExtResource("19_t5h83")])
+skill_children = Dictionary[String, Array]({
+"skill_beacon": Array[String]([]),
+"skill_boost": Array[String](["skill_boost_extra", "skill_damp_control"]),
+"skill_boost_extra": Array[String](["skill_boost_faster"]),
+"skill_boost_faster": Array[String]([]),
+"skill_cargo1": Array[String](["skill_cargo2"]),
+"skill_cargo2": Array[String](["skill_cargo3"]),
+"skill_cargo3": Array[String]([]),
+"skill_damp_control": Array[String](["skill_damp_control_extra"]),
+"skill_damp_control_extra": Array[String]([]),
+"skill_fuel1": Array[String](["skill_fuel2"]),
+"skill_fuel2": Array[String](["skill_fuel_tank"]),
+"skill_fuel_tank": Array[String]([]),
+"skill_laser1": Array[String](["skill_laser2"]),
+"skill_laser2": Array[String]([]),
+"skill_speed1": Array[String](["skill_speed2"]),
+"skill_speed2": Array[String](["skill_boost", "skill_fuel_tank", "skill_speed3"]),
+"skill_speed3": Array[String](["skill_damp_control"])
+})
+skill_requirements = Dictionary[String, Array]({
+"skill_beacon": Array[String]([]),
+"skill_boost": Array[String](["skill_speed2"]),
+"skill_boost_extra": Array[String](["skill_boost"]),
+"skill_boost_faster": Array[String](["skill_boost_extra"]),
+"skill_cargo1": Array[String]([]),
+"skill_cargo2": Array[String](["skill_cargo1"]),
+"skill_cargo3": Array[String](["skill_cargo2"]),
+"skill_damp_control": Array[String](["skill_speed3", "skill_boost"]),
+"skill_damp_control_extra": Array[String](["skill_damp_control"]),
+"skill_fuel1": Array[String]([]),
+"skill_fuel2": Array[String](["skill_fuel1"]),
+"skill_fuel_tank": Array[String](["skill_fuel2", "skill_speed2"]),
+"skill_laser1": Array[String]([]),
+"skill_laser2": Array[String](["skill_laser1"]),
+"skill_speed1": Array[String]([]),
+"skill_speed2": Array[String](["skill_speed1"]),
+"skill_speed3": Array[String](["skill_speed2"])
+})
+tier_by_id = Dictionary[String, int]({
+"skill_beacon": 0,
+"skill_boost": 2,
+"skill_boost_extra": 3,
+"skill_boost_faster": 4,
+"skill_cargo1": 0,
+"skill_cargo2": 1,
+"skill_cargo3": 2,
+"skill_damp_control": 3,
+"skill_damp_control_extra": 4,
+"skill_fuel1": 0,
+"skill_fuel2": 1,
+"skill_fuel_tank": 2,
+"skill_laser1": 0,
+"skill_laser2": 1,
+"skill_speed1": 0,
+"skill_speed2": 1,
+"skill_speed3": 2
+})
+lane_by_id = Dictionary[String, int]({
+"skill_beacon": 4,
+"skill_boost": 1,
+"skill_boost_extra": 1,
+"skill_boost_faster": 1,
+"skill_cargo1": 0,
+"skill_cargo2": 0,
+"skill_cargo3": 0,
+"skill_damp_control": 2,
+"skill_damp_control_extra": 2,
+"skill_fuel1": 3,
+"skill_fuel2": 3,
+"skill_fuel_tank": 3,
+"skill_laser1": 1,
+"skill_laser2": 1,
+"skill_speed1": 2,
+"skill_speed2": 2,
+"skill_speed3": 2
+})
+metadata/_custom_type_script = "uid://d1sby71hlh3sx"

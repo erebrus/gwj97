@@ -1,3 +1,4 @@
+@tool
 ## Assigns a float lane to every skill using the Brandes-Köpf algorithm. Assumes tier order is
 ## already fixed by crossing minimization; only assigns lanes, never reorders.
 class_name SJSkillTreeLaneAssigner extends RefCounted
