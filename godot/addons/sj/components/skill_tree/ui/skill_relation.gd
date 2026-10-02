@@ -1,6 +1,15 @@
 @tool
 class_name SJSkillRelation extends Line2D
 
+
+const DIRECTION_AXIS := {
+	SJSkillTreeControl.Direction.LeftRight: Vector2.RIGHT,
+	SJSkillTreeControl.Direction.RightLeft: Vector2.LEFT,
+	SJSkillTreeControl.Direction.TopDown:   Vector2.DOWN,
+	SJSkillTreeControl.Direction.DownTop:   Vector2.UP,
+}
+
+
 @export var curve_factor: float = 0.5:
 	set(value):
 		if value == curve_factor:
@@ -10,31 +19,23 @@ class_name SJSkillRelation extends Line2D
 			setup()
 
 
-var parent: SJSkillNode:
+var nodes: Array[SJSkillNode]:
 	set(value):
-		if value == parent:
+		if value == nodes:
 			return
-		if parent != null:
-			parent.transform_changed.disconnect(update_points)
-		parent = value
-		parent.transform_changed.connect(update_points)
+		if nodes != null:
+			for node in nodes:
+				if node.transform_changed.is_connected(update_points):
+					node.transform_changed.disconnect(update_points)
+		nodes = value
+		for node in nodes:
+			node.transform_changed.connect(update_points)
+		
 		if is_node_ready():
 			setup()
 
 
-var child: SJSkillNode:
-	set(value):
-		if value == child:
-			return
-		if child != null:
-			child.transform_changed.disconnect(update_points)
-		child = value
-		child.transform_changed.connect(update_points)
-		if is_node_ready():
-			setup()
-
-
-var direction: SJSkillTree.Direction:
+var direction: SJSkillTreeControl.Direction:
 	set(value):
 		if value == direction:
 			return
@@ -54,40 +55,25 @@ func setup() -> void:
 func update_points() -> void:
 	var curve := Curve2D.new()
 	
-	var parent_size := parent.get_rect().size
-	var child_size := child.get_rect().size
+	var axis: Vector2 = DIRECTION_AXIS[direction]
+	var extent := axis.abs()
 	
-	var parent_position := parent.global_position + parent_size / 2 - global_position
-	var child_position := child.global_position + child.get_rect().size / 2 - global_position
-	var parent_out: Vector2
-	var child_out: Vector2
-	
-	# TODO: allow routing through dummy nodes
-	
-	match direction:
-		SJSkillTree.Direction.LeftRight:
-			parent_position += Vector2(parent_size.x * 0.4, 0)
-			child_position -= Vector2(child_size.x * 0.4, 0)
-			parent_out = Vector2(parent_size.x * curve_factor, 0)
-			child_out = - Vector2(child_size.x * curve_factor, 0)
-		SJSkillTree.Direction.RightLeft:
-			parent_position -= Vector2(parent_size.x * 0.4, 0)
-			child_position += Vector2(child_size.x * 0.4, 0)
-			parent_out = - Vector2(parent_size.x * curve_factor, 0)
-			child_out = Vector2(child_size.x * curve_factor, 0)
-		SJSkillTree.Direction.TopDown:
-			parent_position += Vector2(0, parent_size.y * 0.4)
-			child_position -= Vector2(0, child_size.y * 0.4)
-			parent_out = Vector2(0, parent_size.y * curve_factor)
-			child_out = - Vector2(0, child_size.y * curve_factor)
-		SJSkillTree.Direction.DownTop:
-			parent_position -= Vector2(0, parent_size.y * 0.4)
-			child_position += Vector2(0, child_size.y * 0.4)
-			parent_out = - Vector2(0, parent_size.y * curve_factor)
-			child_out = Vector2(0, child_size.y * curve_factor)
-	
-	curve.add_point(parent_position, Vector2.ZERO, parent_out)
-	curve.add_point(child_position, child_out)
+	for i in nodes.size():
+		var node := nodes[i]
+		var node_size := node.get_rect().size
+		var node_extent := node_size.dot(extent)
+		var node_position := node.global_position + node_size / 2 - global_position
+		
+		if i > 0:
+			var node_in_position := node_position - axis * node_extent * 0.4
+			var in_control := -axis * node_extent * curve_factor
+			
+			curve.add_point(node_in_position, in_control, Vector2.ZERO)
+			
+		if i < nodes.size() - 1:
+			var node_out_position := node_position + axis * node_extent * 0.4
+			var out_control := axis * node_extent * curve_factor
+			
+			curve.add_point(node_out_position, Vector2.ZERO, out_control)
 	
 	points = curve.get_baked_points()
-	

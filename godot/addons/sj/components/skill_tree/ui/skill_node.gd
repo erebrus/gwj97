@@ -53,6 +53,10 @@ func setup() -> void:
 	if skill == null:
 		return
 	
+	is_available = skill.is_available()
+	for parent in skill.parents:
+		parent.bought.connect(_on_parent_bought)
+	
 	modulate.a = 0 if skill.is_dummy else 1
 
 
@@ -66,3 +70,7 @@ func _on_gui_input(event: InputEvent) -> void:
 		if not event.is_pressed() and event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
 			pressed.emit(skill)
 			is_selected = true
+
+
+func _on_parent_bought() -> void:
+	is_available = skill.is_available()

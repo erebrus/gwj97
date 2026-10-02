@@ -1,6 +1,7 @@
+@tool
 extends SJSkillNode
 
 
 func setup() -> void:
 	super.setup()
-	%Name.text = skill.id
+	%Name.text = "%s [%s]" % [skill.id, ",".join(skill.requirements)]
