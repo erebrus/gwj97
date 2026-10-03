@@ -2,6 +2,9 @@
 class_name SJSkillRelation extends Line2D
 
 
+signal descendant_selected_changed
+
+
 const DIRECTION_AXIS := {
 	SJSkillTreeControl.Direction.LeftRight: Vector2.RIGHT,
 	SJSkillTreeControl.Direction.RightLeft: Vector2.LEFT,
@@ -23,11 +26,14 @@ var nodes: Array[SJSkillNode]:
 	set(value):
 		if value == nodes:
 			return
-		if nodes != null:
+		if not nodes.is_empty():
+			if nodes.back().descendant_selected_changed.is_connected(_on_child_descendant_selected_changed):
+				nodes.back().descendant_selected_changed.disconnect(_on_child_descendant_selected_changed)
 			for node in nodes:
 				if node.transform_changed.is_connected(update_points):
 					node.transform_changed.disconnect(update_points)
 		nodes = value
+		nodes.back().descendant_selected_changed.connect(_on_child_descendant_selected_changed)
 		for node in nodes:
 			node.transform_changed.connect(update_points)
 		
@@ -42,6 +48,24 @@ var direction: SJSkillTreeControl.Direction:
 		direction = value
 		if is_node_ready():
 			setup()
+
+
+var descendant_is_selected: bool:
+	set(value):
+		if value == descendant_is_selected:
+			return
+		descendant_is_selected = value
+		descendant_selected_changed.emit()
+
+
+var parent_node: SJSkillNode:
+	get:
+		return nodes.front()
+
+
+var child_node: SJSkillNode:
+	get:
+		return nodes.back()
 
 
 func _ready() -> void:
@@ -77,3 +101,8 @@ func update_points() -> void:
 			curve.add_point(node_out_position, Vector2.ZERO, out_control)
 	
 	points = curve.get_baked_points()
+
+
+func _on_child_descendant_selected_changed() -> void:
+	descendant_is_selected = child_node.descendant_is_selected
+	parent_node.descendant_is_selected = child_node.descendant_is_selected

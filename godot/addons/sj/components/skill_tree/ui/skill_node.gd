@@ -7,6 +7,7 @@ signal pressed(skill: SJSkill)
 
 signal selected_changed
 signal available_changed
+signal descendant_selected_changed
 
 signal transform_changed
 
@@ -26,7 +27,6 @@ var is_selected: bool:
 		if value == is_selected:
 			return
 		is_selected = value
-		selected_changed.emit()
 		_update_selected()
 
 var is_available: bool:
@@ -36,7 +36,13 @@ var is_available: bool:
 		is_available = value
 		available_changed.emit()
 
-
+var descendant_is_selected: bool:
+	set(value):
+		if value == descendant_is_selected:
+			return
+		descendant_is_selected = value
+		descendant_selected_changed.emit()
+	
 func _ready() -> void:
 	assert(root_input_node != null)
 	root_input_node.gui_input.connect(_on_gui_input)
@@ -61,8 +67,12 @@ func setup() -> void:
 
 
 func _update_selected() -> void:
+	if not is_selected:
+		descendant_is_selected = false
+	selected_changed.emit()
 	if is_selected:
 		selected.emit(skill)
+		descendant_is_selected = true
 
 
 func _on_gui_input(event: InputEvent) -> void:

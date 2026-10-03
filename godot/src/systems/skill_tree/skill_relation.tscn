@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://5ggj818r6uuv"]
+
+[ext_resource type="PackedScene" uid="uid://wyblvfvyq55c" path="res://addons/sj/components/skill_tree/ui/skill_relation.tscn" id="1_iw4gc"]
+[ext_resource type="Shader" uid="uid://o5minclsdc7y" path="res://src/systems/skill_tree/skill_relation.gdshader" id="2_1mt7j"]
+[ext_resource type="Script" uid="uid://n41y4kj07wa4" path="res://src/systems/skill_tree/skill_relation.gd" id="3_x63nj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x63nj"]
+shader = ExtResource("2_1mt7j")
+shader_parameter/inner = 0.3
+shader_parameter/outer = 0.5
+shader_parameter/dot_color = Color(0.8745098, 0.8156863, 0.23921569, 1)
+shader_parameter/speed = 0.0
+shader_parameter/size = 0.030000001425000002
+shader_parameter/intensity = 1.0
+
+[node name="SkillRelation" unique_id=1850826656 instance=ExtResource("1_iw4gc")]
+material = SubResource("ShaderMaterial_x63nj")
+width = 5.0
+default_color = Color(0.24313726, 0.24705882, 0.2627451, 1)
+texture_mode = 2
+script = ExtResource("3_x63nj")
+wave_speed = 1.0
+unselected_color = Color(0.7764706, 0.7764706, 0.7882353, 1)
+selected_color = Color(0.24313726, 0.24705882, 0.2627451, 1)

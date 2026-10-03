@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://rtgfaksbbqkj"]
+
+[ext_resource type="PackedScene" uid="uid://wyblvfvyq55c" path="res://addons/sj/components/skill_tree/ui/skill_relation.tscn" id="1_pm58u"]
+[ext_resource type="Script" uid="uid://c2tp3deom4sa3" path="res://addons/sj/components/skill_tree/example/example_relation.gd" id="2_bd0qd"]
+
+[node name="SkillRelation" unique_id=1850826656 instance=ExtResource("1_pm58u")]
+script = ExtResource("2_bd0qd")
+
+[connection signal="descendant_selected_changed" from="." to="." method="_on_descendant_selected_changed"]

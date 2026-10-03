@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://l57ny7jk3sr3" path="res://src/systems/skill_tree/skills_panel.gd" id="1_ybjot"]
 [ext_resource type="PackedScene" uid="uid://drgw2dc3b7ht0" path="res://src/systems/skill_tree/skill_node.tscn" id="2_ybjot"]
 [ext_resource type="Resource" uid="uid://cycy5w0asq1jb" path="res://data/skill_tree.tres" id="4_61dgf"]
+[ext_resource type="PackedScene" uid="uid://5ggj818r6uuv" path="res://src/systems/skill_tree/skill_relation.tscn" id="4_nxybu"]
 
 [node name="SkillsPanel" type="MarginContainer" unique_id=737614502]
 anchors_preset = 15
@@ -64,4 +65,5 @@ theme_type_variation = &"MarginContainerLarge"
 unique_name_in_owner = true
 layout_mode = 2
 node_scene = ExtResource("2_ybjot")
+relation_scene = ExtResource("4_nxybu")
 skill_tree = ExtResource("4_61dgf")
